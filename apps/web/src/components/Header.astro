@@ -47,14 +47,91 @@ const navLinks = [
       </div>
       
       <!-- Mobile Menu Button -->
-      <button class="md:hidden p-2 text-white/70 hover:text-white" aria-label="Menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <button
+        type="button"
+        class="mobile-toggle md:hidden p-2 text-white/70 hover:text-white"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-mobile-toggle
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-menu-icon="open">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
+        <svg class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" data-menu-icon="close">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
+        </svg>
       </button>
+
+      <div id="mobile-menu" class="mobile-menu md:hidden" data-mobile-menu hidden>
+        <ul class="mobile-nav-list">
+          {navLinks.map((link) => (
+            <li>
+              <a href={link.href} class="mobile-nav-link">{link.label}</a>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mobile-actions">
+          <a href="/login" class="mobile-login-button">Mi Portal</a>
+          <a href="/contacto" class="mobile-cta-button">Agendar Demo</a>
+        </div>
+      </div>
     </nav>
   </div>
 </header>
+
+<script>
+  const initMobileHeaderMenu = () => {
+    const header = document.getElementById("main-header");
+    if (!header || header.dataset.mobileBound === "true") {
+      return;
+    }
+
+    const button = header.querySelector("[data-mobile-toggle]");
+    const menu = header.querySelector("[data-mobile-menu]");
+    const openIcon = header.querySelector('[data-menu-icon="open"]');
+    const closeIcon = header.querySelector('[data-menu-icon="close"]');
+
+    if (!button || !menu || !openIcon || !closeIcon) {
+      return;
+    }
+
+    const closeMenu = () => {
+      menu.hidden = true;
+      button.setAttribute("aria-expanded", "false");
+      button.setAttribute("aria-label", "Abrir menu");
+      openIcon.classList.remove("hidden");
+      closeIcon.classList.add("hidden");
+    };
+
+    const openMenu = () => {
+      menu.hidden = false;
+      button.setAttribute("aria-expanded", "true");
+      button.setAttribute("aria-label", "Cerrar menu");
+      openIcon.classList.add("hidden");
+      closeIcon.classList.remove("hidden");
+    };
+
+    button.addEventListener("click", () => {
+      const isOpen = button.getAttribute("aria-expanded") === "true";
+      if (isOpen) {
+        closeMenu();
+        return;
+      }
+      openMenu();
+    });
+
+    menu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", closeMenu);
+    });
+
+    header.dataset.mobileBound = "true";
+  };
+
+  document.addEventListener("DOMContentLoaded", initMobileHeaderMenu);
+  document.addEventListener("astro:page-load", initMobileHeaderMenu);
+</script>
 
 <style>
   /* Initial state - transparent, full width */
@@ -65,6 +142,7 @@ const navLinks = [
   
   /* Pill container */
   .header-pill {
+    position: relative;
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -158,5 +236,92 @@ const navLinks = [
     color: white;
     background: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.05);
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+
+  .mobile-toggle:hover {
+    border-color: rgba(255, 255, 255, 0.32);
+    background: rgba(255, 255, 255, 0.09);
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: calc(100% + 0.65rem);
+    left: 0;
+    right: 0;
+    padding: 0.75rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(8, 12, 12, 0.96);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+  }
+
+  .mobile-nav-list {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .mobile-nav-link {
+    display: block;
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    border-radius: 0.75rem;
+    color: rgba(255, 255, 255, 0.84);
+    font-size: 0.94rem;
+    font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .mobile-nav-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .mobile-actions {
+    margin-top: 0.7rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .mobile-login-button,
+  .mobile-cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 2.75rem;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .mobile-login-button {
+    color: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .mobile-cta-button {
+    color: #ffffff;
+    background: linear-gradient(135deg, #00C2D1 0%, #00A8B5 100%);
+    box-shadow: 0 0 20px rgba(0, 194, 209, 0.3);
+  }
+
+  @media (min-width: 768px) {
+    .mobile-menu,
+    .mobile-toggle {
+      display: none !important;
+    }
   }
 </style>
