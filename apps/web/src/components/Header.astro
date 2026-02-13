@@ -1,0 +1,162 @@
+---
+const navLinks = [
+  { href: "/producto", label: "Producto" },
+  { href: "/beneficios", label: "Beneficios" },
+  { href: "/soluciones", label: "Soluciones" },
+  { href: "/evidencia", label: "Evidencia" },
+  { href: "/prensa", label: "Prensa" },
+];
+---
+
+<header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out py-6 header-initial">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+    <nav id="header-inner" class="header-pill flex items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2 logo-link ml-3">
+        <img src="/images/Logo-Blokkit-white.png" alt="BloKKit - Solución de control de celulares para colegios y empresas" class="h-7 transition-all duration-300" />
+      </a>
+      
+      <!-- Navigation Links -->
+      <ul class="hidden md:flex items-center gap-1">
+        {navLinks.map(link => (
+          <li>
+            <a href={link.href} class="nav-link">
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+      
+      <!-- Right side buttons -->
+      <div class="hidden md:flex items-center gap-3">
+        <!-- Login Button -->
+        <a href="/login" class="login-button">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>
+          <span>Mi Portal</span>
+        </a>
+        
+        <!-- CTA Button -->
+        <a href="/contacto" class="cta-button">
+          <span>Agendar Demo</span>
+          <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+      </div>
+      
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden p-2 text-white/70 hover:text-white" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<style>
+  /* Initial state - transparent, full width */
+  .header-initial {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  /* Pill container */
+  .header-pill {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Scrolled state - smaller, more opaque */
+  #main-header.scrolled {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+  
+  #header-inner.scrolled {
+    background: rgba(13, 13, 13, 0.85);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-color: rgba(255, 255, 255, 0.12);
+    padding: 0.5rem 1.25rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+  }
+  
+  #header-inner.scrolled .logo-link img {
+    height: 1.5rem;
+  }
+  
+  /* Navigation links */
+  .nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 50px;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  /* CTA Button */
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #00C2D1 0%, #00A8B5 100%);
+    border-radius: 50px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 0 20px rgba(0, 194, 209, 0.3);
+  }
+  
+  .cta-button:hover {
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 194, 209, 0.5);
+  }
+  
+  .cta-button svg {
+    transition: transform 0.2s ease;
+  }
+  
+  .cta-button:hover svg {
+    transform: translateX(3px);
+  }
+  
+  /* Login Button */
+  .login-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    transition: all 0.2s ease;
+  }
+  
+  .login-button:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+</style>

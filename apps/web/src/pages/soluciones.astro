@@ -1,0 +1,1094 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const pageTitle = "Soluciones | BloKKit";
+const pageDescription = "Soluciones operativas BloKKit para educación, empresas, gobierno, policías, justicia y eventos.";
+
+const architectureCards = [
+  {
+    title: "Funda BloKKit",
+    pill: "Bloqueo fisico",
+    description:
+      "Funda Faraday de alta eficacia para bloquear señal movil durante la actividad, manteniendo el telefono en poder del usuario.",
+    points: [
+      "Bloqueo de señal 3G, 4G, 5G, WiFi y Bluetooth",
+      "50.000+ ciclos de cierre para uso intensivo",
+    ],
+    iconPath: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
+  },
+  {
+    title: "Dock de desbloqueo",
+    pill: "Control de apertura",
+    description:
+      "Estacion magnetica para apertura autorizada en segundos, con operacion estandar o Smart segun el nivel de trazabilidad requerido.",
+    points: [
+      "Apertura controlada en menos de 2 segundos",
+      "Version Smart con registro de eventos",
+    ],
+    iconPath:
+      "M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z",
+  },
+  {
+    title: "Plataforma de gestion",
+    pill: "Trazabilidad",
+    description:
+      "Panel web para seguimiento de adopcion, incidentes, excepciones y soporte, con reportes para equipos operativos y direccion.",
+    points: [
+      "Dashboard de KPIs y tickets de soporte",
+      "Roles, registros y reportes exportables",
+    ],
+    iconPath:
+      "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z",
+  },
+];
+
+const rolloutPhases = [
+  {
+    title: "Diagnostico y planificacion",
+    description: "Levantamos flujo real, puntos de friccion y alcance por area para definir un protocolo ejecutable.",
+  },
+  {
+    title: "Capacitacion operativa",
+    description: "Entrenamos responsables, equipos de terreno y supervisores con criterio unico de uso y excepciones.",
+  },
+  {
+    title: "Implementacion",
+    description: "Activamos fundas, docks y reglas de operacion en jornada real con acompanamiento inicial.",
+  },
+  {
+    title: "Monitoreo",
+    description: "Seguimos adopcion, incidentes y aperturas para ajustar rapidamente sin frenar la operacion.",
+  },
+  {
+    title: "Evaluacion de impacto",
+    description: "Consolidamos resultados y evidencia para continuidad, escalamiento o ajustes de politica interna.",
+  },
+];
+
+const contextSolutions = [
+  {
+    id: "educacion",
+    tone: "light",
+    number: "01",
+    kicker: "Educacion",
+    title: "Cumplimiento pedagogico diario",
+    subtitle: "Colegios, liceos y universidades",
+    summary:
+      "BloKKit baja la norma al aula: el estudiante conserva su telefono, pero sin uso durante la clase, con protocolo visible para docentes y apoderados.",
+    challenge:
+      "La prohibicion por si sola genera uso oculto, conflictos de convivencia y alta carga administrativa para el equipo directivo.",
+    flow: [
+      {
+        title: "Inicio de jornada con cierre validado",
+        detail: "Cada estudiante guarda su telefono, realiza cierre magnetico y parte la clase con el mismo criterio para todos.",
+      },
+      {
+        title: "Bloqueo durante actividades",
+        detail: "El dispositivo permanece inhabilitado sin confiscacion y sin discusiones recurrentes en sala.",
+      },
+      {
+        title: "Apertura autorizada al cierre",
+        detail: "La liberacion se realiza solo en dock autorizado al finalizar la actividad o en contingencias definidas.",
+      },
+      {
+        title: "Registro de excepciones",
+        detail: "Salud, emergencia o uso pedagogico quedan documentados bajo responsables designados.",
+      },
+    ],
+    modules: [
+      "Funda por estudiante para uso diario",
+      "Dock fijo o portatil para aperturas controladas",
+      "Protocolo institucional alineado al reglamento interno",
+    ],
+    results: [
+      "Hasta 10 minutos pedagogicos recuperados por bloque en implementaciones comparables",
+      "Menor tension entre docencia, convivencia y familias",
+      "Evidencia operativa para fiscalizacion y mejora continua",
+    ],
+    ctaLabel: "Ver marco ley 2026",
+    ctaHref: "/ley-celulares-2026",
+  },
+  {
+    id: "empresas",
+    tone: "dark",
+    number: "02",
+    kicker: "Empresas",
+    title: "Foco y confidencialidad en operaciones criticas",
+    subtitle: "Directorios, comites, training y salas de decision",
+    summary:
+      "Definimos zonas y momentos sin telefono para reuniones criticas, trabajo profundo y sesiones con informacion sensible.",
+    challenge:
+      "Sin un mecanismo simple, los acuerdos de no uso se rompen rapido y el equipo vuelve a interrupciones constantes.",
+    flow: [
+      {
+        title: "Diseno por tipo de sesion",
+        detail: "Se establecen espacios y reuniones donde el protocolo BloKKit es obligatorio segun riesgo e impacto.",
+      },
+      {
+        title: "Activacion en ingreso",
+        detail: "Cada participante inicia la sesion con bloqueo fisico, evitando notificaciones y uso paralelo del telefono.",
+      },
+      {
+        title: "Custodia sin friccion",
+        detail: "El telefono sigue con su dueno, lo que reduce resistencia frente a esquemas de entrega o retiro manual.",
+      },
+      {
+        title: "Reporte para liderazgo",
+        detail: "Se mide adopcion y cumplimiento por area para sostener la practica en el tiempo.",
+      },
+    ],
+    modules: [
+      "Fundas para comites y equipos clave",
+      "Docks por piso o salas de reunion",
+      "Panel para seguimiento por unidad de negocio",
+    ],
+    results: [
+      "Menos interrupciones en sesiones de alto costo",
+      "Mayor disciplina de reunion y mejor calidad de decision",
+      "Control simple de cumplimiento por area",
+    ],
+    ctaLabel: "Solicitar diseno para mi operacion",
+    ctaHref: "/contacto",
+  },
+  {
+    id: "gobierno-policias",
+    tone: "light",
+    number: "03",
+    kicker: "Gobierno, policias y justicia",
+    title: "Cadena de custodia con trazabilidad",
+    subtitle: "Congreso, audiencias, diligencias y recintos sensibles",
+    summary:
+      "BloKKit estandariza ingreso, resguardo y devolucion de dispositivos con responsables y trazas claras en entornos de alta sensibilidad.",
+    challenge:
+      "El manejo informal de telefonos en procesos sensibles eleva riesgo legal, operacional y reputacional.",
+    flow: [
+      {
+        title: "Ingreso bajo protocolo unico",
+        detail: "Se define punto de control, responsable y tipo de resguardo segun la naturaleza de la diligencia.",
+      },
+      {
+        title: "Bloqueo verificable",
+        detail: "El dispositivo queda inutilizado para captura o comunicacion no autorizada durante el proceso.",
+      },
+      {
+        title: "Apertura con personal autorizado",
+        detail: "Solo roles habilitados operan los docks para liberar equipos al cierre del procedimiento.",
+      },
+      {
+        title: "Trazabilidad y respaldo",
+        detail: "Las excepciones, aperturas y devoluciones quedan registradas para auditoria y control interno.",
+      },
+    ],
+    modules: [
+      "Fundas con identificacion por usuario o caso",
+      "Dock estandar o Smart segun nivel de control",
+      "Registro de incidentes y excepciones",
+    ],
+    results: [
+      "Operacion consistente en sesiones sensibles",
+      "Reduccion de incidentes por manejo discrecional",
+      "Soporte documental para compliance y auditoria",
+    ],
+    ctaLabel: "Hablar con equipo tecnico",
+    ctaHref: "/contacto",
+  },
+  {
+    id: "eventos",
+    tone: "dark",
+    number: "04",
+    kicker: "Eventos y espectaculos",
+    title: "Control de experiencia y propiedad intelectual",
+    subtitle: "Conciertos, lanzamientos, premieres y activaciones",
+    summary:
+      "Aplicamos un flujo rapido de ingreso y salida para evitar grabaciones no autorizadas, filtraciones y distraccion de audiencia.",
+    challenge:
+      "Cuando no existe protocolo de custodia, sube el riesgo de filtraciones y baja la calidad de experiencia en vivo.",
+    flow: [
+      {
+        title: "Configuracion previa por aforo",
+        detail: "Definimos cantidad de fundas, puntos de apertura y staff necesario segun tipo de evento.",
+      },
+      {
+        title: "Ingreso ordenado",
+        detail: "El publico bloquea su telefono en entrada con apoyo de personal entrenado y senaletica clara.",
+      },
+      {
+        title: "Operacion durante show",
+        detail: "Se mantiene la experiencia sin pantallas y con procedimientos para contingencias autorizadas.",
+      },
+      {
+        title: "Salida fluida",
+        detail: "La apertura se ejecuta por estaciones para liberar al publico sin cuellos de botella.",
+      },
+    ],
+    modules: [
+      "Kit de fundas por capacidad de evento",
+      "Docks distribuidos por accesos y salida",
+      "Soporte de activacion y guion operativo",
+    ],
+    results: [
+      "Proteccion efectiva de contenido",
+      "Experiencia inmersiva para audiencia",
+      "Operacion escalable para eventos recurrentes",
+    ],
+    ctaLabel: "Evaluar mi evento",
+    ctaHref: "/contacto",
+  },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main>
+    <section class="page-hero section-tone-dark">
+      <div class="page-hero-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <span class="page-label" data-reveal>Soluciones</span>
+        <h1 class="page-title" data-reveal style="--delay: 100ms;">
+          Soluciones que<br />
+          <span class="text-accent">si se implementan</span>
+        </h1>
+        <p class="page-subtitle" data-reveal style="--delay: 200ms;">
+          Convertimos una politica interna en operacion diaria con protocolo,
+          control de apertura y trazabilidad por contexto.
+        </p>
+
+      </div>
+    </section>
+
+    <section class="architecture-section section-tone-slate">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="architecture-header" data-reveal>
+          <span class="architecture-kicker">Sistema BloKKit</span>
+          <h2 class="architecture-title">
+            Arquitectura <span class="text-accent">Integral</span><br />
+            para operacion sin friccion
+          </h2>
+          <p class="architecture-intro">
+            Tres piezas conectadas convierten una politica interna en cumplimiento diario, medible y escalable.
+          </p>
+        </div>
+
+        <div class="architecture-cards" data-reveal style="--delay: 120ms;">
+          {architectureCards.map((card, index) => (
+            <article class={`architecture-card ${index === 1 ? "is-featured" : ""}`}>
+              <div class="architecture-card-head">
+                <div class="architecture-icon">
+                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d={card.iconPath} />
+                  </svg>
+                </div>
+                <span class="architecture-pill">{card.pill}</span>
+              </div>
+              <h3 class="architecture-card-title">{card.title}</h3>
+              <p class="architecture-card-description">{card.description}</p>
+              <ul class="architecture-points">
+                {card.points.map((point) => <li>{point}</li>)}
+              </ul>
+            </article>
+          ))}
+        </div>
+
+        <div class="architecture-cta" data-reveal style="--delay: 220ms;">
+          <a href="/producto" class="btn-primary-large">
+            Conocer el producto
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="rollout-section section-tone-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="rollout-header" data-reveal>
+          <span class="page-label">Implementacion</span>
+          <h2 class="rollout-title">Despliegue en cinco fases</h2>
+          <p class="rollout-intro">
+            Modelo de implementacion utilizado en pilotos BloKKit para asegurar adopcion y continuidad operativa.
+          </p>
+        </div>
+
+        <div class="rollout-grid" data-reveal style="--delay: 140ms;">
+          {rolloutPhases.map((phase, index) => (
+            <article class="rollout-step soft-card">
+              <span class="rollout-index">0{index + 1}</span>
+              <h3>{phase.title}</h3>
+              <p>{phase.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {contextSolutions.map((context) => (
+      <section id={context.id} class={`context-section ${context.tone === "dark" ? "section-tone-dark" : "section-tone-slate"}`}>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="context-shell">
+            <div class="context-main">
+              <div class="context-head">
+                <span class="context-number">{context.number}</span>
+                <div>
+                  <span class="context-kicker">{context.kicker}</span>
+                  <h2 class="context-title">{context.title}</h2>
+                  <p class="context-subtitle">{context.subtitle}</p>
+                </div>
+              </div>
+
+              <p class="context-summary">{context.summary}</p>
+
+              <div class="context-challenge">
+                <h3>Desafio que resolvemos</h3>
+                <p>{context.challenge}</p>
+              </div>
+
+              <div class="context-flow">
+                {context.flow.map((step) => (
+                  <article class="flow-step">
+                    <h4>{step.title}</h4>
+                    <p>{step.detail}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+
+            <aside class="context-side">
+              <div class="side-card">
+                <h3>Modulos activados</h3>
+                <ul class="check-list">
+                  {context.modules.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+
+              <div class="side-card">
+                <h3>Resultado operativo</h3>
+                <ul class="dot-list">
+                  {context.results.map((item) => <li>{item}</li>)}
+                </ul>
+              </div>
+
+              <a href={context.ctaHref} class="inline-link">
+                {context.ctaLabel}
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </aside>
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <section class="final-cta section-tone-slate">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="final-cta-shell text-center">
+          <h2 class="final-cta-title" data-reveal>
+            Listo para definir tu<br />
+            solucion BloKKit?
+          </h2>
+          <p class="final-cta-subtitle" data-reveal style="--delay: 100ms;">
+            Agendamos una demo y te proponemos el flujo exacto para tu institucion,
+            equipo o evento con protocolo, roles y plan de activacion.
+          </p>
+          <div class="final-cta-buttons" data-reveal style="--delay: 200ms;">
+            <a href="/contacto" class="btn-primary-large">Agendar Demo Gratuita</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* ==================== HERO OVERRIDES (PARIDAD PAGINAS INTERNAS) ==================== */
+  .page-hero.section-tone-dark {
+    background-color: #080808;
+    background-image:
+      linear-gradient(rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      radial-gradient(980px 380px at 14% -10%, rgba(0, 194, 209, 0.24) 0%, transparent 62%),
+      radial-gradient(880px 340px at 84% 12%, rgba(0, 194, 209, 0.12) 0%, transparent 64%),
+      linear-gradient(180deg, #121212 0%, #090909 56%, #060606 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .page-hero.section-tone-dark .orb-1 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.3) 0%, transparent 72%);
+    opacity: 0.52;
+  }
+
+  .page-hero.section-tone-dark .orb-2 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.2) 0%, transparent 72%);
+    opacity: 0.44;
+  }
+
+  .page-hero.section-tone-dark .page-label {
+    border-color: rgba(62, 224, 240, 0.36);
+    background: rgba(4, 10, 12, 0.7);
+    color: #67e8f9;
+  }
+
+  .page-hero.section-tone-dark .page-subtitle {
+    color: rgba(226, 232, 240, 0.82) !important;
+  }
+
+  .rollout-section,
+  .context-section.section-tone-dark {
+    position: relative;
+    background-color: #07090b;
+    background-image:
+      linear-gradient(rgba(0, 194, 209, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.06) 1px, transparent 1px),
+      radial-gradient(920px 380px at 14% -8%, rgba(0, 194, 209, 0.2), transparent 62%),
+      radial-gradient(820px 320px at 84% 110%, rgba(6, 182, 212, 0.1), transparent 66%),
+      linear-gradient(180deg, #0e0e0e 0%, #080808 100%);
+    background-size: 72px 72px, 72px 72px, auto, auto, auto;
+    background-position: 0 0, 0 0, center, center, center;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .architecture-section,
+  .context-section.section-tone-slate,
+  .final-cta.section-tone-slate {
+    background-color: #dce5ef;
+    background-image:
+      radial-gradient(circle at 14% 10%, rgba(8, 145, 178, 0.14) 0%, transparent 42%),
+      radial-gradient(circle at 84% 90%, rgba(14, 116, 144, 0.12) 0%, transparent 46%),
+      linear-gradient(180deg, #dce5ef 0%, #e6edf5 100%);
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  .architecture-section {
+    padding: 7rem 0 6.8rem;
+  }
+
+  .architecture-header {
+    text-align: center;
+    margin-inline: auto;
+    margin-bottom: 2.7rem;
+    max-width: 72ch;
+  }
+
+  .architecture-kicker {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.34rem 0.86rem;
+    border-radius: 999px;
+    border: 1px solid rgba(14, 116, 144, 0.3);
+    background: rgba(224, 242, 254, 0.75);
+    color: #0e7490;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.8rem;
+  }
+
+  .architecture-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.6rem, 5.4vw, 4.35rem);
+    line-height: 1.02;
+    margin-bottom: 0.7rem;
+    color: #0f172a;
+  }
+
+  .architecture-section .text-accent {
+    color: #0e7490;
+  }
+
+  .architecture-intro {
+    margin: 0;
+    font-size: 1.06rem;
+    line-height: 1.6;
+    color: rgba(30, 41, 59, 0.8) !important;
+  }
+
+  .architecture-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.15rem;
+    margin-bottom: 2.35rem;
+  }
+
+  .architecture-card {
+    padding: 1.35rem 1.22rem 1.18rem;
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.82) 0%, rgba(241, 245, 249, 0.74) 100%);
+    border: 1px solid rgba(148, 163, 184, 0.34);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .architecture-card:hover {
+    border-color: rgba(14, 116, 144, 0.28);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.14);
+  }
+
+  .architecture-card.is-featured {
+    background: linear-gradient(135deg, rgba(224, 242, 254, 0.96) 0%, rgba(207, 250, 254, 0.75) 100%);
+    border-color: rgba(14, 116, 144, 0.3);
+    box-shadow: 0 16px 34px rgba(14, 116, 144, 0.13);
+  }
+
+  .architecture-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
+    margin-bottom: 0.95rem;
+  }
+
+  .architecture-icon {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(186, 230, 253, 0.5);
+    border: 1px solid rgba(14, 116, 144, 0.26);
+    border-radius: 14px;
+    color: #0e7490;
+  }
+
+  .architecture-pill {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.62rem;
+    border-radius: 999px;
+    border: 1px solid rgba(14, 116, 144, 0.28);
+    background: rgba(224, 242, 254, 0.82);
+    color: #0e7490;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .architecture-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    line-height: 0.92;
+    color: #0f172a;
+    margin-bottom: 0.6rem;
+  }
+
+  .architecture-card-description {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.56;
+    color: rgba(30, 41, 59, 0.86) !important;
+  }
+
+  .architecture-points {
+    margin-top: 0.9rem;
+    padding-top: 0.84rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.34);
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .architecture-points li {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: rgba(30, 41, 59, 0.85) !important;
+    position: relative;
+    padding-left: 0.95rem;
+  }
+
+  .architecture-points li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: #0891b2;
+    position: absolute;
+    left: 0;
+    top: 0.52rem;
+  }
+
+  .architecture-cta {
+    text-align: center;
+  }
+
+  .rollout-section {
+    padding: 5.8rem 0;
+  }
+
+  .rollout-header {
+    text-align: center;
+    max-width: 72ch;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+  }
+
+  .rollout-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 0.7rem;
+  }
+
+  .rollout-intro {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .rollout-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.92rem;
+  }
+
+  .rollout-step {
+    border-radius: 18px;
+    padding: 1rem;
+    background: linear-gradient(160deg, rgba(8, 14, 24, 0.75) 0%, rgba(7, 12, 20, 0.9) 100%);
+    border: 1px solid rgba(103, 232, 249, 0.24);
+  }
+
+  .rollout-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: rgba(0, 194, 209, 0.14);
+    border: 1px solid rgba(0, 194, 209, 0.34);
+    color: #67e8f9;
+    font-size: 0.76rem;
+    font-weight: 700;
+    margin-bottom: 0.65rem;
+  }
+
+  .rollout-step h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.54rem;
+    line-height: 0.95;
+    margin-bottom: 0.5rem;
+  }
+
+  .rollout-step p {
+    margin: 0;
+    font-size: 0.86rem;
+    line-height: 1.45;
+  }
+
+  .context-section {
+    padding: 6.2rem 0;
+  }
+
+  .context-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    gap: 1.1rem;
+    align-items: start;
+  }
+
+  .context-main {
+    border-radius: 24px;
+    padding: 1.65rem;
+    border: 1px solid transparent;
+  }
+
+  .section-tone-dark .context-main {
+    background: linear-gradient(152deg, rgba(10, 16, 24, 0.9), rgba(8, 12, 18, 0.95));
+    border-color: rgba(103, 232, 249, 0.24);
+    box-shadow: 0 20px 38px rgba(2, 6, 23, 0.42);
+  }
+
+  .section-tone-slate .context-main {
+    background: linear-gradient(155deg, rgba(255, 255, 255, 0.9) 0%, rgba(241, 245, 249, 0.82) 100%);
+    border-color: rgba(148, 163, 184, 0.34);
+    box-shadow: 0 16px 32px rgba(15, 23, 42, 0.12);
+  }
+
+  /* Hard guard for legibility on light sections */
+  .context-section.section-tone-slate .context-shell,
+  .context-section.section-tone-slate .context-main,
+  .context-section.section-tone-slate .context-side,
+  .context-section.section-tone-slate .side-card,
+  .context-section.section-tone-slate .flow-step,
+  .context-section.section-tone-slate .context-challenge {
+    opacity: 1 !important;
+    filter: none !important;
+  }
+
+  .context-section.section-tone-slate .context-title,
+  .context-section.section-tone-slate .context-challenge h3,
+  .context-section.section-tone-slate .flow-step h4,
+  .context-section.section-tone-slate .side-card h3 {
+    color: #0f172a !important;
+    text-shadow: none !important;
+  }
+
+  .context-section.section-tone-slate .context-subtitle,
+  .context-section.section-tone-slate .context-summary,
+  .context-section.section-tone-slate .context-challenge p,
+  .context-section.section-tone-slate .flow-step p,
+  .context-section.section-tone-slate .check-list li,
+  .context-section.section-tone-slate .dot-list li {
+    color: rgba(15, 23, 42, 0.92) !important;
+    text-shadow: none !important;
+  }
+
+  .context-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    margin-bottom: 1.1rem;
+  }
+
+  .context-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 4.3rem;
+    line-height: 0.82;
+    color: rgba(0, 194, 209, 0.26);
+  }
+
+  .context-kicker {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.24rem 0.62rem;
+    border-radius: 999px;
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    color: #67e8f9;
+    background: rgba(12, 74, 110, 0.32);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.45rem;
+  }
+
+  .section-tone-slate .context-kicker {
+    color: #0e7490;
+    background: rgba(224, 242, 254, 0.8);
+    border-color: rgba(14, 116, 144, 0.3);
+  }
+
+  .context-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 3.1vw, 2.9rem);
+    line-height: 0.95;
+    margin-bottom: 0.35rem;
+  }
+
+  .context-subtitle {
+    margin: 0;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    opacity: 0.86;
+  }
+
+  .context-summary {
+    margin: 0 0 1rem;
+    font-size: 1rem;
+    line-height: 1.68;
+  }
+
+  .context-challenge {
+    border-radius: 14px;
+    padding: 0.92rem 0.98rem;
+    margin-bottom: 0.98rem;
+  }
+
+  .section-tone-dark .context-challenge {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(148, 163, 184, 0.28);
+  }
+
+  .section-tone-slate .context-challenge {
+    background: rgba(226, 232, 240, 0.42);
+    border: 1px solid rgba(148, 163, 184, 0.35);
+  }
+
+  .context-challenge h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    line-height: 0.95;
+    margin-bottom: 0.35rem;
+  }
+
+  .context-challenge p {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .context-flow {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+
+  .flow-step {
+    border-radius: 14px;
+    padding: 0.88rem 0.92rem;
+  }
+
+  .section-tone-dark .flow-step {
+    background: rgba(8, 13, 20, 0.72);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+  }
+
+  .section-tone-slate .flow-step {
+    background: rgba(255, 255, 255, 0.67);
+    border: 1px solid rgba(148, 163, 184, 0.32);
+  }
+
+  .flow-step h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    line-height: 0.92;
+    margin-bottom: 0.36rem;
+  }
+
+  .flow-step p {
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.42;
+  }
+
+  .context-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.82rem;
+  }
+
+  .side-card {
+    border-radius: 18px;
+    padding: 1rem 1.02rem;
+  }
+
+  .section-tone-dark .side-card {
+    background: linear-gradient(152deg, rgba(10, 16, 24, 0.88), rgba(8, 12, 18, 0.95));
+    border: 1px solid rgba(103, 232, 249, 0.22);
+  }
+
+  .section-tone-slate .side-card {
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.9), rgba(241, 245, 249, 0.8));
+    border: 1px solid rgba(148, 163, 184, 0.34);
+  }
+
+  .side-card h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    line-height: 0.94;
+    margin-bottom: 0.62rem;
+  }
+
+  .check-list,
+  .dot-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .check-list li,
+  .dot-list li {
+    font-size: 0.85rem;
+    line-height: 1.45;
+    position: relative;
+    padding-left: 1rem;
+  }
+
+  .check-list li::before,
+  .dot-list li::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: #22d3ee;
+    position: absolute;
+    left: 0;
+    top: 0.48rem;
+  }
+
+  .section-tone-slate .check-list li::before,
+  .section-tone-slate .dot-list li::before {
+    background: #0891b2;
+  }
+
+  .inline-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.44rem;
+    justify-content: center;
+    width: 100%;
+    min-height: 2.65rem;
+    border-radius: 999px;
+    border: 1px solid rgba(125, 211, 252, 0.32);
+    background: rgba(5, 22, 46, 0.66);
+    color: #a5f3fc;
+    font-size: 0.83rem;
+    font-weight: 700;
+    transition: border-color 0.22s ease, transform 0.22s ease, background 0.22s ease;
+  }
+
+  .inline-link:hover {
+    border-color: rgba(45, 212, 191, 0.54);
+    transform: translateY(-2px);
+    background: rgba(8, 28, 54, 0.94);
+  }
+
+  .section-tone-slate .inline-link {
+    background: rgba(224, 242, 254, 0.65);
+    border-color: rgba(14, 116, 144, 0.28);
+    color: #0e7490;
+  }
+
+  .section-tone-slate .inline-link:hover {
+    background: rgba(224, 242, 254, 0.9);
+    border-color: rgba(14, 116, 144, 0.44);
+  }
+
+  .final-cta {
+    padding: 5rem 0 5.8rem;
+  }
+
+  .final-cta-shell {
+    max-width: 920px;
+    margin: 0 auto;
+    border-radius: 2rem;
+    border: 1px solid rgba(125, 211, 252, 0.24);
+    background:
+      radial-gradient(620px 260px at 50% 10%, rgba(0, 194, 209, 0.27) 0%, transparent 62%),
+      radial-gradient(380px 220px at 18% 82%, rgba(0, 194, 209, 0.14) 0%, transparent 64%),
+      radial-gradient(280px 180px at 86% 22%, rgba(6, 182, 212, 0.12) 0%, transparent 64%),
+      linear-gradient(160deg, rgba(21, 21, 21, 0.97) 0%, rgba(8, 8, 8, 0.95) 100%);
+    box-shadow: 0 24px 50px rgba(2, 6, 23, 0.4);
+    padding: 4.4rem 2.3rem 4.2rem;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s ease, border-color 0.24s ease;
+  }
+
+  .final-cta-shell:hover {
+    transform: translateY(-2px);
+    border-color: rgba(125, 211, 252, 0.25);
+    box-shadow: 0 24px 44px rgba(2, 6, 23, 0.4);
+  }
+
+  .final-cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 5.2vw, 4.3rem);
+    line-height: 1.02;
+    margin-bottom: 1rem;
+    color: #f8fafc !important;
+  }
+
+  .final-cta-subtitle {
+    font-size: 1.04rem;
+    color: rgba(226, 232, 240, 0.76) !important;
+    margin: 0 auto 2rem;
+    max-width: 60ch;
+  }
+
+  .architecture-cta .btn-primary-large,
+  .architecture-cta .btn-primary-large:hover,
+  .architecture-cta .btn-primary-large:focus-visible,
+  .architecture-cta .btn-primary-large:visited,
+  .final-cta .btn-primary-large,
+  .final-cta .btn-primary-large:hover,
+  .final-cta .btn-primary-large:focus-visible,
+  .final-cta .btn-primary-large:visited {
+    color: #ffffff !important;
+  }
+
+  @media (max-width: 1200px) {
+    .rollout-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .architecture-cards,
+    .rollout-grid,
+    .context-flow {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .context-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .context-side {
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    .context-side .side-card {
+      flex: 1;
+    }
+
+    .context-side .inline-link {
+      width: auto;
+      min-width: 240px;
+      align-self: flex-end;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .architecture-section {
+      padding: 5.3rem 0 5rem;
+    }
+
+    .architecture-cards,
+    .rollout-grid,
+    .context-flow,
+    .context-side {
+      grid-template-columns: 1fr;
+      flex-direction: column;
+    }
+
+    .context-main {
+      padding: 1.15rem;
+      border-radius: 16px;
+    }
+
+    .context-number {
+      font-size: 3.3rem;
+    }
+
+    .context-title {
+      font-size: 2.15rem;
+    }
+
+    .rollout-section,
+    .context-section {
+      padding: 4.4rem 0;
+    }
+
+    .final-cta {
+      padding-top: 2.7rem;
+      padding-bottom: 3.4rem;
+    }
+
+    .final-cta-shell {
+      border-radius: 1.12rem;
+      padding: 2.6rem 1rem 2.4rem;
+    }
+
+    .final-cta-subtitle {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+</style>

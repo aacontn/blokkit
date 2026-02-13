@@ -1,0 +1,589 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const pageTitle = "Contacto BloKKit | Control de Celulares para Colegios y Empresas";
+const pageDescription =
+  "Contacta a BloKKit para implementar control de celulares en colegios, universidades, empresas, gobierno y eventos.";
+
+const activationSteps = [
+  {
+    title: "Levantamiento de contexto",
+    detail: "Revisamos operacion actual, puntos de friccion y objetivo institucional.",
+  },
+  {
+    title: "Diseno del protocolo",
+    detail: "Definimos flujo diario, roles por area y criterio de excepciones.",
+  },
+  {
+    title: "Plan de implementacion",
+    detail: "Proponemos piloto, calendario y metricas para medir adopcion real.",
+  },
+];
+
+const directChannels = [
+  { label: "Email", value: "hola@blokkit.cl", href: "mailto:hola@blokkit.cl" },
+  { label: "Telefono", value: "+56 9 9039 9130", href: "tel:+56990399130" },
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main class="contact-page">
+    <section class="page-hero section-tone-dark">
+      <div class="page-hero-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <span class="page-label" data-reveal>Contacto</span>
+        <h1 class="page-title" data-reveal>
+          Implementa BloKKit para<br />
+          <span class="text-accent">control de celulares</span>
+        </h1>
+        <p class="page-subtitle" data-reveal style="--delay: 100ms;">
+          Solucion para colegios, universidades, empresas, gobierno y eventos que necesitan foco, protocolo y trazabilidad.
+        </p>
+      </div>
+    </section>
+
+    <div class="contact-flow-surface section-tone-slate">
+      <section class="contact-shell-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="contact-grid">
+            <article class="contact-form-card" data-reveal>
+              <span class="contact-card-kicker">Asesoria inicial</span>
+              <h2 class="contact-form-title">En que te podemos ayudar hoy?</h2>
+              <p class="contact-form-lead">
+                Te enviamos una propuesta con alcance, fases de activacion y tiempos estimados segun tu operacion.
+              </p>
+
+              <form class="contact-form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="name">Nombre y apellido</label>
+                    <input type="text" id="name" name="name" placeholder="Tu nombre" />
+                  </div>
+                  <div class="form-group">
+                    <label for="role">Cargo</label>
+                    <input type="text" id="role" name="role" placeholder="Ej: Direccion, Operaciones" />
+                  </div>
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="email">Email institucional</label>
+                    <input type="email" id="email" name="email" placeholder="tu@email.com" />
+                  </div>
+                  <div class="form-group">
+                    <label for="institution">Institucion o empresa</label>
+                    <input type="text" id="institution" name="institution" placeholder="Nombre de tu organizacion" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="sector">Sector</label>
+                  <select id="sector" name="sector">
+                    <option value="">Selecciona una opcion</option>
+                    <option value="educacion">Educacion</option>
+                    <option value="empresas">Empresas</option>
+                    <option value="gobierno">Gobierno y Justicia</option>
+                    <option value="eventos">Eventos y espectaculos</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="message">Contexto y objetivo</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    placeholder="Ej: cantidad de personas, tipo de operacion y principal problema que quieres resolver"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary-large btn-submit">Recibir propuesta</button>
+              </form>
+
+              <p class="form-note">Respuesta inicial en menos de 24 horas habiles.</p>
+            </article>
+
+            <aside class="contact-side" data-reveal style="--delay: 100ms;">
+              <article class="contact-card contact-card--light">
+                <span class="contact-card-kicker">Que incluye</span>
+                <h3>Propuesta de implementacion</h3>
+                <ul class="contact-checklist">
+                  <li>Flujo recomendado por contexto.</li>
+                  <li>Roles operativos por etapa.</li>
+                  <li>Manejo de excepciones y apertura.</li>
+                  <li>Plan de piloto o despliegue completo.</li>
+                </ul>
+              </article>
+
+              <article class="contact-card contact-card--dark">
+                <span class="contact-card-kicker">Canal directo</span>
+                <h3>Habla con el equipo BloKKit</h3>
+                <p class="contact-direct-copy">
+                  Si necesitas acelerar una decision, escribe o llama y definimos proximo paso contigo.
+                </p>
+                <div class="direct-links">
+                  {directChannels.map((channel) => (
+                    <a href={channel.href} class="direct-link">
+                      <span>{channel.label}</span>
+                      <strong>{channel.value}</strong>
+                    </a>
+                  ))}
+                </div>
+                <div class="contact-side-actions">
+                  <a href="/soluciones" class="btn-secondary-large">Ver soluciones</a>
+                </div>
+              </article>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="activation-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <header class="activation-header" data-reveal>
+            <span class="page-label">Proceso de trabajo</span>
+            <h2 class="activation-title">
+              Como activamos<br />
+              <span class="text-accent">la implementacion</span>
+            </h2>
+            <p class="activation-intro">
+              Un flujo simple para implementar control de celulares con criterios claros y adopcion real.
+            </p>
+          </header>
+
+          <div class="activation-grid" data-reveal style="--delay: 120ms;">
+            {activationSteps.map((step, index) => (
+              <article class="activation-step">
+                <span class="activation-index">0{index + 1}</span>
+                <h3>{step.title}</h3>
+                <p>{step.detail}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero.section-tone-dark {
+    background-color: #080808;
+    background-image:
+      linear-gradient(rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      radial-gradient(980px 380px at 14% -10%, rgba(0, 194, 209, 0.24) 0%, transparent 62%),
+      radial-gradient(880px 340px at 84% 12%, rgba(0, 194, 209, 0.12) 0%, transparent 64%),
+      linear-gradient(180deg, #121212 0%, #090909 56%, #060606 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .page-hero.section-tone-dark .orb-1 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.3) 0%, transparent 72%);
+    opacity: 0.52;
+  }
+
+  .page-hero.section-tone-dark .orb-2 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.2) 0%, transparent 72%);
+    opacity: 0.44;
+  }
+
+  .page-hero.section-tone-dark .page-label {
+    border-color: rgba(62, 224, 240, 0.36);
+    background: rgba(4, 10, 12, 0.7);
+    color: #67e8f9;
+  }
+
+  .page-hero.section-tone-dark .page-subtitle {
+    color: rgba(226, 232, 240, 0.82) !important;
+    max-width: 64ch;
+  }
+
+  .contact-flow-surface.section-tone-slate {
+    background-color: #dce5ef;
+    background-image:
+      radial-gradient(circle at 14% 10%, rgba(8, 145, 178, 0.14) 0%, transparent 42%),
+      radial-gradient(circle at 84% 90%, rgba(14, 116, 144, 0.12) 0%, transparent 46%),
+      linear-gradient(180deg, #dce5ef 0%, #e6edf5 100%);
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22), inset 0 -1px 0 rgba(255, 255, 255, 0.22);
+  }
+
+  .contact-shell-section {
+    padding: 5.8rem 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 1.15rem;
+    align-items: start;
+  }
+
+  .contact-form-card {
+    padding: 2rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(148, 163, 184, 0.34);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.86) 0%, rgba(241, 245, 249, 0.76) 100%);
+    box-shadow: 0 20px 36px rgba(15, 23, 42, 0.11), inset 0 1px 0 rgba(255, 255, 255, 0.68);
+  }
+
+  .contact-card-kicker {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.32rem 0.72rem;
+    border-radius: 999px;
+    border: 1px solid rgba(14, 116, 144, 0.3);
+    background: rgba(224, 242, 254, 0.82);
+    color: #0e7490;
+    font-size: 0.69rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 0.95rem;
+  }
+
+  .contact-form-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2.15rem, 4.6vw, 3.3rem);
+    line-height: 1;
+    margin-bottom: 0.55rem;
+    color: #0f172a;
+  }
+
+  .contact-form-lead {
+    margin: 0 0 1.45rem;
+    font-size: 0.97rem;
+    line-height: 1.55;
+    color: rgba(30, 41, 59, 0.82) !important;
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .form-group label {
+    font-size: 0.81rem;
+    font-weight: 600;
+    color: rgba(51, 65, 85, 0.94);
+    letter-spacing: 0.01em;
+  }
+
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    width: 100%;
+    padding: 0.84rem 0.95rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+    background: rgba(255, 255, 255, 0.9);
+    color: #0f172a;
+    font-size: 0.92rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    outline: none;
+    border-color: rgba(14, 116, 144, 0.55);
+    box-shadow: 0 0 0 3px rgba(14, 116, 144, 0.14);
+    background: rgba(255, 255, 255, 0.98);
+  }
+
+  .btn-submit {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    margin-top: 0.1rem;
+  }
+
+  .form-note {
+    margin: 0.95rem 0 0;
+    font-size: 0.8rem;
+    color: rgba(51, 65, 85, 0.76) !important;
+  }
+
+  .contact-side {
+    display: flex;
+    flex-direction: column;
+    gap: 0.95rem;
+  }
+
+  .contact-card {
+    border-radius: 1.35rem;
+    padding: 1.3rem 1.22rem 1.18rem;
+  }
+
+  .contact-card h3 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.95rem;
+    line-height: 0.96;
+    margin-bottom: 0.8rem;
+    color: #0f172a;
+  }
+
+  .contact-card--light {
+    border: 1px solid rgba(148, 163, 184, 0.34);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.82) 0%, rgba(248, 250, 252, 0.66) 100%);
+    box-shadow: 0 16px 28px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.62);
+  }
+
+  .contact-checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .contact-checklist li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.88rem;
+    line-height: 1.42;
+    color: rgba(30, 41, 59, 0.9) !important;
+  }
+
+  .contact-checklist li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.43rem;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: #0891b2;
+  }
+
+  .contact-card--dark {
+    border: 1px solid rgba(103, 232, 249, 0.22);
+    background:
+      radial-gradient(360px 170px at 86% 12%, rgba(0, 194, 209, 0.16), transparent 72%),
+      linear-gradient(156deg, rgba(11, 20, 35, 0.92), rgba(7, 13, 24, 0.95));
+    box-shadow: 0 20px 34px rgba(2, 6, 23, 0.32);
+  }
+
+  .contact-card--dark h3 {
+    color: #f8fafc;
+  }
+
+  .contact-card--dark .contact-card-kicker {
+    border-color: rgba(34, 211, 238, 0.28);
+    background: rgba(0, 194, 209, 0.14);
+    color: #a5f3fc;
+  }
+
+  .contact-direct-copy {
+    margin: 0 0 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: rgba(226, 232, 240, 0.85) !important;
+  }
+
+  .direct-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .direct-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.6rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    background: rgba(5, 22, 46, 0.65);
+    padding: 0.74rem 0.84rem;
+    color: #e2e8f0;
+    transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  }
+
+  .direct-link span {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: rgba(186, 230, 253, 0.92);
+  }
+
+  .direct-link strong {
+    font-size: 0.88rem;
+    color: #f8fafc;
+  }
+
+  .direct-link:hover {
+    border-color: rgba(34, 211, 238, 0.5);
+    background: rgba(8, 28, 54, 0.92);
+    transform: translateY(-1px);
+  }
+
+  .contact-side-actions {
+    margin-top: 0.95rem;
+  }
+
+  .contact-side-actions .btn-secondary-large {
+    width: 100%;
+  }
+
+  .activation-section {
+    padding: 5.8rem 0;
+    position: relative;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .activation-header {
+    text-align: center;
+    max-width: 70ch;
+    margin-inline: auto;
+    margin-bottom: 2rem;
+  }
+
+  .activation-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2.65rem, 5.1vw, 4.2rem);
+    line-height: 1.02;
+    margin-bottom: 0.7rem;
+    color: #0f172a !important;
+  }
+
+  .activation-intro {
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.55;
+    color: rgba(30, 41, 59, 0.82) !important;
+  }
+
+  .activation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.95rem;
+  }
+
+  .activation-step {
+    padding: 1.18rem 1.05rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(148, 163, 184, 0.34);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.86) 0%, rgba(241, 245, 249, 0.76) 100%);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.11);
+  }
+
+  .activation-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: rgba(0, 194, 209, 0.14);
+    border: 1px solid rgba(0, 194, 209, 0.34);
+    color: #67e8f9;
+    font-size: 0.77rem;
+    font-weight: 700;
+    margin-bottom: 0.62rem;
+  }
+
+  .activation-step h3 {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 1.6rem;
+    line-height: 0.95;
+    margin-bottom: 0.45rem;
+    color: #0f172a;
+  }
+
+  .activation-step p {
+    margin: 0;
+    font-size: 0.87rem;
+    line-height: 1.45;
+    color: rgba(30, 41, 59, 0.82) !important;
+  }
+
+  .contact-page .btn-primary-large,
+  .contact-page .btn-primary-large:hover,
+  .contact-page .btn-primary-large:focus-visible,
+  .contact-page .btn-primary-large:visited {
+    color: #ffffff !important;
+  }
+
+  @media (max-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-side {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .activation-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .contact-shell-section {
+      padding: 4.8rem 0;
+    }
+
+    .contact-form-card {
+      padding: 1.25rem 1rem 1.1rem;
+      border-radius: 1.05rem;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .contact-side {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-card {
+      border-radius: 1rem;
+      padding: 1rem 0.92rem 0.9rem;
+    }
+
+    .activation-section {
+      padding: 4.9rem 0;
+    }
+
+  }
+</style>

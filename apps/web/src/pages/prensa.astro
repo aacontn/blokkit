@@ -1,0 +1,576 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const pageTitle = "Prensa | BloKKit";
+const pageDescription = "Noticias y entrevistas sobre BloKKit en medios nacionales e internacionales.";
+
+const news = [
+  {
+    type: "Noticia",
+    title: "Lo Barnechea pone en marcha plan piloto de inhibidores de señales en colegios para regular uso de celulares",
+    source: "Emol",
+    date: "27 agosto 2025",
+    excerpt:
+      "Cobertura sobre la implementación y alcance del plan piloto en establecimientos de Lo Barnechea.",
+    url: "https://www.emol.com/noticias/Nacional/2025/08/27/1176169/inhibidores-senal-celulares-lo-barnechea.html",
+    cta: "Leer nota"
+  },
+  {
+    type: "Noticia",
+    title: "Lo Barnechea implementará inhibidores de señal de teléfonos en colegios",
+    source: "Chilevisión",
+    date: "2025",
+    excerpt:
+      "Nota de Chilevisión sobre la medida municipal y su objetivo de ordenar el uso de celulares en salas de clases.",
+    url: "https://www.chilevision.cl/noticias/nacional/video/lo-barnechea-implementara-inhibidores-de-senal-de-telefonos-en-colegios",
+    cta: "Ver publicación"
+  },
+  {
+    type: "Noticia",
+    title: "Inhibidores de celular en colegios: \"Estarán más concentrados, pero tiene que acompañarse de educación\"",
+    source: "24 Horas",
+    date: "2025",
+    excerpt:
+      "Entrevista y análisis sobre la implementación de inhibidores en colegios y el rol del acompañamiento pedagógico.",
+    url: "https://www.24horas.cl/programas/manana-informativa/experta-inhibidores-celulares-ninos-concentrados",
+    cta: "Leer nota"
+  },
+  {
+    type: "Noticia",
+    title: "\"Se ven mejoras en la convivencia\": Lo Barnechea evalúa plan que regula uso de celulares mediante inhibidores de señal en colegios",
+    source: "Meganoticias",
+    date: "27 agosto 2025",
+    excerpt:
+      "Cobertura sobre los resultados iniciales del plan piloto y su impacto en la convivencia escolar.",
+    url: "https://www.meganoticias.cl/nacional/496898-municipalidad-lo-barnechea-evaluacion-plan-piloto-inhibidores-senal-colegio-brk-27-08-2025.html",
+    cta: "Leer publicación"
+  },
+  {
+    type: "Noticia",
+    title: "No TikTok, no Instagram: Chilean school blocks phones as students rediscover real-world connections",
+    source: "Korea JoongAng Daily",
+    date: "12 septiembre 2025",
+    excerpt:
+      "Cobertura internacional sobre la experiencia chilena con bloqueo de señal para reducir distracciones digitales.",
+    url: "https://koreajoongangdaily.joins.com/news/2025-09-12/world/world/No-TikTok-no-Instagram-Chilean-school-blocks-phones-as-students-rediscover-realworld-connections/2397713",
+    cta: "Read article"
+  },
+  {
+    type: "Noticia",
+    title: "Chile School Blocks Phone Signals to Combat Screen Addiction",
+    source: "EdexLive",
+    date: "2025",
+    excerpt:
+      "Artículo sobre cómo colegios en Chile están probando bloqueadores de señal para enfrentar la adicción a pantallas.",
+    url: "https://www.edexlive.com/news/no-more-tiktok-instagram-chile-tests-phone-signal-blockers-in-schools-to-address-screen-addiction",
+    cta: "Read article"
+  }
+];
+
+const interviews = [
+  {
+    type: "Entrevista",
+    title: "Lo Barnechea evalúa plan que regula uso de celulares mediante inhibidores",
+    source: "Meganoticias (YouTube)",
+    date: "2025",
+    excerpt:
+      "Segmento audiovisual sobre la evaluación del plan y su impacto en el ambiente escolar.",
+    url: "https://www.youtube.com/watch?v=n69gHQxt3k8",
+    cta: "Ver video"
+  },
+  {
+    type: "Entrevista",
+    title: "Lo Barnechea implementará inhibidores de señal de teléfonos en colegios - CHV Noticias",
+    source: "CHV Noticias (YouTube)",
+    date: "2025",
+    excerpt:
+      "Cobertura audiovisual de CHV Noticias sobre la implementación en colegios.",
+    url: "https://www.youtube.com/watch?v=XM_TvEgUb3M",
+    cta: "Ver video"
+  },
+  {
+    type: "Entrevista",
+    title: "Regulación del uso de celulares en colegios de Lo Barnechea: es para estar presentes | Doble Click",
+    source: "Tele13 Radio (YouTube)",
+    date: "2025",
+    excerpt:
+      "Entrevista radial con foco en convivencia escolar, atención en clases y política pública local.",
+    url: "https://www.youtube.com/watch?v=TmYKCgeB8Nw",
+    cta: "Ver entrevista"
+  },
+  {
+    type: "Entrevista",
+    title: "Chile: Signal blocking phone-cases help students focus",
+    source: "Channel 3000 / News 3 Now (YouTube)",
+    date: "2025",
+    excerpt:
+      "Cobertura internacional en video sobre el uso de fundas bloqueadoras de señal para mejorar la concentración en clases.",
+    url: "https://www.youtube.com/watch?v=4viwjpTySHI",
+    cta: "Watch video"
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main>
+    <section class="page-hero section-tone-dark">
+      <div class="page-hero-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <span class="page-label" data-reveal>Prensa</span>
+        <h1 class="page-title" data-reveal style="--delay: 100ms;">
+          BloKKit en<br />
+          <span class="text-accent">Noticias y Entrevistas</span>
+        </h1>
+        <p class="page-subtitle" data-reveal style="--delay: 200ms;">
+          Cobertura reciente en medios y plataformas audiovisuales, en Chile y el extranjero, sobre la
+          implementación de soluciones para regular el uso de celulares en espacios educativos.
+        </p>
+      </div>
+    </section>
+
+    <section class="press-section page-surface section-tone-slate">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="section-head" data-reveal>
+          <span class="page-label">Noticias</span>
+          <p class="section-lead">
+            Publicaciones editoriales y cobertura en medios nacionales e internacionales.
+          </p>
+        </div>
+
+        <div class="press-grid">
+          {news.map((item, index) => (
+            <article class="press-card" data-reveal style={`--delay: ${index * 100}ms`}>
+              <div class="press-meta">
+                <span class="press-type">{item.type}</span>
+                <span class="press-date">{item.date}</span>
+              </div>
+              <h2 class="press-title">{item.title}</h2>
+              <p class="press-excerpt">{item.excerpt}</p>
+              <div class="press-footer">
+                <span class="press-source">{item.source}</span>
+                <a href={item.url} target="_blank" rel="noopener noreferrer" class="press-link">{item.cta} ↗</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="press-section page-surface section-tone-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="section-head" data-reveal>
+          <span class="page-label">Entrevistas</span>
+          <p class="section-lead">
+            Cobertura audiovisual con entrevistas y análisis en TV y radio.
+          </p>
+        </div>
+
+        <div class="press-grid interviews-grid">
+          {interviews.map((item, index) => (
+            <article class="press-card" data-reveal style={`--delay: ${index * 100}ms`}>
+              <div class="press-meta">
+                <span class="press-type">{item.type}</span>
+                <span class="press-date">{item.date}</span>
+              </div>
+              <h2 class="press-title">{item.title}</h2>
+              <p class="press-excerpt">{item.excerpt}</p>
+              <div class="press-footer">
+                <span class="press-source">{item.source}</span>
+                <a href={item.url} target="_blank" rel="noopener noreferrer" class="press-link">{item.cta} ↗</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta section-tone-slate">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6">
+        <div class="final-cta-card text-center" data-reveal>
+          <h2 class="final-cta-title">
+            ¿Eres periodista o<br />
+            medio de comunicación?
+          </h2>
+          <p class="final-cta-subtitle" data-reveal style="--delay: 100ms;">
+            Coordinamos vocerías, entrevistas y material editorial para notas sobre educación, convivencia y operación.
+          </p>
+          <div class="final-cta-buttons" data-reveal style="--delay: 200ms;">
+            <a href="/contacto" class="btn-primary-large">
+              Contactar equipo de prensa
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  /* Dark style parity with Beneficios hero */
+  .page-hero.section-tone-dark {
+    padding-top: 11.3rem;
+    padding-bottom: 4.6rem;
+    background-color: #080808;
+    background-image:
+      linear-gradient(rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      radial-gradient(980px 380px at 14% -10%, rgba(0, 194, 209, 0.24) 0%, transparent 62%),
+      radial-gradient(880px 340px at 84% 12%, rgba(0, 194, 209, 0.12) 0%, transparent 64%),
+      linear-gradient(180deg, #121212 0%, #090909 56%, #060606 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .page-hero.section-tone-dark .orb-1 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.3) 0%, transparent 72%);
+    opacity: 0.52;
+  }
+
+  .page-hero.section-tone-dark .orb-2 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.2) 0%, transparent 72%);
+    opacity: 0.44;
+  }
+
+  .page-hero.section-tone-dark .page-label {
+    border-color: rgba(62, 224, 240, 0.36);
+    background: rgba(4, 10, 12, 0.7);
+    color: #67e8f9;
+  }
+
+  .page-hero.section-tone-dark .page-subtitle {
+    color: rgba(226, 232, 240, 0.82) !important;
+  }
+
+  .press-section.section-tone-dark {
+    position: relative;
+    background-color: #090909;
+    background-image:
+      linear-gradient(rgba(0, 194, 209, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.055) 1px, transparent 1px),
+      radial-gradient(980px 420px at 14% -12%, rgba(0, 194, 209, 0.24), transparent 60%),
+      radial-gradient(820px 340px at 86% 10%, rgba(0, 194, 209, 0.14), transparent 62%),
+      linear-gradient(180deg, #121212 0%, #0b0b0b 52%, #070707 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+    background-position: 0 0, 0 0, center, center, center;
+  }
+
+  .press-section.section-tone-dark::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(700px 260px at 16% 8%, rgba(0, 194, 209, 0.12) 0%, transparent 72%),
+      radial-gradient(620px 220px at 84% 92%, rgba(0, 194, 209, 0.08) 0%, transparent 74%);
+    z-index: 0;
+  }
+
+  .press-section.section-tone-dark .max-w-7xl {
+    position: relative;
+    z-index: 1;
+  }
+
+  .press-section {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  /* Light style: glass cards */
+  .press-section.section-tone-slate,
+  .final-cta.section-tone-slate {
+    background-color: #dce5ef;
+    background-image:
+      radial-gradient(900px 320px at 18% 18%, rgba(14, 116, 144, 0.12) 0%, transparent 68%),
+      radial-gradient(760px 280px at 84% 84%, rgba(14, 116, 144, 0.1) 0%, transparent 72%),
+      linear-gradient(180deg, #dbe4ee 0%, #e6edf5 100%);
+  }
+
+  .section-tone-slate .section-head {
+    text-align: center;
+    max-width: 78ch;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.3rem;
+  }
+
+  .section-tone-slate .page-label {
+    border-color: rgba(14, 116, 144, 0.28);
+    background: rgba(224, 242, 254, 0.82);
+    color: #0e7490;
+  }
+
+  .section-tone-slate .press-title {
+    color: #0f172a !important;
+  }
+
+  .press-section.section-tone-slate .section-lead {
+    color: rgba(30, 41, 59, 0.9) !important;
+  }
+
+  .section-tone-slate .press-excerpt,
+  .section-tone-slate .press-date {
+    color: rgba(51, 65, 85, 0.88);
+  }
+
+  .section-head {
+    margin-bottom: 1.75rem;
+  }
+
+  .press-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .interviews-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .press-card {
+    border-radius: 1.1rem;
+    border: 1px solid rgba(148, 163, 184, 0.26);
+    background: linear-gradient(170deg, rgba(255, 255, 255, 0.82) 0%, rgba(248, 250, 252, 0.66) 100%);
+    backdrop-filter: blur(7px);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.58);
+    padding: 1.25rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  }
+
+  .press-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(100, 116, 139, 0.4);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.66);
+  }
+
+  .press-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .press-type {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    border: 1px solid rgba(100, 116, 139, 0.28);
+    background: rgba(255, 255, 255, 0.7);
+    color: #334155;
+    padding: 0.25rem 0.7rem;
+    font-size: 0.66rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .press-date {
+    font-size: 0.78rem;
+    opacity: 0.8;
+  }
+
+  .press-title {
+    font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+    line-height: 1.2;
+    margin-bottom: 0.8rem;
+  }
+
+  .press-excerpt {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin-bottom: 1rem;
+  }
+
+  .press-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(148, 163, 184, 0.28);
+  }
+
+  .press-source {
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+
+  .section-tone-slate .press-source {
+    color: #0f172a;
+  }
+
+  .section-tone-dark .press-source {
+    color: #e2e8f0;
+  }
+
+  .press-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-decoration: none;
+  }
+
+  .press-link:hover {
+    text-decoration: underline;
+  }
+
+  .section-tone-dark .press-card {
+    background: linear-gradient(160deg, rgba(20, 20, 20, 0.9) 0%, rgba(9, 9, 9, 0.88) 100%);
+    border-color: rgba(148, 163, 184, 0.24);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+  }
+
+  .section-tone-dark .press-card:hover {
+    background: linear-gradient(160deg, rgba(24, 24, 24, 0.92) 0%, rgba(12, 12, 12, 0.9) 100%);
+    border-color: rgba(148, 163, 184, 0.4);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .section-tone-dark .press-type {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(148, 163, 184, 0.34);
+    color: #e2e8f0;
+  }
+
+  .section-tone-dark .press-link {
+    color: #e2e8f0;
+  }
+
+  .section-tone-dark .press-link:hover {
+    color: var(--color-accent);
+  }
+
+  .section-tone-slate .press-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1.4rem;
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.64) 0%, rgba(248, 250, 252, 0.48) 100%);
+    border-color: rgba(148, 163, 184, 0.34);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 34px rgba(15, 23, 42, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  }
+
+  .section-tone-slate .press-card::before {
+    content: '';
+    position: absolute;
+    inset: -40% -20% auto;
+    height: 140px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.52) 0%, transparent 72%);
+    pointer-events: none;
+  }
+
+  .section-tone-slate .press-card:nth-child(3n + 2) {
+    background: linear-gradient(165deg, rgba(224, 242, 254, 0.72) 0%, rgba(207, 235, 248, 0.56) 100%);
+    border-color: rgba(14, 116, 144, 0.32);
+  }
+
+  .section-tone-slate .press-card:hover {
+    transform: translateY(-4px);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.82) 0%, rgba(248, 250, 252, 0.66) 100%);
+    border-color: rgba(100, 116, 139, 0.42);
+    box-shadow: 0 22px 36px rgba(15, 23, 42, 0.14), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  }
+
+  .section-tone-slate .press-card:nth-child(3n + 2):hover {
+    background: linear-gradient(165deg, rgba(224, 242, 254, 0.84) 0%, rgba(207, 235, 248, 0.7) 100%);
+    border-color: rgba(14, 116, 144, 0.4);
+  }
+
+  .section-tone-slate .press-type {
+    border-color: rgba(14, 116, 144, 0.24);
+    background: rgba(224, 242, 254, 0.8);
+    color: #0e7490;
+  }
+
+  .section-tone-slate .press-link {
+    color: #0369a1;
+  }
+
+  .final-cta {
+    padding: 6.2rem 0 6.8rem;
+    border-top: 0;
+    border-bottom: 0;
+  }
+
+  .final-cta.section-tone-slate {
+    border-top: 0;
+    border-bottom: 0;
+    box-shadow: none;
+  }
+
+  .final-cta-card {
+    border-radius: 2rem;
+    border: 1px solid rgba(34, 211, 238, 0.24);
+    padding: 4.2rem 1.8rem 3.6rem;
+    background:
+      linear-gradient(rgba(0, 194, 209, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.045) 1px, transparent 1px),
+      radial-gradient(740px 260px at 18% 80%, rgba(0, 194, 209, 0.16), transparent 70%),
+      radial-gradient(680px 240px at 84% 14%, rgba(0, 194, 209, 0.12), transparent 72%),
+      linear-gradient(180deg, #171717 0%, #0f0f0f 55%, #0a0a0a 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+    box-shadow: 0 24px 44px rgba(15, 23, 42, 0.24);
+  }
+
+  .final-cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    line-height: 1.04;
+    margin-bottom: 1.5rem;
+    color: #f8fafc !important;
+  }
+
+  .final-cta-subtitle {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.72) !important;
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .final-cta .btn-primary-large,
+  .final-cta .btn-primary-large:hover,
+  .final-cta .btn-primary-large:focus-visible,
+  .final-cta .btn-primary-large:visited {
+    color: #ffffff !important;
+  }
+
+  @media (max-width: 1280px) {
+    .press-grid,
+    .interviews-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .page-hero.section-tone-dark {
+      padding-top: 10rem;
+      padding-bottom: 4rem;
+    }
+
+    .press-grid,
+    .interviews-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .final-cta {
+      padding: 4.8rem 0 5.2rem;
+    }
+
+    .final-cta-card {
+      border-radius: 1.35rem;
+      padding: 2.8rem 1rem 2.6rem;
+    }
+  }
+</style>

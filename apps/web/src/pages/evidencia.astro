@@ -1,0 +1,767 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const pageTitle = "Evidencia | BloKKit";
+const pageDescription =
+  "Evidencia internacional y contexto Chile para decisiones de implementacion BloKKit con medicion real de impacto.";
+
+const chileSignals = [
+  {
+    value: "87%",
+    title: "NNA con smartphone propio",
+    detail: "Ninos, ninas y adolescentes de 9 a 17 anos en Chile con acceso a internet movil."
+  },
+  {
+    value: "94% / 81%",
+    title: "Penetracion por rango etario",
+    detail: "14 a 17 anos: 94%. 8 a 12 anos: 81%."
+  },
+  {
+    value: "8,9 anos",
+    title: "Edad del primer celular",
+    detail: "Descenso desde 11 anos (2016) a 8,9 anos (2022)."
+  },
+  {
+    value: "46%",
+    title: "Uso sobre 4 horas diarias",
+    detail: "Escolares que superan cuatro horas de smartphone al dia."
+  }
+];
+
+const internationalScale = [
+  {
+    value: "27",
+    title: "Paises con operacion Yondr",
+    detail: "Con oficinas reportadas en Londres y Dublin."
+  },
+  {
+    value: "35",
+    title: "Paises con escuelas asociadas",
+    detail: "Implementacion en miles de escuelas y cobertura en los 50 estados de EE.UU."
+  },
+  {
+    value: "2.000",
+    title: "Escuelas usando bolsas (2024)",
+    detail: "Estimacion incluida en el material internacional compilado."
+  },
+  {
+    value: "x10",
+    title: "Crecimiento en contratos publicos",
+    detail: "De USD 174.000 (2021) a USD 2,13M (2023) en contratos gubernamentales en EE.UU."
+  },
+  {
+    value: "900",
+    title: "Escuelas en estudio de percepcion",
+    detail: "Base reportada para medir mejoras academicas, de conducta y participacion."
+  },
+  {
+    value: "20+",
+    title: "Paises con red PhoneLocker",
+    detail: "Distribucion europea desde Reino Unido con socios con licencia."
+  }
+];
+
+const regulationSignals = [
+  {
+    country: "Francia",
+    status: "Prohibicion total",
+    detail: "Primaria y secundaria desde 2018."
+  },
+  {
+    country: "Reino Unido",
+    status: "Guia nacional",
+    detail: "Linea 2023 para restringir uso en la jornada, incluidos recreos."
+  },
+  {
+    country: "Australia",
+    status: "Prohibicion por estados",
+    detail: "Implementada en varios estados, incluidos NSW y Victoria."
+  },
+  {
+    country: "Espana",
+    status: "Restricciones por comunidad",
+    detail: "Avance regulatorio en primaria y secundaria."
+  },
+  {
+    country: "Estados Unidos",
+    status: "Regulacion por estado/distrito",
+    detail: "Creciente adopcion de politicas de restriccion en jornada escolar."
+  },
+  {
+    country: "Chile",
+    status: "Recomendacion y autonomia",
+    detail: "Mineduc recomienda restricciones y cada establecimiento define su ejecucion."
+  }
+];
+
+const outcomes = [
+  {
+    metric: "+6,27%",
+    title: "Exito academico",
+    description:
+      "Estudio Yondr 2024 (mas de 37.000 calificaciones finales) reporta mejora tras restriccion telefonica."
+  },
+  {
+    metric: "+38%",
+    title: "Aprobacion en 11 y 12",
+    description: "Aumento en calificaciones aprobatorias en cursos superiores."
+  },
+  {
+    metric: "+14%",
+    title: "Mejor resultado en examenes",
+    description: "Escuelas con prohibicion efectiva muestran mejores resultados que escuelas sin control real."
+  },
+  {
+    metric: "-20%",
+    title: "Riesgo de uso en clase",
+    description: "Algunos estudios citados muestran caida de rendimiento cuando se usa telefono en aula."
+  },
+  {
+    metric: "+10 min",
+    title: "Tiempo docente recuperado",
+    description: "Docentes reportan hasta diez minutos adicionales por leccion para ensenanza."
+  },
+  {
+    metric: "65/74/83%",
+    title: "Mejoras reportadas en 900 escuelas",
+    description:
+      "65% mejora academica, 74% mejor conducta y 83% mayor participacion estudiantil."
+  },
+  {
+    metric: "2x",
+    title: "Ofsted sobresaliente en UK",
+    description:
+      "Secundarias con prohibicion efectiva muestran mas probabilidad de calificacion sobresaliente."
+  }
+];
+
+const pilotProjection = [
+  {
+    value: ">90%",
+    title: "Reduccion del uso movil en aula",
+    detail: "Caida esperada de distracciones digitales durante la clase."
+  },
+  {
+    value: "6%-14%",
+    title: "Mejora academica proyectada",
+    detail: "Rango de mejora proyectado en desempeno, especialmente en alumnos rezagados."
+  },
+  {
+    value: ">70%",
+    title: "Menos incidentes disciplinarios",
+    detail: "Disminucion esperada de conflictos asociados a celular."
+  },
+  {
+    value: "+10 min",
+    title: "Recuperacion de clase efectiva",
+    detail: "Tiempo que puede volver a ensenanza por cada hora de clase."
+  }
+];
+
+const monitoringTracks = [
+  {
+    title: "Aprendizaje",
+    points: [
+      "Variacion de notas por asignatura y curso",
+      "Resultados de evaluaciones parciales",
+      "Asistencia y continuidad academica"
+    ]
+  },
+  {
+    title: "Convivencia",
+    points: [
+      "Incidentes por uso indebido de smartphone",
+      "Casos de ciberacoso reportados",
+      "Medidas disciplinarias por periodo"
+    ]
+  },
+  {
+    title: "Operacion",
+    points: [
+      "Uso efectivo de funda por jornada",
+      "Aperturas autorizadas y excepciones",
+      "Tiempos de respuesta del protocolo"
+    ]
+  }
+];
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main class="evidence-page">
+    <section class="page-hero section-tone-dark">
+      <div class="page-hero-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        <span class="page-label" data-reveal>Evidencia</span>
+        <h1 class="page-title" data-reveal style="--delay: 100ms;">
+          Evidencia internacional<br />
+          <span class="text-accent">aplicada al contexto Chile</span>
+        </h1>
+        <p class="page-subtitle" data-reveal style="--delay: 200ms;">
+          Conoce cifras y resultados que respaldan la implementacion de BloKKit
+          en aprendizaje, convivencia y continuidad operativa.
+        </p>
+      </div>
+    </section>
+
+    <section class="page-surface section-tone-slate">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="section-head" data-reveal>
+          <span class="page-label">Contexto Chile</span>
+          <h2 class="section-title">Linea base de uso digital escolar</h2>
+          <p class="section-lead">
+            La penetracion temprana y el alto tiempo de pantalla hacen que la implementacion requiera un mecanismo
+            operativo diario, no solo una norma declarativa.
+          </p>
+        </div>
+
+        <div class="grid-4">
+          {chileSignals.map((item, index) => (
+            <article class="metric-card light" data-reveal style={`--delay: ${index * 80}ms`}>
+              <span class="metric-value">{item.value}</span>
+              <h3 class="metric-title">{item.title}</h3>
+              <p class="metric-detail">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="page-surface section-tone-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="section-head" data-reveal>
+          <span class="page-label">Escala internacional</span>
+          <h2 class="section-title">Adopcion y traccion de mercado</h2>
+          <p class="section-lead">
+            El material internacional muestra adopcion acelerada de modelos de restriccion fisica en escuelas,
+            junto con crecimiento de contratos publicos y despliegue multiregion.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          {internationalScale.map((item, index) => (
+            <article class="metric-card dark" data-reveal style={`--delay: ${index * 70}ms`}>
+              <span class="metric-value">{item.value}</span>
+              <h3 class="metric-title">{item.title}</h3>
+              <p class="metric-detail">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="page-surface section-tone-slate">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="section-head" data-reveal>
+          <span class="page-label">Panorama regulatorio</span>
+          <h2 class="section-title">Tendencia global de restriccion escolar</h2>
+          <p class="section-lead">
+            Los enfoques varian por pais, pero la direccion es consistente: reducir uso de celulares en aula y estandarizar su cumplimiento.
+          </p>
+        </div>
+
+        <div class="regulation-grid">
+          {regulationSignals.map((item, index) => (
+            <article class="regulation-card" data-reveal style={`--delay: ${index * 70}ms`}>
+              <h3>{item.country}</h3>
+              <p class="reg-status">{item.status}</p>
+              <p class="reg-detail">{item.detail}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="page-surface section-tone-dark">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="section-head" data-reveal>
+          <span class="page-label">Resultados observados</span>
+          <h2 class="section-title">Evidencia de impacto academico y conducta</h2>
+          <p class="section-lead">
+            En la base recopilada, el impacto mas consistente aparece cuando la restriccion se implementa con protocolo,
+            roles de apertura definidos y seguimiento continuo.
+          </p>
+        </div>
+
+        <div class="grid-4 outcomes-grid">
+          {outcomes.map((item, index) => (
+            <article class="metric-card dark outcome" data-reveal style={`--delay: ${index * 60}ms`}>
+              <span class="metric-value">{item.metric}</span>
+              <h3 class="metric-title">{item.title}</h3>
+              <p class="metric-detail">{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <div class="evidence-flow-surface section-tone-slate">
+      <section class="page-surface">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+          <div class="section-head" data-reveal>
+            <span class="page-label">Proyeccion de impacto</span>
+            <h2 class="section-title">Impacto esperado</h2>
+            <p class="section-lead">
+              Proyecciones construidas en base al benchmark internacional incluido en el PPT y al plan de despliegue institucional.
+            </p>
+          </div>
+
+          <div class="grid-4">
+            {pilotProjection.map((item, index) => (
+              <article class="metric-card light impact" data-reveal style={`--delay: ${index * 70}ms`}>
+                <span class="metric-value">{item.value}</span>
+                <h3 class="metric-title">{item.title}</h3>
+                <p class="metric-detail">{item.detail}</p>
+              </article>
+            ))}
+          </div>
+
+          <div class="tracks-grid">
+            {monitoringTracks.map((track, index) => (
+              <article class="track-card" data-reveal style={`--delay: ${120 + index * 90}ms`}>
+                <h3>{track.title}</h3>
+                <ul>
+                  {track.points.map((point) => <li>{point}</li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+          <div class="final-cta-card text-center">
+            <h2 class="final-cta-title">
+              Descubre el impacto de BloKKit<br />
+              en tu institucion
+            </h2>
+            <p class="final-cta-subtitle">
+              Agenda una demo o solicita una cotizacion para implementar
+              un plan operativo medible en aprendizaje, convivencia y foco.
+            </p>
+            <div class="final-cta-buttons">
+              <a href="/contacto" class="evidence-btn-primary">Solicitar informacion</a>
+              <a href="/contacto" class="evidence-btn-secondary">Agendar demo</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .evidence-page {
+    --ev-accent: #3ee0f0;
+    --ev-accent-strong: #00c2d1;
+    --ev-accent-soft: #b9f4fb;
+    --ev-ink: #161a1f;
+    --ev-copy: #3f4a55;
+  }
+
+  .evidence-page .text-accent {
+    color: var(--ev-accent);
+  }
+
+  .evidence-page .page-hero.section-tone-dark {
+    background-color: #080808;
+    background-image:
+      linear-gradient(rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.052) 1px, transparent 1px),
+      radial-gradient(980px 380px at 14% -10%, rgba(0, 194, 209, 0.24) 0%, transparent 62%),
+      radial-gradient(880px 340px at 84% 12%, rgba(0, 194, 209, 0.14) 0%, transparent 64%),
+      linear-gradient(180deg, #121212 0%, #090909 56%, #060606 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+  }
+
+  .evidence-page .page-hero.section-tone-dark .orb-1 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.3) 0%, transparent 72%);
+  }
+
+  .evidence-page .page-hero.section-tone-dark .orb-2 {
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.2) 0%, transparent 72%);
+  }
+
+  .evidence-page .page-hero.section-tone-dark .page-label,
+  .evidence-page .section-tone-dark .page-label {
+    border-color: rgba(62, 224, 240, 0.36);
+    background: rgba(4, 10, 12, 0.7);
+    color: var(--ev-accent-soft);
+  }
+
+  .evidence-flow-surface.section-tone-slate {
+    background-color: #e7eaee;
+    background-image:
+      radial-gradient(circle at 12% 10%, rgba(0, 194, 209, 0.1) 0%, transparent 44%),
+      radial-gradient(circle at 86% 88%, rgba(0, 194, 209, 0.06) 0%, transparent 48%),
+      linear-gradient(180deg, #e7eaee 0%, #f0f2f5 100%);
+  }
+
+  .evidence-page .section-tone-slate {
+    background-color: #e7eaee;
+    background-image:
+      radial-gradient(circle at 12% 10%, rgba(0, 194, 209, 0.1) 0%, transparent 44%),
+      radial-gradient(circle at 86% 88%, rgba(0, 194, 209, 0.06) 0%, transparent 48%),
+      linear-gradient(180deg, #e7eaee 0%, #f0f2f5 100%);
+  }
+
+  .evidence-page .section-tone-dark {
+    background-color: #080808;
+    background-image:
+      linear-gradient(rgba(0, 194, 209, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.05) 1px, transparent 1px),
+      radial-gradient(900px 340px at 15% -8%, rgba(0, 194, 209, 0.2), transparent 60%),
+      radial-gradient(820px 320px at 86% 12%, rgba(0, 194, 209, 0.12), transparent 62%),
+      linear-gradient(180deg, #111111 0%, #090909 58%, #070707 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+  }
+
+  .evidence-page .section-tone-slate .page-label {
+    border-color: rgba(0, 194, 209, 0.36);
+    background: rgba(255, 255, 255, 0.64);
+    color: #0b7285;
+  }
+
+  .evidence-page .section-tone-dark h1,
+  .evidence-page .section-tone-dark h2,
+  .evidence-page .section-tone-dark h3,
+  .evidence-page .section-tone-dark h4,
+  .evidence-page .section-tone-dark .page-title,
+  .evidence-page .section-tone-dark .section-title {
+    color: #f4f8fb !important;
+  }
+
+  .evidence-page .section-tone-dark p,
+  .evidence-page .section-tone-dark li,
+  .evidence-page .section-tone-dark .page-subtitle,
+  .evidence-page .section-tone-dark .section-lead {
+    color: rgba(230, 237, 243, 0.82) !important;
+  }
+
+  .evidence-page .section-tone-slate h1,
+  .evidence-page .section-tone-slate h2,
+  .evidence-page .section-tone-slate h3,
+  .evidence-page .section-tone-slate h4,
+  .evidence-page .section-tone-slate .page-title,
+  .evidence-page .section-tone-slate .section-title {
+    color: #252823 !important;
+  }
+
+  .evidence-page .section-tone-slate p,
+  .evidence-page .section-tone-slate li,
+  .evidence-page .section-tone-slate .page-subtitle,
+  .evidence-page .section-tone-slate .section-lead {
+    color: var(--ev-copy) !important;
+  }
+
+  .section-head {
+    margin: 0 auto 2rem;
+    max-width: 76ch;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: clamp(2.15rem, 5vw, 3.75rem);
+    line-height: 0.98;
+    margin-bottom: 0.75rem;
+  }
+
+  .grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .metric-card {
+    border-radius: 1.2rem;
+    padding: 1.2rem;
+    transition: transform 0.24s ease, box-shadow 0.24s ease, border-color 0.24s ease;
+  }
+
+  .metric-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .metric-card.light {
+    border: 1px solid rgba(138, 145, 138, 0.24);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.72), rgba(248, 251, 254, 0.56));
+    backdrop-filter: blur(10px);
+    box-shadow: 0 16px 30px rgba(24, 24, 24, 0.12);
+  }
+
+  .metric-card.dark {
+    border: 1px solid rgba(103, 140, 138, 0.28);
+    background: linear-gradient(165deg, rgba(20, 22, 22, 0.9) 0%, rgba(10, 12, 12, 0.92) 100%);
+    box-shadow: 0 18px 34px rgba(0, 0, 0, 0.3);
+  }
+
+  .metric-card.dark:hover {
+    border-color: rgba(62, 224, 240, 0.46);
+  }
+
+  .metric-card.light.impact {
+    border-color: rgba(0, 194, 209, 0.3);
+  }
+
+  .metric-card.outcome {
+    min-height: 194px;
+  }
+
+  .metric-value {
+    display: block;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    line-height: 1;
+    color: var(--ev-accent);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  .metric-title {
+    margin: 0 0 0.52rem;
+    font-size: clamp(1.2rem, 2vw, 1.52rem);
+    line-height: 1.03;
+  }
+
+  .metric-detail {
+    margin: 0;
+    line-height: 1.58;
+    font-size: 0.93rem;
+  }
+
+  .regulation-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .regulation-card {
+    border-radius: 1.1rem;
+    border: 1px solid rgba(138, 145, 138, 0.26);
+    background: linear-gradient(165deg, rgba(255, 255, 255, 0.68), rgba(249, 251, 254, 0.54));
+    box-shadow: 0 14px 28px rgba(24, 24, 24, 0.11);
+    padding: 1.1rem;
+  }
+
+  .regulation-card h3 {
+    margin: 0 0 0.42rem;
+    color: #252823;
+    font-size: clamp(1.35rem, 2vw, 1.72rem);
+    line-height: 1;
+  }
+
+  .reg-status {
+    margin: 0 0 0.45rem;
+    color: #0b7285;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .reg-detail {
+    margin: 0;
+    color: #5d625c;
+    font-size: 0.93rem;
+    line-height: 1.45;
+  }
+
+  .outcomes-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .tracks-grid {
+    margin-top: 1.1rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .track-card {
+    border-radius: 1.1rem;
+    border: 1px solid rgba(138, 145, 138, 0.24);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.7), rgba(247, 250, 253, 0.56));
+    box-shadow: 0 14px 28px rgba(24, 24, 24, 0.11);
+    padding: 1.1rem;
+  }
+
+  .track-card h3 {
+    margin: 0 0 0.7rem;
+    color: #252823;
+    font-size: clamp(1.35rem, 2vw, 1.72rem);
+    line-height: 1;
+  }
+
+  .track-card ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.52rem;
+  }
+
+  .track-card li {
+    position: relative;
+    padding-left: 1rem;
+    font-size: 0.93rem;
+    line-height: 1.45;
+    color: #5d625c;
+  }
+
+  .track-card li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.48rem;
+    width: 0.46rem;
+    height: 0.46rem;
+    border-radius: 999px;
+    background: rgba(0, 194, 209, 0.58);
+  }
+
+  .final-cta {
+    padding: 3.4rem 0 5.6rem;
+    margin-top: 0;
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .final-cta-card {
+    border-radius: 2rem;
+    border: 1px solid rgba(62, 224, 240, 0.3);
+    padding: 3.8rem 1.7rem 3.3rem;
+    background:
+      linear-gradient(rgba(0, 194, 209, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 194, 209, 0.045) 1px, transparent 1px),
+      radial-gradient(760px 260px at 20% 82%, rgba(0, 194, 209, 0.17), transparent 70%),
+      radial-gradient(620px 220px at 82% 14%, rgba(0, 194, 209, 0.12), transparent 72%),
+      linear-gradient(180deg, #171919 0%, #0f1010 55%, #0a0b0b 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+    box-shadow: 0 22px 44px rgba(18, 24, 32, 0.22);
+  }
+
+  .evidence-page .final-cta .final-cta-card .final-cta-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(2.75rem, 6vw, 4.2rem);
+    line-height: 1.03;
+    margin-bottom: 1.2rem;
+    color: #ffffff !important;
+  }
+
+  .final-cta-card .final-cta-subtitle {
+    margin: 0 auto 2.1rem;
+    max-width: 62ch;
+    font-size: 1.04rem;
+    line-height: 1.64;
+    color: rgba(230, 237, 243, 0.82) !important;
+  }
+
+  .final-cta-card p {
+    color: inherit;
+  }
+
+  .final-cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+  }
+
+  .evidence-btn-primary,
+  .evidence-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.2rem;
+    padding: 0.8rem 1.85rem;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+
+  .evidence-btn-primary {
+    color: #f8fbff;
+    background: linear-gradient(135deg, #63ecf7 0%, #3ee0f0 58%, #00c2d1 100%);
+    box-shadow: 0 0 0 1px rgba(99, 236, 247, 0.34) inset, 0 14px 34px rgba(0, 194, 209, 0.34);
+  }
+
+  .evidence-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 0 1px rgba(99, 236, 247, 0.44) inset, 0 18px 42px rgba(0, 194, 209, 0.42);
+  }
+
+  .evidence-btn-secondary {
+    color: rgba(244, 248, 251, 0.9);
+    border: 1px solid rgba(62, 224, 240, 0.36);
+    background: rgba(8, 30, 40, 0.5);
+  }
+
+  .evidence-btn-secondary:hover {
+    transform: translateY(-2px);
+    border-color: rgba(62, 224, 240, 0.6);
+    background: rgba(8, 35, 48, 0.66);
+  }
+
+  @media (max-width: 1280px) {
+    .outcomes-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .grid-4,
+    .grid-3,
+    .outcomes-grid,
+    .regulation-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .tracks-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .grid-4,
+    .grid-3,
+    .outcomes-grid,
+    .regulation-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .final-cta {
+      padding: 2.6rem 0 4.3rem;
+    }
+
+    .final-cta-card {
+      border-radius: 1.3rem;
+      padding: 2.7rem 1rem 2.5rem;
+    }
+
+    .final-cta-buttons {
+      flex-direction: column;
+    }
+
+    .evidence-btn-primary,
+    .evidence-btn-secondary {
+      width: 100%;
+    }
+  }
+</style>

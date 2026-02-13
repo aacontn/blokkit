@@ -1,0 +1,922 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const pageTitle = "Ley de Celulares 2026 - Blokkit | Cumplimiento Sin Conflicto";
+const pageDescription = "Todo sobre la nueva ley que prohíbe celulares en colegios chilenos desde marzo 2026. Conoce los requisitos, excepciones y cómo Blokkit te ayuda a cumplir.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+  
+  <main class="law-page">
+    <!-- HERO SECTION -->
+    <section class="law-hero page-hero section-tone-dark">
+      <div class="page-hero-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+      </div>
+      <div class="law-hero-bg"></div>
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 text-center">
+        <span class="law-badge" data-reveal>
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          Vigente desde Marzo 2026
+        </span>
+        <h1 class="law-hero-title" data-reveal style="--delay: 100ms;">
+          La Ley <span class="text-accent">Prohíbe</span>.<br />
+          El Colegio <span class="text-accent">Implementa</span>.<br />
+          Blokkit Hace Que Se Cumpla.
+        </h1>
+        <p class="law-hero-subtitle" data-reveal style="--delay: 200ms;">
+          La nueva normativa modifica la Ley General de Educación y prohíbe el uso de dispositivos 
+          móviles durante actividades curriculares. Pero prohibir no basta: tu colegio necesita 
+          un mecanismo operativo para cumplir sin conflicto.
+        </p>
+        <div class="law-hero-ctas" data-reveal style="--delay: 300ms;">
+          <a href="/contacto" class="btn-primary-large">
+            Agendar Pilotaje
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- QUÉ EXIGE LA LEY -->
+    <section class="law-requirements page-surface section-tone-slate">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="law-section-header" data-reveal>
+          <span class="section-number">01</span>
+          <h2 class="law-section-title">
+            ¿Qué Exige la Ley<br />
+            <span class="text-accent">y Desde Cuándo?</span>
+          </h2>
+        </div>
+        
+        <div class="law-timeline" data-reveal style="--delay: 150ms;">
+          <div class="timeline-item soft-card">
+            <div class="timeline-date">Marzo 2026</div>
+            <div class="timeline-content">
+              <h4>Entrada en Vigencia</h4>
+              <p>La prohibición comienza con el inicio del año escolar 2026.</p>
+            </div>
+          </div>
+          <div class="timeline-item soft-card">
+            <div class="timeline-date">Junio 2026</div>
+            <div class="timeline-content">
+              <h4>Actualización RICE</h4>
+              <p>Los colegios tienen hasta el 30 de junio para actualizar su Reglamento Interno de Convivencia Escolar.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="law-bullets" data-reveal style="--delay: 300ms;">
+          <div class="law-bullet soft-card">
+            <div class="bullet-icon bullet-red">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+            </div>
+            <div>
+              <h4>Prohibición Total en Aula</h4>
+              <p>Sin uso de celulares, tablets o smartwatches durante actividades curriculares. Aplica desde Pre-Kinder hasta 4° Medio.</p>
+            </div>
+          </div>
+          
+          <div class="law-bullet soft-card">
+            <div class="bullet-icon bullet-green">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h4>Excepciones Definidas</h4>
+              <p>Salud con diagnóstico médico, emergencias/catástrofes, uso pedagógico solicitado por docente, o solicitud fundada del apoderado.</p>
+            </div>
+          </div>
+          
+          <div class="law-bullet soft-card">
+            <div class="bullet-icon bullet-blue">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div>
+              <h4>Reglamento Obligatorio</h4>
+              <p>El RICE debe definir las medidas concretas, protocolos de aplicación y consecuencias del incumplimiento.</p>
+            </div>
+          </div>
+          
+          <div class="law-bullet soft-card">
+            <div class="bullet-icon bullet-yellow">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              </svg>
+            </div>
+            <div>
+              <h4>Fiscalización Activa</h4>
+              <p>La Superintendencia de Educación definirá mecanismos y consecuencias para la aplicación.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEMAS DE SOLO PROHIBIR -->
+    <section class="law-problems page-surface section-tone-dark">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="law-section-header" data-reveal>
+          <span class="section-number">02</span>
+          <h2 class="law-section-title">
+            Problemas de<br />
+            <span class="text-accent">Solo Prohibir</span>
+          </h2>
+          <p class="law-section-desc">
+            La experiencia internacional muestra que una prohibición sin mecanismo de cumplimiento 
+            genera más conflictos que soluciones.
+          </p>
+        </div>
+        
+        <div class="problems-grid" data-reveal style="--delay: 150ms;">
+          <div class="problem-card soft-card">
+            <div class="problem-icon">😶</div>
+            <h4>Uso Oculto</h4>
+            <p>Los estudiantes esconden el celular y lo usan "por debajo". Imposible de fiscalizar constantemente.</p>
+          </div>
+          
+          <div class="problem-card soft-card">
+            <div class="problem-icon">⚡</div>
+            <h4>Conflictos Diarios</h4>
+            <p>Discusiones repetitivas entre profesores y estudiantes. Tensión con apoderados que no entienden las reglas.</p>
+          </div>
+          
+          <div class="problem-card soft-card">
+            <div class="problem-icon">📋</div>
+            <h4>Sin Evidencia</h4>
+            <p>"¿Cómo demuestro que estoy cumpliendo?" Sin protocolo formal, no hay documentación para la Superintendencia.</p>
+          </div>
+          
+          <div class="problem-card soft-card">
+            <div class="problem-icon">🔄</div>
+            <h4>Reglas Inconsistentes</h4>
+            <p>Cada profesor aplica la norma de forma diferente. Los estudiantes explotan las inconsistencias.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOKKIT COMO SOLUCIÓN -->
+    <section class="law-solution page-surface section-tone-slate">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="law-section-header" data-reveal>
+          <span class="section-number">03</span>
+          <h2 class="law-section-title">
+            Blokkit Como<br />
+            <span class="text-accent">Medida del Reglamento</span>
+          </h2>
+          <p class="law-section-desc">
+            Solución de custodia: el alumno conserva su teléfono, pero no puede usarlo durante la clase.
+          </p>
+        </div>
+        
+        <div class="solution-grid" data-reveal style="--delay: 150ms;">
+          <div class="solution-card glass-card">
+            <div class="solution-number">1</div>
+            <h4>Cumplimiento Sin Fricción</h4>
+            <p>El teléfono queda inutilizable durante la clase. Sin discusiones, sin tentaciones, sin "uso escondido".</p>
+          </div>
+          
+          <div class="solution-card glass-card">
+            <div class="solution-number">2</div>
+            <h4>Protocolo + Evidencia</h4>
+            <p>Kit completo: fundas + dock + procedimiento + señalética + anexo para el reglamento interno.</p>
+          </div>
+          
+          <div class="solution-card glass-card">
+            <div class="solution-number">3</div>
+            <h4>Manejo de Excepciones</h4>
+            <p>Protocolo claro para emergencias y salud. Los apoderados saben exactamente cómo funciona.</p>
+          </div>
+          
+          <div class="solution-card glass-card">
+            <div class="solution-number">4</div>
+            <h4>Tecnología Pasiva</h4>
+            <p>Jaula de Faraday certificada. Sin emisión de señales, sin interferencia. 100% legal.</p>
+          </div>
+        </div>
+        
+        <div class="solution-cta" data-reveal style="--delay: 300ms;">
+          <a href="/contacto" class="btn-primary-large">
+            Solicitar Cotización Institucional
+            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ PARA APODERADOS -->
+    <section class="law-faq page-surface section-tone-dark">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6">
+        <div class="law-section-header" data-reveal>
+          <span class="section-number">04</span>
+          <h2 class="law-section-title">
+            Preguntas Frecuentes<br />
+            <span class="text-accent">Para Apoderados</span>
+          </h2>
+        </div>
+        
+        <div class="faq-list" data-reveal style="--delay: 150ms;">
+          <details class="faq-item soft-card">
+            <summary class="faq-question">
+              <span>¿Y si necesito contactar a mi hijo en una emergencia?</span>
+              <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              La ley contempla excepciones para emergencias y catástrofes. El colegio define un protocolo donde, 
+              ante una situación urgente, se puede contactar vía secretaría o inspectoría, quienes pueden 
+              autorizar la apertura inmediata del Blokkit.
+            </div>
+          </details>
+          
+          <details class="faq-item soft-card">
+            <summary class="faq-question">
+              <span>Mi hijo necesita el celular por una condición de salud</span>
+              <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              La ley permite excepciones para condiciones de salud diagnosticadas por un médico que requieran 
+              monitoreo periódico. El colegio puede establecer un protocolo especial donde el estudiante 
+              no usa Blokkit o tiene acceso autorizado en ciertos momentos.
+            </div>
+          </details>
+          
+          <details class="faq-item soft-card">
+            <summary class="faq-question">
+              <span>¿El teléfono se puede dañar dentro del Blokkit?</span>
+              <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              No. El Blokkit es una funda de tela con malla de Faraday. No emite ninguna señal, no tiene 
+              componentes eléctricos activos y no puede dañar el dispositivo de ninguna forma. El teléfono 
+              simplemente no recibe señal mientras está dentro.
+            </div>
+          </details>
+          
+          <details class="faq-item soft-card">
+            <summary class="faq-question">
+              <span>¿Es legal usar dispositivos que bloquean señales?</span>
+              <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              Blokkit NO es un inhibidor o jammer (que sí son ilegales en Chile). Es una solución física tipo 
+              jaula de Faraday que simplemente bloquea pasivamente las señales al teléfono guardado dentro. 
+              No emite interferencia y es 100% legal.
+            </div>
+          </details>
+          
+          <details class="faq-item soft-card">
+            <summary class="faq-question">
+              <span>¿Qué pasa si mi hijo no quiere entregar el celular?</span>
+              <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </summary>
+            <div class="faq-answer">
+              El reglamento interno del colegio define las consecuencias. Con Blokkit, el estudiante conserva 
+              su teléfono físicamente (no lo entrega a nadie), solo lo guarda en la funda. Esto reduce la 
+              resistencia significativamente respecto a la confiscación tradicional.
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="law-final-cta section-tone-slate">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="final-cta-shell text-center">
+          <h2 class="final-cta-title" data-reveal>
+            ¿Listo para Cumplir<br />
+            <span class="text-accent">Sin Conflicto?</span>
+          </h2>
+          <p class="final-cta-desc" data-reveal style="--delay: 100ms;">
+            Agenda un pilotaje gratuito o solicita una cotización para tu establecimiento.
+          </p>
+          <div class="final-cta-buttons" data-reveal style="--delay: 200ms;">
+            <a href="/contacto" class="btn-primary-large">
+              Agendar Pilotaje
+              <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+            <a href="/" class="btn-secondary-large">
+              Volver al Inicio
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .law-page .text-accent {
+    color: #22d3ee !important;
+  }
+
+  .law-hero {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 12rem;
+    padding-bottom: 5.4rem;
+    background:
+      linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+      radial-gradient(920px 360px at 12% -10%, rgba(34, 211, 238, 0.18), transparent 62%),
+      radial-gradient(760px 300px at 86% 14%, rgba(45, 212, 191, 0.1), transparent 66%),
+      linear-gradient(180deg, #121212 0%, #080808 55%, #050505 100%);
+    background-size: 64px 64px, 64px 64px, auto, auto, auto;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .law-hero-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(620px 280px at 50% 0%, rgba(34, 211, 238, 0.12) 0%, transparent 66%),
+      radial-gradient(520px 260px at 20% 92%, rgba(45, 212, 191, 0.1) 0%, transparent 64%);
+  }
+
+  .law-badge {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(103, 232, 249, 0.36);
+    background: rgba(6, 18, 20, 0.78);
+    color: #a5f3fc;
+    padding: 0.44rem 1rem;
+    border-radius: 999px;
+    font-size: 0.77rem;
+    font-weight: 800;
+    margin-bottom: 1.35rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .law-hero-title {
+    font-size: clamp(2.9rem, 6vw, 5rem);
+    line-height: 0.94;
+    margin-bottom: 1rem;
+    color: #f9fafb !important;
+  }
+
+  .law-hero-subtitle {
+    font-size: 1.04rem;
+    color: rgba(229, 231, 235, 0.84);
+    max-width: 64ch;
+    margin: 0 auto 2rem;
+    line-height: 1.68;
+  }
+
+  .law-hero-ctas {
+    display: flex;
+    justify-content: center;
+  }
+
+  .law-page .btn-primary-large,
+  .law-page .btn-primary-large:hover,
+  .law-page .btn-primary-large:focus-visible,
+  .law-page .btn-primary-large:visited {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #67e8f9 0%, #22d3ee 58%, #06b6d4 100%);
+    box-shadow:
+      0 0 0 1px rgba(165, 243, 252, 0.35) inset,
+      0 14px 34px rgba(8, 145, 178, 0.35);
+  }
+
+  .law-page .btn-primary-large:hover {
+    box-shadow:
+      0 0 0 1px rgba(165, 243, 252, 0.46) inset,
+      0 18px 42px rgba(8, 145, 178, 0.44);
+  }
+
+  .law-page .btn-secondary-large,
+  .law-page .btn-secondary-large:hover,
+  .law-page .btn-secondary-large:focus-visible,
+  .law-page .btn-secondary-large:visited {
+    color: #f9fafb !important;
+    border-color: rgba(103, 232, 249, 0.44);
+    background: rgba(8, 18, 20, 0.75);
+  }
+
+  .law-page .btn-secondary-large:hover {
+    border-color: rgba(165, 243, 252, 0.65);
+    background: rgba(8, 22, 24, 0.9);
+  }
+
+  .law-requirements,
+  .law-problems,
+  .law-solution,
+  .law-faq {
+    position: relative;
+    padding-top: 5.5rem;
+    padding-bottom: 5.5rem;
+    border-top: 1px solid rgba(23, 23, 23, 0.12);
+    border-bottom: 1px solid rgba(23, 23, 23, 0.12);
+  }
+
+  .law-requirements.section-tone-slate,
+  .law-solution.section-tone-slate,
+  .law-final-cta.section-tone-slate {
+    background:
+      linear-gradient(rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.035) 1px, transparent 1px),
+      radial-gradient(760px 320px at 14% -6%, rgba(34, 211, 238, 0.12), transparent 62%),
+      linear-gradient(180deg, #fafaf9 0%, #f1f1ef 100%);
+    background-size: 72px 72px, 72px 72px, auto, auto;
+  }
+
+  .law-problems.section-tone-dark,
+  .law-faq.section-tone-dark {
+    background:
+      linear-gradient(rgba(34, 211, 238, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.045) 1px, transparent 1px),
+      radial-gradient(820px 320px at 86% -8%, rgba(34, 211, 238, 0.16), transparent 62%),
+      linear-gradient(180deg, #111111 0%, #070707 100%);
+    background-size: 72px 72px, 72px 72px, auto, auto;
+  }
+
+  .law-section-header {
+    margin-bottom: 2.2rem;
+  }
+
+  .section-number {
+    display: inline-block;
+    font-size: 0.74rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: 0.3rem 0.74rem;
+    border-radius: 999px;
+  }
+
+  .section-tone-dark .section-number {
+    color: #a5f3fc;
+    border: 1px solid rgba(103, 232, 249, 0.34);
+    background: rgba(8, 23, 31, 0.66);
+  }
+
+  .section-tone-slate .section-number {
+    color: #0e7490;
+    border: 1px solid rgba(8, 145, 178, 0.28);
+    background: rgba(207, 250, 254, 0.7);
+  }
+
+  .law-section-title {
+    font-size: clamp(2.2rem, 5vw, 3.1rem);
+    line-height: 1.05;
+    margin-top: 0.62rem;
+  }
+
+  .section-tone-dark .law-section-title {
+    color: #f9fafb !important;
+  }
+
+  .section-tone-slate .law-section-title {
+    color: #171717 !important;
+  }
+
+  .law-section-desc {
+    font-size: 1rem;
+    max-width: 66ch;
+    margin-top: 0.78rem;
+  }
+
+  .section-tone-dark .law-section-desc {
+    color: rgba(226, 232, 240, 0.82) !important;
+  }
+
+  .section-tone-slate .law-section-desc {
+    color: rgba(23, 23, 23, 0.82) !important;
+  }
+
+  .law-timeline {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+    flex-wrap: wrap;
+  }
+
+  .timeline-item,
+  .law-bullet,
+  .problem-card,
+  .solution-card,
+  .faq-item {
+    border-radius: 1rem;
+    border: 1px solid;
+  }
+
+  .section-tone-dark .timeline-item,
+  .section-tone-dark .law-bullet,
+  .section-tone-dark .problem-card,
+  .section-tone-dark .solution-card,
+  .section-tone-dark .faq-item {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.03);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+  }
+
+  .section-tone-slate .timeline-item,
+  .section-tone-slate .law-bullet,
+  .section-tone-slate .problem-card,
+  .section-tone-slate .solution-card,
+  .section-tone-slate .faq-item {
+    border-color: rgba(23, 23, 23, 0.15);
+    background: #ffffff;
+    box-shadow: 0 14px 30px rgba(23, 23, 23, 0.12);
+  }
+
+  .timeline-item {
+    flex: 1;
+    min-width: 260px;
+    padding: 1.2rem 1.15rem 1.05rem;
+  }
+
+  .timeline-date {
+    font-size: 1rem;
+    color: #06b6d4;
+    margin-bottom: 0.42rem;
+    letter-spacing: 0.04em;
+  }
+
+  .timeline-content h4 {
+    font-size: 1rem;
+    font-weight: 800;
+    margin-bottom: 0.32rem;
+  }
+
+  .section-tone-dark .timeline-content h4 {
+    color: #f9fafb;
+  }
+
+  .section-tone-slate .timeline-content h4 {
+    color: #171717;
+  }
+
+  .timeline-content p {
+    font-size: 0.9rem;
+    line-height: 1.58;
+  }
+
+  .section-tone-dark .timeline-content p {
+    color: rgba(226, 232, 240, 0.78);
+  }
+
+  .section-tone-slate .timeline-content p {
+    color: rgba(23, 23, 23, 0.78);
+  }
+
+  .law-bullets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .law-bullet {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    padding: 1rem 0.95rem;
+  }
+
+  .bullet-icon {
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 0.74rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid rgba(34, 211, 238, 0.24);
+  }
+
+  .bullet-red {
+    background: rgba(239, 68, 68, 0.14);
+    color: #dc2626;
+  }
+
+  .bullet-green {
+    background: rgba(34, 211, 238, 0.15);
+    color: #06b6d4;
+  }
+
+  .bullet-blue {
+    background: rgba(45, 212, 191, 0.18);
+    color: #0f766e;
+  }
+
+  .bullet-yellow {
+    background: rgba(245, 158, 11, 0.16);
+    color: #b45309;
+  }
+
+  .law-bullet h4 {
+    font-size: 0.98rem;
+    font-weight: 800;
+    margin-bottom: 0.18rem;
+  }
+
+  .section-tone-dark .law-bullet h4 {
+    color: #f9fafb;
+  }
+
+  .section-tone-slate .law-bullet h4 {
+    color: #171717;
+  }
+
+  .law-bullet p {
+    font-size: 0.88rem;
+    line-height: 1.58;
+  }
+
+  .section-tone-dark .law-bullet p {
+    color: rgba(226, 232, 240, 0.77);
+  }
+
+  .section-tone-slate .law-bullet p {
+    color: rgba(23, 23, 23, 0.78);
+  }
+
+  .problems-grid,
+  .solution-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .problem-card {
+    padding: 1.3rem 1.2rem;
+    text-align: left;
+  }
+
+  .problem-icon {
+    width: 2.95rem;
+    height: 2.95rem;
+    border-radius: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    margin-bottom: 0.65rem;
+    background: rgba(34, 211, 238, 0.16);
+    border: 1px solid rgba(103, 232, 249, 0.28);
+  }
+
+  .problem-card h4 {
+    font-size: 1.14rem;
+    margin-bottom: 0.45rem;
+  }
+
+  .section-tone-dark .problem-card h4 {
+    color: #f9fafb;
+  }
+
+  .section-tone-slate .problem-card h4 {
+    color: #171717;
+  }
+
+  .problem-card p {
+    font-size: 0.9rem;
+    line-height: 1.58;
+  }
+
+  .section-tone-dark .problem-card p {
+    color: rgba(226, 232, 240, 0.76);
+  }
+
+  .section-tone-slate .problem-card p {
+    color: rgba(23, 23, 23, 0.78);
+  }
+
+  .solution-grid {
+    margin-bottom: 2rem;
+  }
+
+  .solution-card {
+    padding: 1.32rem 1.2rem 1.18rem 1.36rem;
+    position: relative;
+  }
+
+  .solution-number {
+    position: absolute;
+    top: -0.54rem;
+    left: 1rem;
+    width: 1.76rem;
+    height: 1.76rem;
+    background: linear-gradient(135deg, #a5f3fc 0%, #67e8f9 100%);
+    color: #0e7490;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px rgba(34, 211, 238, 0.32);
+  }
+
+  .solution-card h4 {
+    font-size: 1.12rem;
+    margin-bottom: 0.34rem;
+    margin-top: 0.35rem;
+  }
+
+  .section-tone-dark .solution-card h4 {
+    color: #f9fafb;
+  }
+
+  .section-tone-slate .solution-card h4 {
+    color: #171717;
+  }
+
+  .solution-card p {
+    font-size: 0.9rem;
+    line-height: 1.58;
+  }
+
+  .section-tone-dark .solution-card p {
+    color: rgba(226, 232, 240, 0.78);
+  }
+
+  .section-tone-slate .solution-card p {
+    color: rgba(23, 23, 23, 0.78);
+  }
+
+  .solution-cta {
+    text-align: center;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .faq-item {
+    overflow: hidden;
+  }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.12rem;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
+  }
+
+  .section-tone-dark .faq-question {
+    color: #f9fafb;
+  }
+
+  .section-tone-slate .faq-question {
+    color: #171717;
+  }
+
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: #06b6d4;
+    transition: transform 0.2s ease;
+  }
+
+  .faq-item[open] .faq-icon {
+    transform: rotate(180deg);
+  }
+
+  .faq-answer {
+    padding: 0 1.12rem 1rem;
+    font-size: 0.93rem;
+    line-height: 1.66;
+  }
+
+  .section-tone-dark .faq-answer {
+    color: rgba(226, 232, 240, 0.78);
+  }
+
+  .section-tone-slate .faq-answer {
+    color: rgba(23, 23, 23, 0.78);
+  }
+
+  .law-final-cta {
+    padding: 5.4rem 0 6rem;
+    border-top: 1px solid rgba(23, 23, 23, 0.12);
+    border-bottom: 1px solid rgba(23, 23, 23, 0.12);
+  }
+
+  .final-cta-shell {
+    max-width: 920px;
+    margin: 0 auto;
+    border-radius: 2rem;
+    border: 1px solid rgba(34, 211, 238, 0.24);
+    background:
+      radial-gradient(560px 240px at 50% 12%, rgba(34, 211, 238, 0.22) 0%, transparent 62%),
+      radial-gradient(340px 200px at 18% 82%, rgba(45, 212, 191, 0.12) 0%, transparent 64%),
+      linear-gradient(160deg, rgba(21, 21, 21, 0.97) 0%, rgba(8, 8, 8, 0.96) 100%);
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.28);
+    padding: 4.2rem 2rem 3.8rem;
+  }
+
+  .final-cta-title {
+    font-size: clamp(2.6rem, 5vw, 4rem);
+    line-height: 1.02;
+    margin-bottom: 1rem;
+    color: #f9fafb !important;
+  }
+
+  .final-cta-desc {
+    color: rgba(229, 231, 235, 0.82);
+    font-size: 1.02rem;
+    margin-bottom: 2rem;
+  }
+
+  .final-cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 1024px) {
+    .law-hero {
+      min-height: 64vh;
+    }
+
+    .law-timeline {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .law-hero {
+      min-height: auto;
+      padding-top: 10.7rem;
+      padding-bottom: 4.6rem;
+    }
+
+    .law-hero-title {
+      font-size: clamp(2.35rem, 11vw, 3.1rem);
+    }
+
+    .law-hero-subtitle {
+      font-size: 0.98rem;
+    }
+
+    .law-bullets,
+    .problems-grid,
+    .solution-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .law-requirements,
+    .law-problems,
+    .law-solution,
+    .law-faq {
+      padding-top: 4.3rem;
+      padding-bottom: 4.3rem;
+    }
+
+    .final-cta-shell {
+      padding: 2.7rem 1rem 2.5rem;
+      border-radius: 1.25rem;
+    }
+
+    .final-cta-desc {
+      font-size: 0.95rem;
+    }
+  }
+</style>
