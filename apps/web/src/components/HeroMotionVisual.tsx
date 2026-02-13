@@ -155,8 +155,9 @@ const AiIcon = () => (
 export default function HeroMotionVisual() {
   return (
     <>
-      <div style={sceneStyle} aria-hidden="true">
+      <div className="hero-motion-scene" style={sceneStyle} aria-hidden="true">
         <div
+          className="hero-motion-glow"
           style={{
             position: 'absolute',
             inset: '8%',
@@ -171,6 +172,7 @@ export default function HeroMotionVisual() {
         {[0, 0.6, 1.2].map((delay, index) => (
           <div
             key={index}
+            className="hero-motion-ring"
             style={{
               ...ringStyle,
               animation: `heroRing 4s linear ${delay}s infinite`,
@@ -181,6 +183,7 @@ export default function HeroMotionVisual() {
         <img
           src="/images/blokkit-fundas.png"
           alt="Fundas BloKKit"
+          className="hero-motion-product"
           style={{
             position: 'absolute',
             inset: 0,
@@ -254,6 +257,10 @@ export default function HeroMotionVisual() {
       </div>
 
       <style>{`
+        .hero-motion-scene {
+          overflow: visible;
+        }
+
         @keyframes heroGlow {
           0%, 100% { opacity: 0.26; transform: scale(0.97); }
           50% { opacity: 0.55; transform: scale(1.03); }
@@ -271,6 +278,27 @@ export default function HeroMotionVisual() {
           50% { transform: translate3d(0, 0, 0) scale(1); }
           75% { transform: translate3d(-4px, 14px, 0) scale(0.995); }
           100% { transform: translate3d(0, 0, 0) scale(1); }
+        }
+
+        @media (max-width: 768px) {
+          .hero-motion-scene {
+            width: 92% !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            margin-top: 2% !important;
+          }
+
+          .hero-motion-product {
+            width: 86% !important;
+          }
+
+          .hero-motion-ring {
+            inset: 17% !important;
+          }
+
+          .hero-motion-glow {
+            inset: 11% !important;
+          }
         }
 
       `}</style>
