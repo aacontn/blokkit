@@ -3671,3 +3671,83 @@
     width: 100%;
     margin-top: 1rem;
   }
+
+  /* ==================== MOBILE PERFORMANCE GUARDRAILS ==================== */
+  @media (max-width: 768px) {
+    .hero-section,
+    .hero-content {
+      min-height: 100svh;
+    }
+
+    .gradient-orb {
+      filter: blur(40px);
+      animation: none !important;
+      opacity: 0.3;
+    }
+
+    .orb-3,
+    .orb-4 {
+      display: none !important;
+    }
+
+    .center-glow {
+      animation: none !important;
+      opacity: 0.45;
+    }
+
+    .grid-overlay {
+      animation: none !important;
+      mask-image: none;
+    }
+
+    .signal-interference,
+    .particles,
+    .scroll-indicator {
+      display: none !important;
+    }
+
+    .hero-motion-product,
+    .hero-float-card,
+    .tech-render,
+    .badge-dot,
+    .scroll-dot {
+      animation: none !important;
+    }
+
+    .hero-chip,
+    .problem-metric,
+    .ley-brief-alert,
+    .modal-overlay {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    [data-reveal] {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .problem-stage::before,
+    .problem-stage-overlay::after,
+    .problem-kicker,
+    .problem-title-line > span,
+    .problem-subtitle,
+    .problem-copy,
+    .problem-signal,
+    .problem-ctas,
+    .problem-metric {
+      transition: none !important;
+    }
+
+    .problem-stage:not(.revealed) .problem-kicker,
+    .problem-stage:not(.revealed) .problem-subtitle,
+    .problem-stage:not(.revealed) .problem-copy,
+    .problem-stage:not(.revealed) .problem-signal,
+    .problem-stage:not(.revealed) .problem-ctas,
+    .problem-stage:not(.revealed) .problem-metric,
+    .problem-stage:not(.revealed) .problem-title-line > span {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }

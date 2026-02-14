@@ -100,7 +100,7 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
   </div>
 </header>
 
-<script>
+<script is:inline>
   const initMobileHeaderMenu = () => {
     const header = document.getElementById("main-header");
     if (!header || header.dataset.mobileBound === "true") {
@@ -139,7 +139,12 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
     header.dataset.mobileBound = "true";
   };
 
-  document.addEventListener("DOMContentLoaded", initMobileHeaderMenu);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initMobileHeaderMenu, { once: true });
+  } else {
+    initMobileHeaderMenu();
+  }
+
   document.addEventListener("astro:page-load", initMobileHeaderMenu);
 </script>
 
@@ -440,6 +445,45 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
     .mobile-menu,
     .mobile-toggle {
       display: none !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .header-pill {
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    #header-inner.scrolled {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .mobile-menu {
+      transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+    }
+
+    .mobile-menu.is-open {
+      transition: opacity 0.2s ease;
+    }
+
+    .mobile-menu-backdrop {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      background: rgba(0, 0, 0, 0.72);
+    }
+
+    .mobile-menu-surface {
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform;
+    }
+
+    .mobile-menu-top,
+    .mobile-menu-kicker,
+    .mobile-nav-list li,
+    .mobile-actions {
+      transition-duration: 0.24s;
+      transition-delay: 0ms !important;
     }
   }
 

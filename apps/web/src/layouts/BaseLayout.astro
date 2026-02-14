@@ -219,7 +219,7 @@ const structuredData = {
       <link
         rel="preload"
         as="image"
-        href="/images/blokkit-fundas.png"
+        href="/images/blokkit-fundas.webp"
         fetchpriority="high"
       />
     )}
@@ -380,20 +380,6 @@ const structuredData = {
   /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
-  }
-
-  @supports (content-visibility: auto) {
-    .home-slate-flow,
-    .product-slate-flow,
-    .contact-flow-surface,
-    .law-page > section:not(.law-hero),
-    .benefit-section,
-    .architecture,
-    .module-section,
-    .ops-section {
-      content-visibility: auto;
-      contain-intrinsic-size: 1px 900px;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {
