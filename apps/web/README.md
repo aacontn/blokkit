@@ -1,43 +1,44 @@
-# Astro Starter Kit: Minimal
+# BloKKit Web
 
-```sh
-npm create astro@latest -- --template minimal
-```
+Sitio corporativo de BloKKit construido con Astro.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Modo de salida
 
-## 🚀 Project Structure
+La app web corre en `output: "server"` con `@astrojs/node` para soportar endpoints como `/api/contact`.
+El build genera `apps/web/dist/server/entry.mjs` para ejecutar en Node.
 
-Inside of your Astro project, you'll see the following folders and files:
+## Comandos
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Desde la raíz del monorepo:
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- `npm run dev --workspace=@blokkit/web`
+- `npm run build --workspace=@blokkit/web`
+- `npm run preview --workspace=@blokkit/web`
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Variables de entorno SEO / Analytics
 
-Any static assets, like images, can be placed in the `public/` directory.
+Opcionales. Si no se definen, el sitio sigue funcionando sin scripts de tracking.
 
-## 🧞 Commands
+- `PUBLIC_SITE_URL` (ej: `https://blokkit.cl`)
+- `PUBLIC_GOOGLE_SITE_VERIFICATION`
+- `PUBLIC_BING_SITE_VERIFICATION`
+- `PUBLIC_FACEBOOK_DOMAIN_VERIFICATION`
+- `PUBLIC_GTM_ID` (ej: `GTM-XXXXXXX`)
+- `PUBLIC_GA_MEASUREMENT_ID` (ej: `G-XXXXXXXXXX`, solo si no usas GTM)
+- `PUBLIC_TWITTER_HANDLE` (ej: `@blokkit_cl`)
 
-All commands are run from the root of the project, from a terminal:
+Notas:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- Si existe `PUBLIC_GTM_ID`, se prioriza GTM.
+- Si no existe GTM y sí existe `PUBLIC_GA_MEASUREMENT_ID`, se inyecta `gtag.js`.
+- Se emite un evento de page view en carga inicial y en `astro:page-load`.
 
-## 👀 Want to learn more?
+## Variables de entorno formulario de contacto (Mail Relay API)
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Necesarias para que `POST /api/contact` pueda enviar correos usando `POST /api/v1/send_emails`.
+
+- `MAILRELAY_API_TOKEN` (API key en header `X-AUTH-TOKEN`)
+- `MAILRELAY_FROM_EMAIL` (remitente validado en Mail Relay)
+- `MAILRELAY_FROM_NAME` (opcional, default: `BloKKit Web`)
+- `MAILRELAY_API_BASE_URL` (opcional, default: `https://blokkit.ipzmarketing.com/api/v1`)
+- `CONTACT_FORM_TO_EMAIL` (opcional, default: `hola@blokkit.cl`)

@@ -6,14 +6,19 @@ const navLinks = [
   { href: "/evidencia", label: "Evidencia" },
   { href: "/prensa", label: "Prensa" },
 ];
+const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
 ---
 
 <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out py-6 header-initial">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6">
+  <div class="max-w-7xl mx-auto layout-shell">
     <nav id="header-inner" class="header-pill flex items-center justify-between">
       <!-- Logo -->
       <a href="/" class="flex items-center gap-2 logo-link ml-3">
-        <img src="/images/Logo-Blokkit-white.png" alt="BloKKit - Solución de control de celulares para colegios y empresas" class="h-7 transition-all duration-300" />
+        <img
+          src="/images/Logo-Blokkit-white.png"
+          alt="BloKKit - Solución de control de celulares para colegios y empresas"
+          class="h-7 transition-all duration-300"
+        />
       </a>
       
       <!-- Navigation Links -->
@@ -80,7 +85,7 @@ const navLinks = [
       <p class="mobile-menu-kicker">Navegacion</p>
 
       <ul class="mobile-nav-list">
-        {navLinks.map((link, index) => (
+        {mobileNavLinks.map((link, index) => (
           <li style={`--i: ${index + 1};`}>
             <a href={link.href} class="mobile-nav-link">{link.label}</a>
           </li>
@@ -437,4 +442,5 @@ const navLinks = [
       display: none !important;
     }
   }
+
 </style>

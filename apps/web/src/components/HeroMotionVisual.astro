@@ -1,0 +1,373 @@
+---
+---
+<div class="hero-motion-scene" aria-hidden="true">
+  <div class="hero-motion-glow"></div>
+
+  <div class="hero-motion-ring ring-1"></div>
+  <div class="hero-motion-ring ring-2"></div>
+  <div class="hero-motion-ring ring-3"></div>
+
+  <img
+    src="/images/blokkit-fundas.png"
+    alt="Fundas BloKKit"
+    class="hero-motion-product"
+    loading="eager"
+    decoding="async"
+    fetchpriority="high"
+  />
+
+  <div class="hero-chip hero-chip--signals">
+    <span class="chip-icons">
+      <span class="blocked-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 19v-2" />
+          <path d="M9 19v-5" />
+          <path d="M13 19v-8" />
+          <path d="M17 19V8" />
+        </svg>
+      </span>
+      <span class="blocked-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M7 7l10 10-5 4V3l5 4L7 17" />
+        </svg>
+      </span>
+      <span class="blocked-icon">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M2.4 9.2a15 15 0 0 1 19.2 0" />
+          <path d="M5.2 12.8a10 10 0 0 1 13.6 0" />
+          <path d="M8.8 16.2a5 5 0 0 1 6.4 0" />
+          <circle cx="12" cy="19.3" r="1.1" />
+        </svg>
+      </span>
+    </span>
+    <span class="chip-title">GSM · BT · WiFi</span>
+    <span class="chip-label">Bloqueo efectivo</span>
+  </div>
+
+  <div class="hero-chip hero-chip--platform">
+    <span class="chip-icons">
+      <span class="icon-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3.5" y="4.5" width="17" height="11" rx="2" />
+          <path d="M10 20h4" />
+          <path d="M8 15.5l2.4-2.2 2.2 2.2 3.4-3.4" />
+        </svg>
+      </span>
+    </span>
+    <span class="chip-title">Plataforma</span>
+    <span class="chip-label">Medicion y trazabilidad</span>
+  </div>
+
+  <div class="hero-chip hero-chip--unlock">
+    <span class="chip-icons">
+      <span class="icon-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="6.5" y="10" width="11" height="9" rx="2" />
+          <path d="M9 10V8a3 3 0 0 1 6 0v2" />
+        </svg>
+      </span>
+      <span class="icon-badge">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="5" y="7" width="14" height="10" rx="2" />
+          <path d="M12 4v3M8 17v2M16 17v2M3 12h2M19 12h2" />
+          <circle cx="10" cy="12" r="1" />
+          <circle cx="14" cy="12" r="1" />
+        </svg>
+      </span>
+    </span>
+    <span class="chip-title">Desbloqueo</span>
+    <span class="chip-label">Manual o Smart</span>
+  </div>
+</div>
+
+<style>
+  .hero-motion-scene {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+  }
+
+  .hero-motion-glow {
+    position: absolute;
+    inset: 8%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 194, 209, 0.5) 0%, rgba(0, 194, 209, 0.2) 32%, rgba(0, 194, 209, 0) 68%);
+    filter: blur(10px);
+    animation: heroGlow 4.2s ease-in-out infinite;
+  }
+
+  .hero-motion-ring {
+    position: absolute;
+    inset: 15%;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 194, 209, 0.28);
+    pointer-events: none;
+  }
+
+  .ring-1 {
+    animation: heroRing 4s linear 0s infinite;
+  }
+
+  .ring-2 {
+    animation: heroRing 4s linear 0.6s infinite;
+  }
+
+  .ring-3 {
+    animation: heroRing 4s linear 1.2s infinite;
+  }
+
+  .hero-motion-product {
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 96%;
+    max-width: 1040px;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 50px rgba(0, 0, 0, 0.36));
+    z-index: 3;
+    will-change: transform;
+    animation: heroProductFloat 5.6s ease-in-out infinite;
+  }
+
+  .hero-chip {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 13px 15px;
+    border-radius: 15px;
+    height: 106px;
+    width: 252px;
+    background: rgba(6, 10, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.38);
+    backdrop-filter: blur(10px);
+    z-index: 4;
+  }
+
+  .hero-chip--signals {
+    top: 9%;
+    left: 1%;
+  }
+
+  .hero-chip--platform {
+    top: 44%;
+    right: 1%;
+  }
+
+  .hero-chip--unlock {
+    left: 3%;
+    bottom: 22%;
+  }
+
+  .chip-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .icon-badge,
+  .blocked-icon {
+    width: 26px;
+    height: 26px;
+    border-radius: 8px;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #e2f9ff;
+  }
+
+  .icon-badge svg,
+  .blocked-icon svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .blocked-icon {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .blocked-icon::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(132deg, transparent 42%, rgba(239, 68, 68, 0.08) 43%, rgba(239, 68, 68, 0.08) 57%, transparent 58%);
+    pointer-events: none;
+  }
+
+  .blocked-icon::after {
+    content: "";
+    position: absolute;
+    width: 36px;
+    height: 1.5px;
+    background: rgba(239, 68, 68, 0.52);
+    transform: rotate(-38deg);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
+  }
+
+  .chip-title {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 19.5px;
+    line-height: 1;
+    white-space: nowrap;
+    color: #fff;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  .chip-label {
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+    color: rgba(255, 255, 255, 0.75);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  @keyframes heroGlow {
+    0%, 100% { opacity: 0.26; transform: scale(0.97); }
+    50% { opacity: 0.55; transform: scale(1.03); }
+  }
+
+  @keyframes heroRing {
+    0% { transform: scale(0.84); opacity: 0; }
+    50% { opacity: 0.28; }
+    100% { transform: scale(1.2); opacity: 0; }
+  }
+
+  @keyframes heroProductFloat {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    25% { transform: translate3d(4px, -14px, 0) scale(1.01); }
+    50% { transform: translate3d(0, 0, 0) scale(1); }
+    75% { transform: translate3d(-4px, 14px, 0) scale(0.995); }
+    100% { transform: translate3d(0, 0, 0) scale(1); }
+  }
+
+  @media (max-width: 1024px) {
+    .hero-chip {
+      width: 200px;
+      min-height: 92px;
+      height: auto;
+      padding: 10px 12px;
+      gap: 6px;
+    }
+
+    .chip-title {
+      font-size: 16px;
+    }
+
+    .chip-label {
+      font-size: 8px;
+    }
+
+    .hero-motion-product {
+      animation-duration: 7.2s;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .hero-motion-scene {
+      width: 96%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-motion-product {
+      width: 86%;
+      animation: none;
+    }
+
+    .hero-motion-ring,
+    .hero-motion-glow {
+      display: none;
+    }
+
+    .hero-chip {
+      width: 146px;
+      min-height: 68px;
+      padding: 8px 9px;
+      gap: 4px;
+      border-radius: 12px;
+    }
+
+    .hero-chip--signals {
+      top: 10%;
+      left: 0;
+    }
+
+    .hero-chip--platform {
+      top: 50%;
+      right: 0;
+    }
+
+    .hero-chip--unlock {
+      left: 4%;
+      bottom: 6%;
+    }
+
+    .chip-icons {
+      gap: 5px;
+    }
+
+    .icon-badge,
+    .blocked-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+    }
+
+    .icon-badge svg,
+    .blocked-icon svg {
+      width: 11px;
+      height: 11px;
+    }
+
+    .chip-title {
+      font-size: 12px;
+    }
+
+    .chip-label {
+      font-size: 7px;
+      letter-spacing: 0.04em;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .hero-chip {
+      width: 134px;
+      min-height: 64px;
+      padding: 7px 8px;
+    }
+
+    .hero-chip--signals {
+      top: 8%;
+    }
+
+    .hero-chip--platform {
+      top: 52%;
+    }
+
+    .hero-chip--unlock {
+      bottom: 4%;
+    }
+
+    .chip-title {
+      font-size: 11px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-motion-glow,
+    .hero-motion-ring,
+    .hero-motion-product {
+      animation: none;
+    }
+  }
+</style>

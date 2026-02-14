@@ -106,88 +106,87 @@ const highlights = [
       </section>
     </div>
   </main>
-</BaseLayout>
+  <script slot="scripts">
+    const rememberedEmailKey = "blokkit.rememberedEmail";
+    const lastEmailKey = "blokkit.lastEmail";
 
-<script>
-  const rememberedEmailKey = "blokkit.rememberedEmail";
-  const lastEmailKey = "blokkit.lastEmail";
+    const setupLoginForm = () => {
+      const form = document.getElementById("login-form");
+      const feedback = document.getElementById("login-feedback");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      const rememberInput = document.getElementById("remember");
+      const submitButton = form?.querySelector(".login-submit");
 
-  const setupLoginForm = () => {
-    const form = document.getElementById("login-form");
-    const feedback = document.getElementById("login-feedback");
-    const emailInput = document.getElementById("email");
-    const passwordInput = document.getElementById("password");
-    const rememberInput = document.getElementById("remember");
-    const submitButton = form?.querySelector(".login-submit");
-
-    if (!form || !feedback || !emailInput || !passwordInput || !rememberInput || !submitButton) {
-      return;
-    }
-
-    if (form.dataset.bound === "true") {
-      return;
-    }
-    form.dataset.bound = "true";
-
-    const savedEmail = window.localStorage.getItem(rememberedEmailKey) ?? window.sessionStorage.getItem(lastEmailKey);
-    if (savedEmail) {
-      emailInput.value = savedEmail;
-      if (window.localStorage.getItem(rememberedEmailKey)) {
-        rememberInput.checked = true;
+      if (!form || !feedback || !emailInput || !passwordInput || !rememberInput || !submitButton) {
+        return;
       }
-    }
 
-    const setState = (message, type, loading) => {
-      feedback.textContent = message;
-      feedback.dataset.type = type;
-      submitButton.classList.toggle("is-loading", loading);
-      submitButton.disabled = loading;
+      if (form.dataset.bound === "true") {
+        return;
+      }
+      form.dataset.bound = "true";
+
+      const savedEmail = window.localStorage.getItem(rememberedEmailKey) ?? window.sessionStorage.getItem(lastEmailKey);
+      if (savedEmail) {
+        emailInput.value = savedEmail;
+        if (window.localStorage.getItem(rememberedEmailKey)) {
+          rememberInput.checked = true;
+        }
+      }
+
+      const setState = (message, type, loading) => {
+        feedback.textContent = message;
+        feedback.dataset.type = type;
+        submitButton.classList.toggle("is-loading", loading);
+        submitButton.disabled = loading;
+      };
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+        const remember = rememberInput.checked;
+
+        if (!email || !password) {
+          setState("Completa correo y contrasena para continuar.", "error", false);
+          return;
+        }
+
+        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        if (!emailValid) {
+          setState("Ingresa un correo institucional valido.", "error", false);
+          return;
+        }
+
+        if (password.length < 8) {
+          setState("La contrasena debe tener al menos 8 caracteres.", "error", false);
+          return;
+        }
+
+        if (remember) {
+          window.localStorage.setItem(rememberedEmailKey, email);
+        } else {
+          window.localStorage.removeItem(rememberedEmailKey);
+          window.sessionStorage.setItem(lastEmailKey, email);
+        }
+
+        setState("Validando acceso...", "info", true);
+
+        const portalBase = form.dataset.portalUrl || "http://localhost:5173";
+        const redirectUrl = `${portalBase.replace(/\/$/, "")}/?email=${encodeURIComponent(email)}`;
+
+        window.setTimeout(() => {
+          window.location.assign(redirectUrl);
+        }, 450);
+      });
     };
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const email = emailInput.value.trim();
-      const password = passwordInput.value;
-      const remember = rememberInput.checked;
-
-      if (!email || !password) {
-        setState("Completa correo y contrasena para continuar.", "error", false);
-        return;
-      }
-
-      const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      if (!emailValid) {
-        setState("Ingresa un correo institucional valido.", "error", false);
-        return;
-      }
-
-      if (password.length < 8) {
-        setState("La contrasena debe tener al menos 8 caracteres.", "error", false);
-        return;
-      }
-
-      if (remember) {
-        window.localStorage.setItem(rememberedEmailKey, email);
-      } else {
-        window.localStorage.removeItem(rememberedEmailKey);
-        window.sessionStorage.setItem(lastEmailKey, email);
-      }
-
-      setState("Validando acceso...", "info", true);
-
-      const portalBase = form.dataset.portalUrl || "http://localhost:5173";
-      const redirectUrl = `${portalBase.replace(/\/$/, "")}/?email=${encodeURIComponent(email)}`;
-
-      window.setTimeout(() => {
-        window.location.assign(redirectUrl);
-      }, 450);
-    });
-  };
-
-  document.addEventListener("DOMContentLoaded", setupLoginForm);
-  document.addEventListener("astro:page-load", setupLoginForm);
-</script>
+    document.addEventListener("DOMContentLoaded", setupLoginForm);
+    document.addEventListener("astro:page-load", setupLoginForm);
+  </script>
+</BaseLayout>
 
 <style>
   body {

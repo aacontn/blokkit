@@ -1,4 +1,5 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@source "../**/*.{astro,html,js,jsx,ts,tsx,md,mdx}";
 
 /* === BLOKKIT DESIGN TOKENS === */
 
@@ -60,6 +61,14 @@ h4 {
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
+}
+
+.layout-shell {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 22px !important;
+  padding-right: 22px !important;
 }
 
 .text-accent {
@@ -344,6 +353,11 @@ a.btn-secondary-large {
 }
 
 @media (max-width: 768px) {
+  .layout-shell {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
   .page-hero {
     padding-top: 10.5rem;
     padding-bottom: 4.25rem;
@@ -366,5 +380,12 @@ a.btn-secondary-large {
   .btn-secondary-large {
     width: 100%;
     min-width: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .layout-shell {
+    padding-left: 26px !important;
+    padding-right: 26px !important;
   }
 }

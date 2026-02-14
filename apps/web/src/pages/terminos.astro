@@ -1,0 +1,66 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+const pageTitle = "Términos y Condiciones | BloKKit";
+const pageDescription =
+  "Términos y condiciones de uso del sitio web de BloKKit y lineamientos generales para información comercial.";
+---
+
+<BaseLayout title={pageTitle} description={pageDescription}>
+  <Header />
+
+  <main class="min-h-screen pt-32 pb-20">
+    <section class="max-w-4xl mx-auto layout-shell" data-reveal>
+      <span class="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs tracking-[0.08em] uppercase text-cyan-200">
+        Documento legal
+      </span>
+      <h1 class="mt-5 text-4xl md:text-5xl font-semibold leading-tight">Términos y Condiciones</h1>
+      <p class="mt-4 text-white/70">Última actualización: 13 de febrero de 2026.</p>
+      <p class="mt-6 text-white/80 leading-relaxed">
+        Al navegar este sitio aceptas estos términos. Si no estás de acuerdo, debes abstenerte de usarlo.
+      </p>
+    </section>
+
+    <section class="max-w-4xl mx-auto layout-shell mt-10 space-y-7 text-white/80 leading-relaxed" data-reveal style="--delay: 120ms;">
+      <article>
+        <h2 class="text-2xl font-semibold text-white">1. Uso del sitio</h2>
+        <p class="mt-3">
+          El contenido se entrega con fines informativos y comerciales. No puede utilizarse para actividades ilícitas ni para afectar la disponibilidad o seguridad del servicio.
+        </p>
+      </article>
+
+      <article>
+        <h2 class="text-2xl font-semibold text-white">2. Propiedad intelectual</h2>
+        <p class="mt-3">
+          Marcas, textos, diseños y materiales publicados pertenecen a BloKKit o a sus respectivos titulares. Su uso requiere autorización previa.
+        </p>
+      </article>
+
+      <article>
+        <h2 class="text-2xl font-semibold text-white">3. Información comercial</h2>
+        <p class="mt-3">
+          Cotizaciones, plazos y alcances de implementación pueden variar según diagnóstico, volumen y condiciones operativas de cada institución.
+        </p>
+      </article>
+
+      <article>
+        <h2 class="text-2xl font-semibold text-white">4. Enlaces externos</h2>
+        <p class="mt-3">
+          El sitio puede incluir enlaces a terceros. BloKKit no controla ni garantiza el contenido de esas plataformas externas.
+        </p>
+      </article>
+
+      <article>
+        <h2 class="text-2xl font-semibold text-white">5. Contacto</h2>
+        <p class="mt-3">
+          Para consultas legales o comerciales, escribe a
+          <a href="mailto:hola@blokkit.cl" class="text-cyan-300 hover:text-cyan-200"> hola@blokkit.cl</a>.
+        </p>
+      </article>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

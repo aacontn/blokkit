@@ -37,7 +37,7 @@ const directChannels = [
         <div class="gradient-orb orb-1"></div>
         <div class="gradient-orb orb-2"></div>
       </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6">
+      <div class="max-w-7xl mx-auto layout-shell">
         <span class="page-label" data-reveal>Contacto</span>
         <h1 class="page-title" data-reveal>
           Implementa BloKKit para<br />
@@ -51,7 +51,7 @@ const directChannels = [
 
     <div class="contact-flow-surface section-tone-slate">
       <section class="contact-shell-section">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto layout-shell">
           <div class="contact-grid">
             <article class="contact-form-card" data-reveal>
               <span class="contact-card-kicker">Asesoria inicial</span>
@@ -60,11 +60,19 @@ const directChannels = [
                 Te enviamos una propuesta con alcance, fases de activacion y tiempos estimados segun tu operacion.
               </p>
 
-              <form class="contact-form">
+              <form class="contact-form" id="contact-form">
+                <input
+                  type="text"
+                  name="website"
+                  class="visually-hidden"
+                  tabindex="-1"
+                  autocomplete="off"
+                  aria-hidden="true"
+                />
                 <div class="form-row">
                   <div class="form-group">
                     <label for="name">Nombre y apellido</label>
-                    <input type="text" id="name" name="name" placeholder="Tu nombre" />
+                    <input type="text" id="name" name="name" placeholder="Tu nombre" required />
                   </div>
                   <div class="form-group">
                     <label for="role">Cargo</label>
@@ -75,7 +83,7 @@ const directChannels = [
                 <div class="form-row">
                   <div class="form-group">
                     <label for="email">Email institucional</label>
-                    <input type="email" id="email" name="email" placeholder="tu@email.com" />
+                    <input type="email" id="email" name="email" placeholder="tu@email.com" required />
                   </div>
                   <div class="form-group">
                     <label for="institution">Institucion o empresa</label>
@@ -101,12 +109,14 @@ const directChannels = [
                     name="message"
                     rows="5"
                     placeholder="Ej: cantidad de personas, tipo de operacion y principal problema que quieres resolver"
+                    required
                   ></textarea>
                 </div>
 
                 <button type="submit" class="btn-primary-large btn-submit">Recibir propuesta</button>
               </form>
 
+              <p class="form-feedback" id="contact-feedback" aria-live="polite"></p>
               <p class="form-note">Respuesta inicial en menos de 24 horas habiles.</p>
             </article>
 
@@ -146,7 +156,7 @@ const directChannels = [
       </section>
 
       <section class="activation-section">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto layout-shell">
           <header class="activation-header" data-reveal>
             <span class="page-label">Proceso de trabajo</span>
             <h2 class="activation-title">
@@ -311,6 +321,29 @@ const directChannels = [
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
   }
 
+  .form-group select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    min-height: 3.2rem;
+    padding-right: 2.85rem;
+    font-size: 16px;
+    line-height: 1.35;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230f172a' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.95rem center;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .form-group select option {
+    font-size: 16px;
+    line-height: 1.35;
+  }
+
+  .form-group select::-ms-expand {
+    display: none;
+  }
+
   .form-group textarea {
     resize: vertical;
     min-height: 140px;
@@ -336,6 +369,28 @@ const directChannels = [
     margin: 0.95rem 0 0;
     font-size: 0.8rem;
     color: rgba(51, 65, 85, 0.76) !important;
+  }
+
+  .form-feedback {
+    min-height: 1.2rem;
+    margin: 0.75rem 0 0;
+    font-size: 0.84rem;
+    color: #0e7490 !important;
+  }
+
+  .form-feedback.is-error {
+    color: #b91c1c !important;
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
   }
 
   .contact-side {
@@ -400,7 +455,7 @@ const directChannels = [
   }
 
   .contact-card--dark h3 {
-    color: #f8fafc;
+    color: #f8fafc !important;
   }
 
   .contact-card--dark .contact-card-kicker {
@@ -559,17 +614,63 @@ const directChannels = [
 
   @media (max-width: 768px) {
     .contact-shell-section {
-      padding: 4.8rem 0;
+      padding: 3.8rem 0;
     }
 
     .contact-form-card {
-      padding: 1.25rem 1rem 1.1rem;
-      border-radius: 1.05rem;
+      padding: 1rem 0.9rem 0.95rem;
+      border-radius: 0.95rem;
+    }
+
+    .contact-form {
+      gap: 0.78rem;
+    }
+
+    .form-group {
+      gap: 0.36rem;
+    }
+
+    .form-group label {
+      font-size: 0.77rem;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      padding: 0.7rem 0.8rem;
+      border-radius: 0.72rem;
+      min-height: 2.75rem;
+    }
+
+    .form-group textarea {
+      min-height: 112px;
     }
 
     .form-row {
       grid-template-columns: 1fr;
-      gap: 0.75rem;
+      gap: 0.62rem;
+    }
+
+    .form-group select,
+    .form-group select option {
+      font-size: 16px;
+    }
+
+    .btn-submit {
+      min-height: 3rem;
+      font-size: 0.9rem;
+      padding-top: 0.88rem;
+      padding-bottom: 0.88rem;
+    }
+
+    .form-note {
+      margin-top: 0.72rem;
+      font-size: 0.75rem;
+    }
+
+    .form-feedback {
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
     }
 
     .contact-side {
@@ -587,3 +688,61 @@ const directChannels = [
 
   }
 </style>
+
+<script>
+  const form = document.querySelector("#contact-form");
+  const feedback = document.querySelector("#contact-feedback");
+  const submitButton = form?.querySelector(".btn-submit");
+  const defaultSubmitText = submitButton?.textContent ?? "Recibir propuesta";
+
+  const setFeedback = (message, isError = false) => {
+    if (!feedback) return;
+    feedback.textContent = message;
+    feedback.classList.toggle("is-error", isError);
+  };
+
+  if (form && feedback && submitButton) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) {
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Enviando...";
+      setFeedback("Enviando tu solicitud...");
+
+      try {
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          const errorMessage =
+            typeof result.message === "string" && result.message
+              ? result.message
+              : "No pudimos enviar la solicitud. Intenta de nuevo.";
+
+          setFeedback(errorMessage, true);
+          return;
+        }
+
+        form.reset();
+        setFeedback("Listo. Recibimos tu mensaje y te responderemos pronto.");
+      } catch {
+        setFeedback("No pudimos enviar la solicitud. Intenta de nuevo.", true);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultSubmitText;
+      }
+    });
+  }
+</script>
