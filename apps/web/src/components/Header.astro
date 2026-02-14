@@ -55,7 +55,7 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
       <button
         type="button"
         class="mobile-toggle md:hidden p-2 text-white/70 hover:text-white"
-        aria-label="Abrir menu"
+        aria-label="Abrir menú"
         aria-expanded="false"
         aria-controls="mobile-menu"
         data-mobile-toggle
@@ -71,18 +71,18 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
   </div>
 
   <div id="mobile-menu" class="mobile-menu md:hidden" data-mobile-menu aria-hidden="true">
-    <button type="button" class="mobile-menu-backdrop" aria-label="Cerrar menu" data-mobile-close></button>
-    <div class="mobile-menu-surface" role="dialog" aria-modal="true" aria-label="Menu principal">
+    <button type="button" class="mobile-menu-backdrop" aria-label="Cerrar menú" data-mobile-close></button>
+    <div class="mobile-menu-surface" role="dialog" aria-modal="true" aria-label="Menú principal">
       <div class="mobile-menu-top">
         <img src="/images/Logo-Blokkit-white.png" alt="BloKKit" class="mobile-menu-logo" />
-        <button type="button" class="mobile-close" aria-label="Cerrar menu" data-mobile-close>
+        <button type="button" class="mobile-close" aria-label="Cerrar menú" data-mobile-close>
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 6l12 12M18 6l-12 12" />
           </svg>
         </button>
       </div>
 
-      <p class="mobile-menu-kicker">Navegacion</p>
+      <p class="mobile-menu-kicker">Navegación</p>
 
       <ul class="mobile-nav-list">
         {mobileNavLinks.map((link, index) => (
@@ -119,7 +119,7 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
     const setMenuState = (open) => {
       menu.classList.toggle("is-open", open);
       menu.setAttribute("aria-hidden", open ? "false" : "true");
-      button.setAttribute("aria-label", open ? "Cerrar menu" : "Abrir menu");
+      button.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
       button.setAttribute("aria-expanded", open ? "true" : "false");
       openIcon.classList.toggle("hidden", open);
       closeIcon.classList.toggle("hidden", !open);
@@ -450,13 +450,13 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
 
   @media (max-width: 767px) {
     .header-pill {
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
 
     #header-inner.scrolled {
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
     }
 
     .mobile-menu {
@@ -474,8 +474,9 @@ const mobileNavLinks = [{ href: "/", label: "Inicio" }, ...navLinks];
     }
 
     .mobile-menu-surface {
+      background: linear-gradient(180deg, rgba(8, 13, 14, 0.98), rgba(6, 9, 10, 0.99));
       transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: transform;
+      will-change: auto;
     }
 
     .mobile-menu-top,

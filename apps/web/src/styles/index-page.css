@@ -2889,13 +2889,13 @@
   @media (max-width: 768px) {
     .hero-section,
     .hero-content {
-      min-height: 100svh;
+      min-height: auto;
     }
 
     .gradient-orb {
-      filter: blur(34px);
-      opacity: 0.34;
-      animation-duration: 22s;
+      filter: blur(26px);
+      opacity: 0.24;
+      animation: none;
     }
 
     .orb-3 {
@@ -2903,25 +2903,39 @@
     }
 
     .center-glow {
-      opacity: 0.5;
-      animation-duration: 6s;
+      display: none;
     }
 
     .grid-overlay {
-      animation: grid-move 40s linear infinite;
+      animation: none;
       mask-image: none;
-      opacity: 0.55;
+      background-size: 96px 96px;
+      opacity: 0.32;
     }
 
     .hero-chip,
     .problem-metric,
-    .ley-brief-alert {
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
+    .ley-brief-alert,
+    .ley-compare-column,
+    .como-step-card,
+    .segment-row,
+    .solution-card,
+    .final-cta-shell {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .home-light-flow {
+      background: linear-gradient(180deg, #d8e0e9 0%, #e6edf5 100%);
+    }
+
+    .home-slate-flow {
+      background: linear-gradient(180deg, #dce5ef 0%, #e6edf5 100%);
+      border-top: 1px solid rgba(148, 163, 184, 0.2);
     }
 
     [data-reveal] {
-      animation-duration: 0.46s;
+      animation-duration: 0.36s;
       animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
     }
 

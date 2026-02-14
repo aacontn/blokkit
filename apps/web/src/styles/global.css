@@ -32,6 +32,16 @@
   --spacing-section: 6rem;
 }
 
+:root {
+  --layout-gutter: clamp(20px, 5.2vw, 30px);
+}
+
+@media (min-width: 769px) {
+  :root {
+    --layout-gutter: 22px;
+  }
+}
+
 /* === BASE STYLES === */
 body {
   font-family: var(--font-body);
@@ -67,8 +77,8 @@ h4 {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 22px !important;
-  padding-right: 22px !important;
+  padding-left: var(--layout-gutter) !important;
+  padding-right: var(--layout-gutter) !important;
 }
 
 .text-accent {
@@ -354,11 +364,6 @@ a.btn-secondary-large {
 }
 
 @media (max-width: 768px) {
-  .layout-shell {
-    padding-left: 24px !important;
-    padding-right: 24px !important;
-  }
-
   .page-hero {
     padding-top: 10.5rem;
     padding-bottom: 4.25rem;
@@ -382,11 +387,26 @@ a.btn-secondary-large {
     width: 100%;
     min-width: 0;
   }
+
+  /* Mobile performance profile */
+  body {
+    background: var(--color-bg-dark);
+  }
+
+  .gradient-orb {
+    filter: blur(40px);
+    opacity: 0.3;
+  }
+
+  .glass,
+  .page-label {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 @media (max-width: 480px) {
-  .layout-shell {
-    padding-left: 26px !important;
-    padding-right: 26px !important;
+  :root {
+    --layout-gutter: clamp(18px, 6vw, 24px);
   }
 }

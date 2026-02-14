@@ -5,23 +5,23 @@ import Footer from "../components/Footer.astro";
 
 const pageTitle = "Evidencia | BloKKit";
 const pageDescription =
-  "Evidencia internacional y contexto Chile para decisiones de implementacion BloKKit con medicion real de impacto.";
+  "Evidencia internacional y contexto Chile para decisiones de implementación BloKKit con medición real de impacto.";
 
 const chileSignals = [
   {
     value: "87%",
     title: "NNA con smartphone propio",
-    detail: "Ninos, ninas y adolescentes de 9 a 17 anos en Chile con acceso a internet movil."
+    detail: "Niños, niñas y adolescentes de 9 a 17 años en Chile con acceso a internet móvil."
   },
   {
     value: "94% / 81%",
-    title: "Penetracion por rango etario",
-    detail: "14 a 17 anos: 94%. 8 a 12 anos: 81%."
+    title: "Penetración por rango etario",
+    detail: "14 a 17 años: 94%. 8 a 12 años: 81%."
   },
   {
-    value: "8,9 anos",
+    value: "8,9 años",
     title: "Edad del primer celular",
-    detail: "Descenso desde 11 anos (2016) a 8,9 anos (2022)."
+    detail: "Descenso desde 11 años (2016) a 8,9 años (2022)."
   },
   {
     value: "46%",
@@ -33,130 +33,130 @@ const chileSignals = [
 const internationalScale = [
   {
     value: "27",
-    title: "Paises con operacion Yondr",
-    detail: "Con oficinas reportadas en Londres y Dublin."
+    title: "Países con operación Yondr",
+    detail: "Con oficinas reportadas en Londres y Dublín."
   },
   {
     value: "35",
-    title: "Paises con escuelas asociadas",
-    detail: "Implementacion en miles de escuelas y cobertura en los 50 estados de EE.UU."
+    title: "Países con escuelas asociadas",
+    detail: "Implementación en miles de escuelas y cobertura en los 50 estados de EE.UU."
   },
   {
     value: "2.000",
     title: "Escuelas usando bolsas (2024)",
-    detail: "Estimacion incluida en el material internacional compilado."
+    detail: "Estimación incluida en el material internacional compilado."
   },
   {
     value: "x10",
-    title: "Crecimiento en contratos publicos",
+    title: "Crecimiento en contratos públicos",
     detail: "De USD 174.000 (2021) a USD 2,13M (2023) en contratos gubernamentales en EE.UU."
   },
   {
     value: "900",
-    title: "Escuelas en estudio de percepcion",
-    detail: "Base reportada para medir mejoras academicas, de conducta y participacion."
+    title: "Escuelas en estudio de percepción",
+    detail: "Base reportada para medir mejoras académicas, de conducta y participación."
   },
   {
     value: "20+",
-    title: "Paises con red PhoneLocker",
-    detail: "Distribucion europea desde Reino Unido con socios con licencia."
+    title: "Países con red PhoneLocker",
+    detail: "Distribución europea desde Reino Unido con socios con licencia."
   }
 ];
 
 const regulationSignals = [
   {
     country: "Francia",
-    status: "Prohibicion total",
+    status: "Prohibición total",
     detail: "Primaria y secundaria desde 2018."
   },
   {
     country: "Reino Unido",
-    status: "Guia nacional",
-    detail: "Linea 2023 para restringir uso en la jornada, incluidos recreos."
+    status: "Guía nacional",
+    detail: "Línea 2023 para restringir uso en la jornada, incluidos recreos."
   },
   {
     country: "Australia",
-    status: "Prohibicion por estados",
+    status: "Prohibición por estados",
     detail: "Implementada en varios estados, incluidos NSW y Victoria."
   },
   {
-    country: "Espana",
+    country: "España",
     status: "Restricciones por comunidad",
     detail: "Avance regulatorio en primaria y secundaria."
   },
   {
     country: "Estados Unidos",
-    status: "Regulacion por estado/distrito",
-    detail: "Creciente adopcion de politicas de restriccion en jornada escolar."
+    status: "Regulación por estado/distrito",
+    detail: "Creciente adopción de políticas de restricción en jornada escolar."
   },
   {
     country: "Chile",
-    status: "Recomendacion y autonomia",
-    detail: "Mineduc recomienda restricciones y cada establecimiento define su ejecucion."
+    status: "Recomendación y autonomía",
+    detail: "Mineduc recomienda restricciones y cada establecimiento define su ejecución."
   }
 ];
 
 const outcomes = [
   {
     metric: "+6,27%",
-    title: "Exito academico",
+    title: "Éxito académico",
     description:
-      "Estudio Yondr 2024 (mas de 37.000 calificaciones finales) reporta mejora tras restriccion telefonica."
+      "Estudio Yondr 2024 (más de 37.000 calificaciones finales) reporta mejora tras restricción telefónica."
   },
   {
     metric: "+38%",
-    title: "Aprobacion en 11 y 12",
+    title: "Aprobación en 11 y 12",
     description: "Aumento en calificaciones aprobatorias en cursos superiores."
   },
   {
     metric: "+14%",
-    title: "Mejor resultado en examenes",
-    description: "Escuelas con prohibicion efectiva muestran mejores resultados que escuelas sin control real."
+    title: "Mejor resultado en exámenes",
+    description: "Escuelas con prohibición efectiva muestran mejores resultados que escuelas sin control real."
   },
   {
     metric: "-20%",
     title: "Riesgo de uso en clase",
-    description: "Algunos estudios citados muestran caida de rendimiento cuando se usa telefono en aula."
+    description: "Algunos estudios citados muestran caída de rendimiento cuando se usa teléfono en aula."
   },
   {
     metric: "+10 min",
     title: "Tiempo docente recuperado",
-    description: "Docentes reportan hasta diez minutos adicionales por leccion para ensenanza."
+    description: "Docentes reportan hasta diez minutos adicionales por lección para enseñanza."
   },
   {
     metric: "65/74/83%",
     title: "Mejoras reportadas en 900 escuelas",
     description:
-      "65% mejora academica, 74% mejor conducta y 83% mayor participacion estudiantil."
+      "65% mejora académica, 74% mejor conducta y 83% mayor participación estudiantil."
   },
   {
     metric: "2x",
     title: "Ofsted sobresaliente en UK",
     description:
-      "Secundarias con prohibicion efectiva muestran mas probabilidad de calificacion sobresaliente."
+      "Secundarias con prohibición efectiva muestran más probabilidad de calificación sobresaliente."
   }
 ];
 
 const pilotProjection = [
   {
     value: ">90%",
-    title: "Reduccion del uso movil en aula",
-    detail: "Caida esperada de distracciones digitales durante la clase."
+    title: "Reducción del uso móvil en aula",
+    detail: "Caída esperada de distracciones digitales durante la clase."
   },
   {
     value: "6%-14%",
-    title: "Mejora academica proyectada",
-    detail: "Rango de mejora proyectado en desempeno, especialmente en alumnos rezagados."
+    title: "Mejora académica proyectada",
+    detail: "Rango de mejora proyectado en desempeño, especialmente en alumnos rezagados."
   },
   {
     value: ">70%",
     title: "Menos incidentes disciplinarios",
-    detail: "Disminucion esperada de conflictos asociados a celular."
+    detail: "Disminución esperada de conflictos asociados a celular."
   },
   {
     value: "+10 min",
-    title: "Recuperacion de clase efectiva",
-    detail: "Tiempo que puede volver a ensenanza por cada hora de clase."
+    title: "Recuperación de clase efectiva",
+    detail: "Tiempo que puede volver a enseñanza por cada hora de clase."
   }
 ];
 
@@ -164,9 +164,9 @@ const monitoringTracks = [
   {
     title: "Aprendizaje",
     points: [
-      "Variacion de notas por asignatura y curso",
+      "Variación de notas por asignatura y curso",
       "Resultados de evaluaciones parciales",
-      "Asistencia y continuidad academica"
+      "Asistencia y continuidad académica"
     ]
   },
   {
@@ -178,7 +178,7 @@ const monitoringTracks = [
     ]
   },
   {
-    title: "Operacion",
+    title: "Operación",
     points: [
       "Uso efectivo de funda por jornada",
       "Aperturas autorizadas y excepciones",
@@ -204,7 +204,7 @@ const monitoringTracks = [
           <span class="text-accent">aplicada al contexto Chile</span>
         </h1>
         <p class="page-subtitle" data-reveal style="--delay: 200ms;">
-          Conoce cifras y resultados que respaldan la implementacion de BloKKit
+          Conoce cifras y resultados que respaldan la implementación de BloKKit
           en aprendizaje, convivencia y continuidad operativa.
         </p>
       </div>
@@ -216,7 +216,7 @@ const monitoringTracks = [
           <span class="page-label">Contexto Chile</span>
           <h2 class="section-title">Linea base de uso digital escolar</h2>
           <p class="section-lead">
-            La penetracion temprana y el alto tiempo de pantalla hacen que la implementacion requiera un mecanismo
+            La penetración temprana y el alto tiempo de pantalla hacen que la implementación requiera un mecanismo
             operativo diario, no solo una norma declarativa.
           </p>
         </div>
@@ -237,10 +237,10 @@ const monitoringTracks = [
       <div class="max-w-7xl mx-auto layout-shell">
         <div class="section-head" data-reveal>
           <span class="page-label">Escala internacional</span>
-          <h2 class="section-title">Adopcion y traccion de mercado</h2>
+          <h2 class="section-title">Adopción y tracción de mercado</h2>
           <p class="section-lead">
-            El material internacional muestra adopcion acelerada de modelos de restriccion fisica en escuelas,
-            junto con crecimiento de contratos publicos y despliegue multiregion.
+            El material internacional muestra adopción acelerada de modelos de restricción física en escuelas,
+            junto con crecimiento de contratos públicos y despliegue multirregión.
           </p>
         </div>
 
@@ -260,9 +260,9 @@ const monitoringTracks = [
       <div class="max-w-7xl mx-auto layout-shell">
         <div class="section-head" data-reveal>
           <span class="page-label">Panorama regulatorio</span>
-          <h2 class="section-title">Tendencia global de restriccion escolar</h2>
+          <h2 class="section-title">Tendencia global de restricción escolar</h2>
           <p class="section-lead">
-            Los enfoques varian por pais, pero la direccion es consistente: reducir uso de celulares en aula y estandarizar su cumplimiento.
+            Los enfoques varían por país, pero la dirección es consistente: reducir uso de celulares en aula y estandarizar su cumplimiento.
           </p>
         </div>
 
@@ -282,9 +282,9 @@ const monitoringTracks = [
       <div class="max-w-7xl mx-auto layout-shell">
         <div class="section-head" data-reveal>
           <span class="page-label">Resultados observados</span>
-          <h2 class="section-title">Evidencia de impacto academico y conducta</h2>
+          <h2 class="section-title">Evidencia de impacto académico y conducta</h2>
           <p class="section-lead">
-            En la base recopilada, el impacto mas consistente aparece cuando la restriccion se implementa con protocolo,
+            En la base recopilada, el impacto más consistente aparece cuando la restricción se implementa con protocolo,
             roles de apertura definidos y seguimiento continuo.
           </p>
         </div>
@@ -340,14 +340,14 @@ const monitoringTracks = [
           <div class="final-cta-card text-center">
             <h2 class="final-cta-title">
               Descubre el impacto de BloKKit<br />
-              en tu institucion
+              en tu institución
             </h2>
             <p class="final-cta-subtitle">
               Agenda una demo o solicita una cotizacion para implementar
               un plan operativo medible en aprendizaje, convivencia y foco.
             </p>
             <div class="final-cta-buttons">
-              <a href="/contacto" class="evidence-btn-primary">Solicitar informacion</a>
+              <a href="/contacto" class="evidence-btn-primary">Solicitar información</a>
               <a href="/contacto" class="evidence-btn-secondary">Agendar demo</a>
             </div>
           </div>

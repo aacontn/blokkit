@@ -1,18 +1,18 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const pageTitle = "Iniciar Sesion | BloKKit";
+const pageTitle = "Iniciar Sesión | BloKKit";
 const pageDescription = "Accede al portal BloKKit para gestionar operaciones, soporte y cumplimiento institucional.";
 const portalUrl = import.meta.env.PUBLIC_PORTAL_URL ?? "http://localhost:5173";
 
 const highlights = [
   {
     title: "Visibilidad operativa",
-    detail: "Monitorea adopcion por sede y detecta brechas en minutos."
+    detail: "Monitorea adopción por sede y detecta brechas en minutos."
   },
   {
     title: "Respuesta coordinada",
-    detail: "Conecta soporte, coordinacion academica y direccion en un solo flujo."
+    detail: "Conecta soporte, coordinación académica y dirección en un solo flujo."
   },
   {
     title: "Trazabilidad completa",
@@ -32,9 +32,9 @@ const highlights = [
           <span class="brand-pill">Mi Portal BloKKit</span>
         </div>
 
-        <h1>Control y continuidad, sin friccion.</h1>
+        <h1>Control y continuidad, sin fricción.</h1>
         <p class="brand-copy">
-          Inicia sesion para revisar cumplimiento, incidentes y reportes de toda tu institucion desde un panel unificado.
+          Inicia sesión para revisar cumplimiento, incidentes y reportes de toda tu institución desde un panel unificado.
         </p>
 
         <ul class="brand-highlights">
@@ -53,7 +53,7 @@ const highlights = [
         <header class="panel-header">
           <span class="panel-pill">Acceso Seguro</span>
           <h2>Bienvenido de vuelta</h2>
-          <p>Usa tu correo institucional para entrar al entorno de gestion.</p>
+          <p>Usa tu correo institucional para entrar al entorno de gestión.</p>
         </header>
 
         <form id="login-form" class="login-form" data-portal-url={portalUrl} novalidate>
@@ -64,7 +64,7 @@ const highlights = [
               name="email"
               type="email"
               autocomplete="email"
-              placeholder="tu@institucion.cl"
+              placeholder="tu@institución.cl"
               inputmode="email"
               required
             />
