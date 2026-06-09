@@ -793,11 +793,9 @@ body {
     color: var(--accent-strong);                     /* icon dark cyan on hover */
 }
 
-/* Arrow circle bg also matches inversion on hover */
-.btn--primary:hover::after {
-    background: var(--accent-strong);
-    color: #FFFFFF;
-}
+/* NOTE: do NOT set `background` (shorthand) on ::after hover — it wipes the
+   background-image that draws the SVG arrow. The proper hover rule lives
+   below and only touches background-color/position. */
 
 .btn--primary.btn--lg {
     padding: 8px 8px 8px 24px;
