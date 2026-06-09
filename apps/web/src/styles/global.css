@@ -338,6 +338,73 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════
+   LIQUID GLASS MATERIAL SYSTEM
+   .glass          — regular card material (dark sections)
+   .glass--subtle  — chrome (nav, pills, small UI)
+   .glass--heavy   — hero cards, modals, prominent surfaces
+   .glass--light   — glass over cream sections
+   ═══════════════════════════════════════════════════ */
+.glass,
+.glass--subtle,
+.glass--heavy,
+.glass--light {
+    position: relative;
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    backdrop-filter: var(--glass-backdrop);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.glass--subtle {
+    -webkit-backdrop-filter: var(--glass-backdrop-subtle);
+    backdrop-filter: var(--glass-backdrop-subtle);
+    border-radius: var(--radius-full);
+    box-shadow: var(--glass-highlight);
+}
+
+.glass--heavy {
+    background: var(--glass-bg-heavy);
+    -webkit-backdrop-filter: var(--glass-backdrop-heavy);
+    backdrop-filter: var(--glass-backdrop-heavy);
+    box-shadow: var(--glass-highlight-strong), var(--glass-shadow);
+}
+
+.glass--light {
+    background: var(--glass-bg-light);
+    border-color: var(--glass-border-light);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), var(--glass-shadow-light);
+}
+
+.glass:hover,
+.glass--heavy:hover {
+    background: var(--glass-bg-hover);
+    border-color: rgba(255, 255, 255, 0.20);
+}
+
+.glass--light:hover {
+    background: var(--glass-bg-light-hover);
+}
+
+/* Specular streak — diagonal light reflection that gives the "liquid" read.
+   Apply alongside any .glass* class. */
+.glass-streak::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(115deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.07) 38%,
+        rgba(255, 255, 255, 0.12) 42%,
+        rgba(255, 255, 255, 0.05) 48%,
+        transparent 60%);
+}
+
+/* ═══════════════════════════════════════════════════
    HERO MESH BACKGROUND — shared by all page heroes
    3 cyan orbs blurred into charcoal, gentle drift
    ═══════════════════════════════════════════════════ */
@@ -646,12 +713,21 @@ body {
 }
 
 .btn--primary {
-    background: var(--accent);
+    /* Liquid glass cyan: translucent tint over blur, specular top edge */
+    background: linear-gradient(180deg, rgba(127, 206, 236, 0.95) 0%, rgba(91, 190, 227, 0.88) 100%);
     color: #FFFFFF;
     padding: 6px 6px 6px 20px;
-    /* Tight padding to reduce thickness */
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
-    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+    backdrop-filter: var(--glass-backdrop-subtle);
+    -webkit-backdrop-filter: var(--glass-backdrop-subtle);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+        0 8px 24px rgba(127, 206, 236, 0.25);
+    transition: background 0.25s ease, color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.btn--primary:active {
+    transform: scale(0.98);
 }
 
 .btn--primary:hover {
@@ -776,10 +852,11 @@ body {
 /* ── Ghost button: slide-fill hover ── */
 .btn--ghost {
     color: var(--text-primary);
-    border: 1px solid var(--border-medium);
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop-subtle);
+    -webkit-backdrop-filter: var(--glass-backdrop-subtle);
+    box-shadow: var(--glass-highlight);
 }
 
 .btn--ghost::before {

@@ -1171,22 +1171,35 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     }
   }
 
-  /* ── Floating spec cards (editorial — hairline borders, not heavy glass) ── */
+  /* ── Floating spec cards — LIQUID GLASS material ── */
   .hero__glass-card {
     position: absolute;
     display: none;
     align-items: center;
     gap: var(--space-3);
     padding: var(--space-4) var(--space-5);
-    background: rgba(20, 19, 18, 0.65);
-    backdrop-filter: blur(14px) saturate(140%);
-    -webkit-backdrop-filter: blur(14px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 6px;
-    box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.05) inset,
-      0 16px 40px rgba(0, 0, 0, 0.6);
+    background: var(--glass-bg-heavy);
+    backdrop-filter: var(--glass-backdrop-heavy);
+    -webkit-backdrop-filter: var(--glass-backdrop-heavy);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--glass-highlight-strong), var(--glass-shadow);
+    overflow: hidden;
     z-index: 2;
+  }
+
+  /* Specular diagonal streak — the "liquid" reflection */
+  .hero__glass-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(115deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.08) 40%,
+      rgba(255, 255, 255, 0.13) 44%,
+      transparent 58%);
   }
 
   .hero__glass-card::before {
