@@ -276,7 +276,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
       <!-- Header -->
       <div style="text-align: center; max-width: 640px; margin: 0 auto var(--space-16);">
         <ScrollReveal client:visible>
-          <span class="label" style="display: inline-block; padding: 6px 14px; background: rgba(255, 255, 255, 0.12); border-radius: var(--radius-full); backdrop-filter: blur(4px);">· Operación Simple</span>
+          <span class="label" style="display: inline-block; padding: 6px 14px; background: rgba(37, 137, 199, 0.08); border: 1px solid rgba(37, 137, 199, 0.25); color: var(--accent-dark); border-radius: var(--radius-full);">· Operación Simple</span>
           <TextSplitReveal client:visible text="Cómo funciona" className="heading-2" style="margin-top: var(--space-6); margin-bottom: -0.15em; line-height: 1.1;" splitBy="word" delay={0.1} />
           <TextSplitReveal client:visible text="en 5 segundos" className="heading-2" style="margin-top: 0; line-height: 1.1; opacity: 0.65;" splitBy="word" delay={0.3} />
           <p class="body-lg" style="margin-top: var(--space-5); max-width: 480px; margin-inline: auto;">
@@ -478,12 +478,12 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
       <!-- Header -->
       <div style="max-width: 720px; margin-bottom: var(--space-10);">
         <ScrollReveal client:visible>
-          <span class="label" style="display: inline-block; padding: 6px 16px; background: rgba(255, 255, 255, 0.1); border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--text-secondary);">INTENCIÓN VS IMPLEMENTACIÓN</span>
-          <h2 class="heading-2" style="margin-top: var(--space-4); line-height: 1.1; font-weight: 800; color: var(--text-primary);">
+          <span class="label" style="display: inline-block; padding: 6px 16px; background: rgba(37, 137, 199, 0.08); border-radius: var(--radius-full); border: 1px solid rgba(37, 137, 199, 0.25); color: var(--accent-dark);">INTENCIÓN VS IMPLEMENTACIÓN</span>
+          <h2 class="heading-2" style="margin-top: var(--space-4); line-height: 1.1; font-weight: 800; color: var(--text-dark);">
             ¿POR QUÉ ESTO IMPORTA?
-            <span style="display: block; color: var(--accent);">PROHIBIR POR SÍ SOLO NO CAMBIA CONDUCTA.</span>
+            <span style="display: block; color: var(--accent-dark);">PROHIBIR POR SÍ SOLO NO CAMBIA CONDUCTA.</span>
           </h2>
-          <p class="body-lg" style="color: var(--text-secondary); margin-top: var(--space-4);">
+          <p class="body-lg" style="color: var(--text-dark-secondary); margin-top: var(--space-4);">
             El objetivo puede ser correcto, pero el resultado depende de la ejecución diaria. La diferencia está en tener un estándar operativo y no solo una regla escrita.
           </p>
         </ScrollReveal>
@@ -562,11 +562,11 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     <div class="container" style="position: relative; z-index: 1;">
       <div style="text-align: center; margin-bottom: var(--space-12);">
         <ScrollReveal client:visible>
-          <span class="label" style="display: inline-block; padding: 6px 16px; background: rgba(255, 255, 255, 0.05); border-radius: var(--radius-full); border: 1px solid rgba(255, 255, 255, 0.1); color: var(--accent); letter-spacing: 0.1em; margin-bottom: var(--space-4); font-size: 0.75rem; font-weight: 700;">DÓNDE APLICA BLOKKIT</span>
-          <h2 class="heading-2" style="font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.1; font-weight: 800; color: var(--text-primary); text-transform: uppercase;">
-            UNA OPERACIÓN CLARA<br/>PARA CADA <span style="color: var(--accent);">TIPO DE ORGANIZACIÓN</span>
+          <span class="label" style="display: inline-block; padding: 6px 16px; background: rgba(37, 137, 199, 0.08); border-radius: var(--radius-full); border: 1px solid rgba(37, 137, 199, 0.25); color: var(--accent-dark); letter-spacing: 0.1em; margin-bottom: var(--space-4); font-size: 0.75rem; font-weight: 700;">DÓNDE APLICA BLOKKIT</span>
+          <h2 class="heading-2" style="font-size: clamp(2rem, 4vw, 2.5rem); line-height: 1.1; font-weight: 800; color: var(--text-dark); text-transform: uppercase;">
+            UNA OPERACIÓN CLARA<br/>PARA CADA <span style="color: var(--accent-dark);">TIPO DE ORGANIZACIÓN</span>
           </h2>
-          <p class="body-lg" style="color: var(--text-secondary); margin-top: var(--space-4); max-width: 800px; margin-inline: auto;">
+          <p class="body-lg" style="color: var(--text-dark-secondary); margin-top: var(--space-4); max-width: 800px; margin-inline: auto;">
              Podemos implementar en educación y universidades, en empresas e instituciones, en espacios restringidos y en operaciones de eventos, salud y servicios.
           </p>
         </ScrollReveal>
@@ -629,7 +629,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
       </div>
       
       <div style="text-align: center; margin-top: var(--space-10);">
-        <p class="body-sm" style="color: var(--text-secondary); max-width: 600px; margin-inline: auto;">
+        <p class="body-sm" style="color: var(--text-dark-secondary); max-width: 600px; margin-inline: auto;">
           BloKKit no impone una receta única: adapta el estándar para que el cumplimiento sea real en tu contexto.
         </p>
       </div>
@@ -1771,7 +1771,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
   }
 
   .ley__accent-text {
-    color: var(--accent);
+    color: var(--accent-dark);    /* readable cyan on cream */
     position: relative;
   }
 
@@ -2608,19 +2608,22 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     }
   }
 
+  /* VS cards — light glass on white section, dark text */
   .why-matters__card {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg-light);
+    border: 1px solid var(--glass-border-light);
     border-radius: var(--radius-xl);
     padding: var(--space-6);
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    backdrop-filter: var(--glass-backdrop-subtle);
+    -webkit-backdrop-filter: var(--glass-backdrop-subtle);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), var(--glass-shadow-light);
   }
 
   .why-matters__card--good {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(127, 206, 236, 0.3);
+    background: rgba(127, 206, 236, 0.10);
+    border: 1px solid rgba(37, 137, 199, 0.30);
   }
 
   .why-matters__tag {
@@ -2630,16 +2633,16 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     letter-spacing: 0.05em;
     padding: 4px 10px;
     border-radius: 100px;
-    background: rgba(255,255,255,0.05);
-    color: var(--text-secondary);
+    background: rgba(31, 31, 31, 0.05);
+    color: var(--text-dark-secondary);
     margin-bottom: var(--space-4);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(31, 31, 31, 0.10);
   }
 
   .why-matters__tag--good {
-    background: rgba(127, 206, 236, 0.14);
-    color: #fff;
-    border: 1px solid rgba(127, 206, 236, 0.3);
+    background: rgba(37, 137, 199, 0.10);
+    color: var(--accent-dark);
+    border: 1px solid rgba(37, 137, 199, 0.30);
   }
 
   .why-matters__card-header {
@@ -2652,7 +2655,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
   .why-matters__card-header h3 {
     font-size: 1rem;
     margin: 0;
-    color: #fff;
+    color: var(--text-dark);
   }
 
   .why-matters__list {
@@ -2664,7 +2667,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
 
   .why-matters__list li {
     font-size: 0.9rem;
-    color: var(--text-secondary);
+    color: var(--text-dark-secondary);
     margin-bottom: var(--space-3);
     padding-left: var(--space-4);
     position: relative;
@@ -2675,15 +2678,15 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     content: "·";
     position: absolute;
     left: 0;
-    color: rgba(255,255,255,0.4);
+    color: var(--accent-dark);
     font-weight: bold;
   }
 
   .why-matters__result {
     font-size: 0.9rem;
-    color: rgba(255,255,255,0.9);
+    color: var(--text-dark);
     padding-top: var(--space-4);
-    border-top: 1px solid rgba(255,255,255,0.05);
+    border-top: 1px solid rgba(31, 31, 31, 0.10);
   }
 
   .why-matters__vs {
@@ -2715,34 +2718,34 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
   }
 
   .why-matters__summary {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(37, 137, 199, 0.06);
     border-radius: var(--radius-lg);
     padding: var(--space-4) var(--space-6);
     font-size: 0.95rem;
-    color: #fff;
+    color: var(--text-dark);
     margin-bottom: var(--space-3);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(37, 137, 199, 0.18);
   }
 
   .why-matters__risk {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(251, 110, 96, 0.06);
     border-radius: var(--radius-lg);
     padding: var(--space-4) var(--space-6);
-    border: 1px solid rgba(255,255,255,0.05);
+    border: 1px solid rgba(251, 110, 96, 0.20);
   }
 
   .why-matters__risk h4 {
     font-size: 0.85rem;
     font-weight: 700;
     margin: 0 0 var(--space-1) 0;
-    color: rgba(255,255,255,0.8);
+    color: var(--data-coral);
     text-transform: uppercase;
     letter-spacing: 0.05em;
   }
 
   .why-matters__risk p {
     font-size: 0.95rem;
-    color: var(--text-secondary);
+    color: var(--text-dark-secondary);
     margin: 0;
   }
 </style>
