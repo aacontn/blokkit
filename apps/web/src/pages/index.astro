@@ -1571,26 +1571,28 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     flex-direction: column;
     justify-content: flex-start;
     gap: var(--space-3);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-top: 1px solid rgba(255, 255, 255, 0.15); /* Soft highlight edge */
+    /* Liquid glass material */
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-xl);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease, background 0.4s ease;
     height: 100%;
     overflow: hidden;
   }
 
-  /* Internal subtle corner glow */
+  /* Specular streak + corner glow */
   :global(.problem__metric::after) {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none;
-    border-radius: var(--radius-xl);
-    background: radial-gradient(120px circle at top right, rgba(127, 206, 236, 0.14), transparent 100%);
+    border-radius: inherit;
+    background:
+      linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.06) 44%, rgba(255, 255, 255, 0.10) 48%, transparent 60%),
+      radial-gradient(120px circle at top right, rgba(127, 206, 236, 0.12), transparent 100%);
     z-index: 0;
   }
 
@@ -1601,9 +1603,9 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
 
   :global(.problem__metric:hover) {
     transform: translateY(-8px) !important;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
-    border-color: rgba(255, 255, 255, 0.2);
+    background: var(--glass-bg-hover);
+    box-shadow: var(--glass-highlight-strong), 0 20px 48px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.22);
   }
 
   .problem__metric-icon {

@@ -33,7 +33,7 @@ const legalLinks = [
       <!-- Brand column -->
       <div class="footer__brand">
         <a href="/" aria-label="BloKKit">
-          <img src="/images/Logo-Blokkit.png" alt="BloKKit" width="140" height="42" loading="lazy" class="footer__logo" />
+          <img src="/images/Logo-Blokkit-white.png" alt="BloKKit" width="140" height="42" loading="lazy" class="footer__logo" />
         </a>
         <p class="footer__tagline">
           Ambientes libres de distracciones para instituciones que buscan el enfoque real.
@@ -116,7 +116,10 @@ const legalLinks = [
 
 <style>
   .footer {
-    background: var(--bg-light-alt);
+    /* Dark liquid-glass footer — coherent with the rest of the site */
+    background:
+      radial-gradient(900px 420px at 85% -10%, rgba(127, 206, 236, 0.08), transparent 60%),
+      var(--bg-dark-deep);
     border-top: 1px solid var(--border-subtle);
     padding-top: var(--space-20);
     padding-bottom: var(--space-8);
@@ -209,19 +212,24 @@ const legalLinks = [
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-md);
-    background: rgba(0, 0, 0, 0.03);
-    border: 1px solid var(--border-subtle);
+    width: 38px;
+    height: 38px;
+    border-radius: var(--radius-full);
+    /* glass chip */
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-backdrop-subtle);
+    -webkit-backdrop-filter: var(--glass-backdrop-subtle);
+    box-shadow: var(--glass-highlight);
     color: var(--text-secondary);
     transition: all var(--duration-fast) var(--ease-out);
   }
 
   .footer__social-btn:hover {
-    color: var(--text-primary);
-    background: rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.15);
+    color: var(--accent);
+    background: var(--glass-bg-hover);
+    border-color: var(--border-accent);
+    transform: translateY(-2px);
   }
 
   /* ── Link Columns ── */
@@ -255,12 +263,19 @@ const legalLinks = [
     color: var(--text-primary);
   }
 
-  /* ── CTA Column ── */
+  /* ── CTA Column — glass panel ── */
   .footer__cta-col {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    box-shadow: var(--glass-highlight), var(--glass-shadow);
   }
 
   .footer__cta-title {
