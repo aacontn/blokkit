@@ -1,0 +1,151 @@
+/* ═══════════════════════════════════════════════════
+   BLOKKIT DESIGN TOKENS — Match Brand Deck (v2)
+   Charcoal warm + Off-white cream + Sky cyan + Coral
+   No mesh, no glass, no serif. Solid, blocky, structural.
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  /* ── Backgrounds — charcoal warm + cream (alternating) ── */
+  --bg-dark: #1F1F1F;            /* warm charcoal, NOT pure black */
+  --bg-dark-alt: #2A2A2A;        /* one step up for surfaces on dark */
+  --bg-dark-deep: #161616;       /* deeper warm charcoal for contrast moments */
+  --bg-black: #000000;
+  --bg-surface: #2A2A2A;
+  --bg-surface-light: #353535;
+  --bg-white: #FFFFFF;           /* pure white — used sparingly */
+  --bg-off-white: #F2F2F2;       /* primary light bg — cream, not white */
+  --bg-light: #E5E5E5;
+  --bg-light-alt: #D8D8D8;
+
+  /* ── Brand cyan family (sky/light, NOT electric) ── */
+  --accent: #7FCEEC;             /* the BloKKit brand cyan — sky/light */
+  --accent-strong: #3FA8E0;      /* medium cyan for data/CTAs */
+  --accent-hover: #5BBEE3;
+  --accent-dark: #2589C7;
+  --accent-pale: #CDEAF5;        /* extra-pale for card backgrounds on light */
+  --accent-muted: rgba(127, 206, 236, 0.14);
+  --accent-glow: rgba(127, 206, 236, 0.22);
+
+  /* ── Data accents ── */
+  --data-coral: #FB6E60;         /* coral for negative data / problems / X marks */
+  --data-coral-pale: rgba(251, 110, 96, 0.15);
+  --data-blue: #3FA8E0;
+  --data-success: #5BBEE3;
+
+  /* ── Text — Default (on dark backgrounds) ── */
+  --text-primary: #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.78);
+  --text-muted: rgba(255, 255, 255, 0.55);
+
+  /* ── Text — On light backgrounds ── */
+  --text-dark: #1F1F1F;
+  --text-dark-secondary: #555555;
+  --text-dark-muted: #888888;
+
+  /* ── Borders ── */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.16);
+  --border-light: rgba(0, 0, 0, 0.08);
+  --border-light-hover: rgba(0, 0, 0, 0.16);
+  --border-accent: rgba(127, 206, 236, 0.4);
+  --border-outline-dark: rgba(255, 255, 255, 0.85);  /* for outlined numerals on dark */
+  --border-outline-light: rgba(31, 31, 31, 0.85);    /* for outlined numerals on light */
+
+  /* ── Spacing scale (4px base) ── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-14: 3.5rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ── Border radius — minimal, structural ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 18px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+  --radius-full: 999px;
+
+  /* ── Shadows — soft, NOT cyan-glow ── */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.30);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.35);
+  --shadow-xl: 0 24px 56px rgba(0, 0, 0, 0.40);
+  --shadow-glow: 0 0 0 1px var(--border-accent);    /* outline glow, not blurry */
+  --shadow-glow-strong: 0 8px 24px rgba(127, 206, 236, 0.18);
+
+  /* ── Shadows — cards on light bg ── */
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.08), 0 16px 40px rgba(0, 0, 0, 0.12);
+  --shadow-elevated: 0 12px 36px rgba(0, 0, 0, 0.12), 0 24px 64px rgba(0, 0, 0, 0.10);
+
+  /* ── Glass — DEPRECATED, kept for legacy components only ── */
+  --glass-bg: rgba(31, 31, 31, 0.7);
+  --glass-bg-hover: rgba(31, 31, 31, 0.85);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-backdrop: blur(16px);
+
+  /* ── Typography — blocky structural, no condensed serif ── */
+  --font-display: "Archivo Black", "Druk Wide", "Impact", system-ui, sans-serif;
+  --font-display-alt: "Big Shoulders Display", "Anton", "Impact", sans-serif;
+  --font-heading: "Archivo Black", "Druk Wide", "Impact", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Menlo", monospace;
+  /* font-editorial deprecated — DO NOT USE */
+  --font-editorial: var(--font-display);
+
+  /* ── Font sizes (fluid) ── */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.15vw, 0.8125rem);
+  --text-sm: clamp(0.8125rem, 0.78rem + 0.15vw, 0.875rem);
+  --text-base: clamp(0.9375rem, 0.9rem + 0.18vw, 1rem);
+  --text-lg: clamp(1.0625rem, 1rem + 0.25vw, 1.125rem);
+  --text-xl: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  --text-2xl: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  --text-3xl: clamp(1.875rem, 1.5rem + 1.5vw, 2.5rem);
+  --text-4xl: clamp(2.25rem, 1.7rem + 2vw, 3.25rem);
+  --text-5xl: clamp(2.75rem, 2rem + 2.5vw, 4rem);
+  --text-6xl: clamp(3.5rem, 2.4rem + 4vw, 6rem);
+  --text-display: clamp(4.5rem, 3rem + 6vw, 9rem);
+
+  /* ── Transitions ── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* ── Z-index scale ── */
+  --z-base: 1;
+  --z-dropdown: 10;
+  --z-sticky: 20;
+  --z-overlay: 30;
+  --z-modal: 40;
+  --z-toast: 50;
+
+  /* ── Container ── */
+  --container-max: 1280px;
+  --container-padding: var(--space-6);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --container-padding: var(--space-8);
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --container-padding: var(--space-12);
+  }
+}

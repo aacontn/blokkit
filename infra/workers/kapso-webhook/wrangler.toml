@@ -1,0 +1,7 @@
+name = "kapso-webhook"
+main = "src/index.ts"
+compatibility_date = "2024-09-01"
+
+[vars]
+SUPABASE_URL = ""
+SUPABASE_SERVICE_ROLE_KEY = ""

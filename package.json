@@ -1,0 +1,18 @@
+{
+  "name": "blokkit-platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*",
+    "infra/workers/*"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace @blokkit/web run dev",
+    "dev:app": "npm --workspace @blokkit/app run dev",
+    "build:web": "npm --workspace @blokkit/web run build",
+    "build:app": "npm --workspace @blokkit/app run build",
+    "build": "npm run build:web && npm run build:app",
+    "preview:web": "npm --workspace @blokkit/web run preview",
+    "preview:app": "npm --workspace @blokkit/app run preview"
+  }
+}

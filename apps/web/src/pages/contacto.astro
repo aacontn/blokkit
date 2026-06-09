@@ -1,0 +1,267 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ScrollReveal from "../components/ui/ScrollReveal.tsx";
+import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+import MagneticButton from "../components/ui/MagneticButton.tsx";
+
+const activationSteps = [
+  { title: "Levantamiento de contexto", detail: "Revisamos operación actual, puntos de fricción y objetivo institucional." },
+  { title: "Diseño del protocolo", detail: "Definimos flujo diario, roles por área y criterio de excepciones." },
+  { title: "Plan de implementación", detail: "Proponemos piloto, calendario y métricas para medir adopción real." },
+];
+
+const directChannels = [
+  { label: "Email", value: "hola@blokkit.cl", href: "mailto:hola@blokkit.cl" },
+  { label: "Teléfono", value: "+56 9 9039 9130", href: "tel:+56990399130" },
+];
+---
+
+<BaseLayout>
+  <Header slot="header" />
+
+  <!-- Hero -->
+  <section class="hero hero--sub hero-mesh-bg">
+    <div class="mesh-gradient" aria-hidden="true"></div>
+    <div class="hero__content container">
+      <span class="label fade-in-up">Contacto</span>
+      <TextSplitReveal client:load text="Implementa BloKKit para control de celulares" as="h1" className="heading-1 hero__title" splitBy="word" delay={0.15} />
+      <ScrollReveal client:visible delay={0.4}>
+        <p class="hero__subtitle body-lg">
+          Solución para colegios, universidades, empresas, gobierno y eventos que necesitan foco, protocolo y trazabilidad.
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- Form + Side cards -->
+  <section class="section--lg contact-body">
+    <div class="container">
+      <div class="contact-grid">
+        <!-- Form card -->
+        <ScrollReveal client:visible className="contact-form-wrap">
+          <div class="contact-form-card">
+            <span class="label">Asesoría inicial</span>
+            <h2 class="heading-3" style="margin-top: var(--space-3)">¿En qué te podemos ayudar hoy?</h2>
+            <p class="body-sm" style="color: var(--text-dark-secondary); margin-bottom: var(--space-6)">
+              Te enviamos una propuesta con alcance, fases de activación y tiempos estimados según tu operación.
+            </p>
+
+            <form class="contact-form" id="contact-form">
+              <input type="text" name="website" class="sr-only" tabindex="-1" autocomplete="off" aria-hidden="true" />
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="name">Nombre y apellido</label>
+                  <input type="text" id="name" name="name" placeholder="Tu nombre" required />
+                </div>
+                <div class="form-group">
+                  <label for="role">Cargo</label>
+                  <input type="text" id="role" name="role" placeholder="Ej: Dirección, Operaciones" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="email">Email institucional</label>
+                  <input type="email" id="email" name="email" placeholder="tu@email.com" required />
+                </div>
+                <div class="form-group">
+                  <label for="institution">Institución o empresa</label>
+                  <input type="text" id="institution" name="institution" placeholder="Nombre de tu organización" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="sector">Sector</label>
+                <select id="sector" name="sector">
+                  <option value="">Selecciona una opción</option>
+                  <option value="educacion">Educación</option>
+                  <option value="empresas">Empresas</option>
+                  <option value="gobierno">Gobierno y Justicia</option>
+                  <option value="eventos">Eventos y espectáculos</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Contexto y objetivo</label>
+                <textarea id="message" name="message" rows="5" placeholder="Ej: cantidad de personas, tipo de operación y principal problema que quieres resolver" required></textarea>
+              </div>
+              <MagneticButton client:visible as="button" type="submit" className="btn btn--primary btn--lg contact-submit-btn">
+                Recibir propuesta
+              </MagneticButton>
+            </form>
+            <p class="form-feedback" id="contact-feedback" aria-live="polite"></p>
+            <p class="body-xs" style="color: var(--text-dark-muted); margin-top: var(--space-3)">
+              Respuesta inicial en menos de 24 horas hábiles.
+            </p>
+          </div>
+        </ScrollReveal>
+
+        <!-- Side cards -->
+        <ScrollReveal client:visible delay={0.2} className="contact-side">
+          <div class="glass-card contact-side-card">
+            <span class="label">Qué incluye</span>
+            <h3 class="heading-5" style="margin-top: var(--space-3)">Propuesta de implementación</h3>
+            <ul class="contact-checklist">
+              <li>Flujo recomendado por contexto.</li>
+              <li>Roles operativos por etapa.</li>
+              <li>Manejo de excepciones y apertura.</li>
+              <li>Plan de piloto o despliegue completo.</li>
+            </ul>
+          </div>
+
+          <div class="contact-dark-card">
+            <span class="label" style="border-color: var(--border-accent); background: var(--accent-muted); color: var(--accent)">Canal directo</span>
+            <h3 class="heading-5" style="margin-top: var(--space-3)">Habla con el equipo BloKKit</h3>
+            <p class="body-sm" style="color: var(--text-secondary); margin-bottom: var(--space-4)">
+              Si necesitas acelerar una decisión, escribe o llama y definimos próximo paso contigo.
+            </p>
+            <div class="direct-links">
+              {directChannels.map((ch) => (
+                <a href={ch.href} class="direct-link">
+                  <span>{ch.label}</span>
+                  <strong>{ch.value}</strong>
+                </a>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </div>
+  </section>
+
+  <!-- Activation steps -->
+  <section class="section section--light-alt">
+    <div class="container" style="text-align: center">
+      <ScrollReveal client:visible>
+        <span class="label">Proceso de trabajo</span>
+        <h2 class="heading-2" style="margin-top: var(--space-4)">Cómo activamos <span class="text-accent">la implementación</span></h2>
+        <p class="body-lg" style="color: var(--text-dark-secondary); max-width: 560px; margin-inline: auto; margin-top: var(--space-3)">
+          Un flujo simple para implementar control de celulares con criterios claros y adopción real.
+        </p>
+      </ScrollReveal>
+      <div class="activation-steps">
+        {activationSteps.map((step, i) => (
+          <ScrollReveal client:visible delay={i * 0.15}>
+            <div class="activation-card">
+              <span class="activation-num">0{i + 1}</span>
+              <h3 class="heading-5">{step.title}</h3>
+              <p class="body-sm" style="color: var(--text-dark-secondary); margin-top: var(--space-2)">{step.detail}</p>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero--sub { min-height: 50vh; display: flex; align-items: center; justify-content: center; padding-top: 80px; position: relative; overflow: hidden; }
+  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); }
+  .hero__subtitle { max-width: 680px; color: var(--text-secondary); }
+
+  .contact-body { background: var(--bg-white); }
+
+  .contact-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--space-8); align-items: start; }
+  @media (max-width: 860px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  .contact-form-card { padding: var(--space-8); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+  @media (max-width: 480px) { .contact-form-card { padding: var(--space-5); } }
+
+  .contact-form { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--space-6); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+  @media (max-width: 640px) { .form-row { grid-template-columns: 1fr; } }
+
+  .form-group { display: flex; flex-direction: column; gap: var(--space-2); }
+  .form-group label { font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
+
+  .form-group input, .form-group textarea, .form-group select {
+    width: 100%; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: var(--bg-black); color: var(--text-primary); font-size: var(--text-base); font-family: var(--font-body); transition: all 0.25s ease;
+  }
+  
+  .form-group select { appearance: none; background-image: url("data:image/svg+xml,..."); background-position: right 1rem center; background-repeat: no-repeat; }
+  
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(127, 206, 236, 0.15); background: var(--bg-surface); }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-muted); opacity: 0.5; }
+
+  .contact-submit-btn { width: 100%; border: none; cursor: pointer; margin-top: var(--space-2); }
+  .form-feedback { min-height: 1.2rem; font-size: var(--text-sm); color: var(--accent); margin-top: var(--space-3); }
+  .form-feedback.is-error { color: #f87171; }
+
+  .contact-side { display: flex; flex-direction: column; gap: var(--space-6); position: sticky; top: 120px; }
+  .contact-side-card { padding: var(--space-6); background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); }
+  
+  .contact-checklist { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-4); }
+  .contact-checklist li { position: relative; padding-left: var(--space-5); font-size: var(--text-sm); color: var(--text-secondary); }
+  .contact-checklist li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  .contact-dark-card { padding: var(--space-6); border-radius: var(--radius-lg); border: 1px solid var(--border-accent); background: linear-gradient(156deg, rgba(11, 20, 35, 0.95), rgba(7, 13, 24, 0.98)); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4); }
+
+  .direct-links { display: flex; flex-direction: column; gap: var(--space-3); margin-top: var(--space-6); }
+  .direct-link { display: flex; justify-content: space-between; align-items: center; gap: var(--space-3); padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); background: rgba(255, 255, 255, 0.03); color: var(--text-primary); transition: all 0.25s ease; text-decoration: none; }
+  .direct-link span { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); }
+  .direct-link strong { font-size: var(--text-sm); color: var(--text-primary); }
+  .direct-link:hover { border-color: var(--accent); transform: translateY(-2px); background: rgba(255, 255, 255, 0.06); }
+
+  .activation-steps { display: grid; gap: var(--space-6); margin-top: var(--space-10); }
+  @media (min-width: 768px) { .activation-steps { grid-template-columns: repeat(3, 1fr); gap: var(--space-8); } }
+
+  .activation-card { padding: var(--space-6); background: var(--bg-white); border: 1px solid var(--border-light); border-radius: var(--radius-lg); text-align: left; transition: transform 0.25s ease, border-color 0.25s ease; position: relative; }
+  .activation-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+  
+  .activation-num { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: rgba(127, 206, 236, 0.1); color: var(--accent); font-family: var(--font-heading); font-size: var(--text-lg); font-weight: 700; margin-bottom: var(--space-4); }
+</style>
+
+<script>
+  const form = document.querySelector("#contact-form") as HTMLFormElement | null;
+  const feedback = document.querySelector("#contact-feedback") as HTMLElement | null;
+  const submitButton = form?.querySelector(".contact-submit-btn") as HTMLButtonElement | null;
+  const defaultSubmitText = submitButton?.textContent ?? "Recibir propuesta";
+
+  const setFeedback = (message: string, isError = false) => {
+    if (!feedback) return;
+    feedback.textContent = message;
+    feedback.classList.toggle("is-error", isError);
+  };
+
+  if (form && feedback && submitButton) {
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Enviando...";
+      setFeedback("Enviando tu solicitud...");
+
+      try {
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok) {
+          const errorMessage =
+            typeof result.message === "string" && result.message
+              ? result.message
+              : "No pudimos enviar la solicitud. Intenta de nuevo.";
+          setFeedback(errorMessage, true);
+          return;
+        }
+
+        form.reset();
+        setFeedback("¡Listo! Recibimos tu mensaje y te responderemos pronto.");
+      } catch {
+        setFeedback("No pudimos enviar la solicitud. Intenta de nuevo.", true);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = defaultSubmitText;
+      }
+    });
+  }
+</script>

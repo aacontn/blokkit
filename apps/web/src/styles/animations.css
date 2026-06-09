@@ -1,0 +1,331 @@
+/* ═══════════════════════════════════════════════════
+   ANIMATIONS — Keyframes & Utility Classes
+   ═══════════════════════════════════════════════════ */
+
+/* ── Mesh gradient animation ── */
+@property --mesh-angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+@property --mesh-x {
+    syntax: "<percentage>";
+    initial-value: 30%;
+    inherits: false;
+}
+
+@property --mesh-y {
+    syntax: "<percentage>";
+    initial-value: 30%;
+    inherits: false;
+}
+
+@keyframes mesh-rotate {
+    0% {
+        --mesh-angle: 0deg;
+        --mesh-x: 30%;
+        --mesh-y: 30%;
+    }
+
+    25% {
+        --mesh-angle: 90deg;
+        --mesh-x: 70%;
+        --mesh-y: 20%;
+    }
+
+    50% {
+        --mesh-angle: 180deg;
+        --mesh-x: 60%;
+        --mesh-y: 70%;
+    }
+
+    75% {
+        --mesh-angle: 270deg;
+        --mesh-x: 20%;
+        --mesh-y: 60%;
+    }
+
+    100% {
+        --mesh-angle: 360deg;
+        --mesh-x: 30%;
+        --mesh-y: 30%;
+    }
+}
+
+.mesh-gradient {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        radial-gradient(ellipse at var(--mesh-x) var(--mesh-y), rgba(127, 206, 236, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at calc(100% - var(--mesh-x)) calc(100% - var(--mesh-y)), rgba(63, 168, 224, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 50%, rgba(22, 33, 62, 0.3) 0%, transparent 70%),
+        var(--bg-dark);
+    animation: mesh-rotate 25s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mesh-gradient {
+        animation: none;
+        background:
+            radial-gradient(ellipse at 30% 30%, rgba(127, 206, 236, 0.06) 0%, transparent 60%),
+            radial-gradient(ellipse at 70% 70%, rgba(63, 168, 224, 0.04) 0%, transparent 50%),
+            var(--bg-dark);
+    }
+}
+
+/* ── Hero radial glow — large diffused cyan light source ── */
+.hero-glow {
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    height: 600px;
+    background: radial-gradient(ellipse at center,
+            rgba(127, 206, 236, 0.10) 0%,
+            rgba(127, 206, 236, 0.04) 35%,
+            transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+    animation: glow-pulse 8s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+@media (min-width: 768px) {
+    .hero-glow {
+        width: 1200px;
+        height: 800px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-glow {
+        animation: none;
+    }
+}
+
+/* ── Hero grid overlay — subtle depth texture ── */
+.hero-grid {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 70%);
+}
+
+/* ── Section Background Utilities ── */
+.has-bg-effect {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.section-glow--light {
+    background: radial-gradient(circle, rgba(127, 206, 236, 0.08) 0%, transparent 70%);
+}
+
+.section-glow--dark {
+    background: radial-gradient(circle, rgba(127, 206, 236, 0.08) 0%, transparent 70%);
+}
+
+@media (min-width: 768px) {
+    .section-glow {
+        width: 1000px;
+        height: 700px;
+    }
+}
+
+.section-grid {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 10%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 70%);
+}
+
+.section-grid--light {
+    opacity: 0.15;
+    background-image:
+        linear-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.15) 1px, transparent 1px);
+}
+
+.section-grid--dark {
+    opacity: 0.03;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+}
+
+/* ── Float animation ── */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* ── Shimmer border ── */
+@keyframes shimmer-border {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+.shimmer-border {
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.shimmer-border::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: linear-gradient(90deg,
+            transparent 0%,
+            transparent 30%,
+            var(--accent) 50%,
+            transparent 70%,
+            transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer-border 4s linear infinite;
+    opacity: 0.4;
+}
+
+.shimmer-border::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    z-index: -1;
+    border-radius: inherit;
+    background: var(--bg-dark-alt);
+}
+
+/* ── Pulse glow ── */
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(127, 206, 236, 0.15);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(127, 206, 236, 0.3);
+    }
+}
+
+.pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ── Fade in up (CSS-only for non-JS) ── */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fade-in-up 0.6s var(--ease-out) both;
+}
+
+/* ── Gradient text shimmer ── */
+@keyframes text-shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.text-shimmer {
+    background: linear-gradient(90deg,
+            var(--accent) 0%,
+            var(--text-primary) 40%,
+            var(--text-primary) 60%,
+            var(--accent) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: text-shimmer 6s linear infinite;
+}
+
+/* ── Link underline reveal ── */
+.link-reveal {
+    position: relative;
+    display: inline-block;
+}
+
+.link-reveal::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1.5px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.link-reveal:hover::after {
+    transform: scaleX(1);
+}

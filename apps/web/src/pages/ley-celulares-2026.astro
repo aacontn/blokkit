@@ -1,0 +1,202 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ScrollReveal from "../components/ui/ScrollReveal.tsx";
+import MagneticButton from "../components/ui/MagneticButton.tsx";
+import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+
+const timeline = [
+  { date: "Octubre 2024", title: "Aprobación en la Cámara de Diputados", desc: "El proyecto fue aprobado por amplia mayoría en la Cámara Baja, marcando un hito legislativo." },
+  { date: "Noviembre 2024", title: "Aprobación en el Senado", desc: "El Senado aprobó el proyecto de ley con modificaciones menores." },
+  { date: "Enero 2025", title: "Promulgación presidencial", desc: "La ley fue promulgada y publicada en el Diario Oficial." },
+  { date: "Marzo 2026", title: "Entrada en vigor", desc: "Los establecimientos educacionales deben implementar protocolos de restricción." },
+];
+
+const obligations = [
+  { title: "Prohibición de uso en aula", desc: "El uso de teléfonos celulares queda prohibido durante las horas de clase en todos los niveles de educación básica y media." },
+  { title: "Protocolo institucional", desc: "Cada establecimiento debe definir un protocolo claro de custodia, excepciones y manejo de dispositivos." },
+  { title: "Excepciones reguladas", desc: "Solo se permite el uso con fines pedagógicos bajo supervisión del docente o en casos de emergencia." },
+  { title: "Rol del equipo directivo", desc: "La dirección del establecimiento es responsable de implementar, comunicar y fiscalizar el cumplimiento del protocolo." },
+];
+
+const challenges = [
+  { title: "¿Dónde se guardan los teléfonos?", desc: "La ley no resuelve la logística: ¿en mochilas?, ¿en casilleros?, ¿quién responde por pérdidas?" },
+  { title: "¿Cómo se evita el uso oculto?", desc: "Sin mecanismo físico, el cumplimiento depende de supervisión constante del docente." },
+  { title: "¿Qué pasa con las excepciones?", desc: "Salud, emergencias y uso pedagógico necesitan un proceso claro, no criterio individual." },
+  { title: "¿Cómo se documenta el cumplimiento?", desc: "La ley exige protocolo, pero no ofrece herramientas de trazabilidad." },
+];
+---
+
+<BaseLayout>
+  <Header slot="header" />
+
+  <section class="hero hero--sub hero-mesh-bg" style="padding-bottom: 40px; min-height: auto;">
+    <div class="mesh-gradient" aria-hidden="true"></div>
+    <div class="hero__content container">
+      <span class="label fade-in-up">Marco Legal</span>
+      <TextSplitReveal client:load text="Ley de Celulares 2026 en Chile" as="h1" className="heading-1 hero__title" splitBy="word" delay={0.15} />
+      <ScrollReveal client:visible delay={0.4}>
+        <p class="hero__subtitle body-lg">
+          Chile prohibirá el uso de celulares en aulas desde marzo 2026. BloKKit ofrece la infraestructura para cumplir la ley de forma práctica y sostenible.
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section--lg section--light-alt" style="padding-top: var(--space-20);">
+    <div class="container" style="text-align: center; margin-bottom: var(--space-10)">
+      <ScrollReveal client:visible>
+        <span class="label">Cronología</span>
+        <h2 class="heading-2" style="margin-top: var(--space-3)">Camino <span class="text-accent">legislativo</span></h2>
+      </ScrollReveal>
+    </div>
+    <div class="container container--sm">
+      <div class="timeline">
+        <div class="timeline__line"></div>
+        {timeline.map((t, i) => (
+          <ScrollReveal client:visible delay={i * 0.1}>
+            <div class="timeline__item">
+              <div class="timeline__marker"></div>
+              <div class="timeline__content glass-card--light">
+                <span class="timeline__date">{t.date}</span>
+                <h3 class="heading-6" style="margin-top: var(--space-2)">{t.title}</h3>
+                <p class="body-sm" style="color: var(--text-dark-secondary); margin-top: var(--space-2)">{t.desc}</p>
+              </div>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Obligations -->
+  <section class="section--lg">
+    <div class="container">
+      <div class="split-layout">
+        <div class="split-layout__sticky">
+          <ScrollReveal client:visible>
+            <span class="label">Qué exige la ley</span>
+            <h2 class="heading-2" style="margin-top: var(--space-3)">Obligaciones para los <span class="text-accent">establecimientos</span></h2>
+            <p class="body-lg" style="color: var(--text-secondary); margin-top: var(--space-4)">
+              Cada colegio debe adaptar su reglamento interno. El incumplimiento puede derivar en sanciones de la Superintendencia.
+            </p>
+          </ScrollReveal>
+        </div>
+        
+        <div class="obligations-list">
+          {obligations.map((o, i) => (
+            <ScrollReveal client:visible delay={i * 0.1}>
+              <div class="obligation-card">
+                <div class="obligation-icon">!</div>
+                <div>
+                  <h3 class="heading-5">{o.title}</h3>
+                  <p class="body-sm" style="color: var(--text-secondary); margin-top: var(--space-2)">{o.desc}</p>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Challenges -->
+  <section class="section--lg section--light-alt">
+    <div class="container" style="text-align: center; margin-bottom: var(--space-10)">
+      <ScrollReveal client:visible>
+        <span class="label">Desafío operacional</span>
+        <h2 class="heading-2" style="margin-top: var(--space-3)">La ley dice <em>qué</em>.<br/>BloKKit resuelve el <span class="text-accent">cómo</span>.</h2>
+      </ScrollReveal>
+    </div>
+    <div class="container">
+      <div class="challenges-grid">
+        {challenges.map((c, i) => (
+          <ScrollReveal client:visible delay={i * 0.1}>
+            <div class="challenge-card">
+              <div class="challenge-header">
+                <span class="challenge-q">?</span>
+                <h3 class="heading-6" style="color: #ef4444">{c.title}</h3>
+              </div>
+              <p class="body-sm" style="color: var(--text-dark-secondary)">{c.desc}</p>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section--light-alt section--lg" style="padding-top: 0; padding-bottom: var(--space-24);">
+    <div class="container">
+      <div class="final-cta__card">
+        <div class="final-cta__glow" aria-hidden="true"></div>
+        <div class="final-cta__inner">
+          <h2 class="heading-2 final-cta__title">Prepárate antes de marzo 2026</h2>
+          <p class="body-lg final-cta__subtitle">
+            Te ayudamos a diseñar el protocolo y la infraestructura para cumplir la ley desde el primer día de clases.
+          </p>
+          <div class="final-cta__buttons">
+            <a href="/contacto" class="btn btn--primary">Diseñar mi protocolo</a>
+            <a href="/producto" class="btn btn--ghost">Ver producto →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero--sub { min-height: 50vh; display: flex; align-items: center; justify-content: center; padding-top: 80px; position: relative; overflow: hidden; }
+  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); }
+  .hero__subtitle { max-width: 720px; color: var(--text-secondary); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 20px; display: flex; flex-direction: column; gap: var(--space-8); }
+  .timeline__line { position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--border-light); }
+  .timeline__item { position: relative; padding-left: var(--space-8); }
+  
+  .timeline__marker { position: absolute; left: -5px; top: 24px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg-white); box-shadow: 0 0 0 4px rgba(127, 206, 236, 0.1); }
+  
+  .timeline__content { padding: var(--space-6); background: var(--bg-white); border: 1px solid var(--border-light); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); transition: transform 0.25s ease, box-shadow 0.25s ease; }
+  .timeline__content:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--accent); }
+  
+  .timeline__date { font-family: var(--font-heading); font-size: var(--text-xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 700; display: block; }
+
+  @media (min-width: 768px) {
+    .timeline { padding-left: 0; align-items: center; }
+    .timeline__line { left: 50%; transform: translateX(-50%); }
+    .timeline__item { width: 50%; padding-left: 0; padding-right: var(--space-10); margin-right: auto; text-align: right; }
+    .timeline__item:nth-child(even) { margin-right: 0; margin-left: auto; padding-right: 0; padding-left: var(--space-10); text-align: left; }
+    .timeline__marker { left: auto; right: -6px; }
+    .timeline__item:nth-child(even) .timeline__marker { right: auto; left: -6px; }
+  }
+
+  /* Obligations */
+  .split-layout { display: grid; gap: var(--space-10); }
+  @media (min-width: 960px) {
+    .split-layout { grid-template-columns: 1fr 1.2fr; gap: var(--space-16); align-items: start; }
+    .split-layout__sticky { position: sticky; top: 120px; }
+  }
+
+  .obligations-list { display: flex; flex-direction: column; gap: var(--space-4); }
+  .obligation-card { display: flex; gap: var(--space-5); padding: var(--space-6); border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); background: var(--surface-glass); transition: border-color 0.25s ease; }
+  .obligation-card:hover { border-color: var(--accent); }
+  
+  .obligation-icon { width: 32px; height: 32px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; background: rgba(127, 206, 236, 0.1); color: var(--accent); border-radius: 50%; font-weight: 700; }
+
+  /* Challenges */
+  .challenges-grid { display: grid; gap: var(--space-5); }
+  @media (min-width: 768px) { .challenges-grid { grid-template-columns: 1fr 1fr; } }
+
+  .challenge-card { padding: var(--space-6); border-radius: var(--radius-lg); background: var(--bg-white); border: 1px solid var(--border-light); border-left: 3px solid #fca5a5; transition: transform 0.25s ease; }
+  .challenge-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  
+  .challenge-header { display: flex; align-items: center; gap: var(--space-3); margin-bottom: var(--space-3); }
+  .challenge-q { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: rgba(239, 68, 68, 0.1); color: #ef4444; border-radius: 50%; font-size: var(--text-xs); font-weight: 700; }
+  
+  .container--sm { max-width: 800px; }
+</style>

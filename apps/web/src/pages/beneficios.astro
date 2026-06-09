@@ -1,0 +1,170 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ScrollReveal from "../components/ui/ScrollReveal.tsx";
+import MagneticButton from "../components/ui/MagneticButton.tsx";
+import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+
+const eduBenefits = [
+  { icon: "📈", title: "ROI administrativo medible", desc: "Menos tiempo dedicado a gestionar incidentes con teléfonos y conflictos digitales." },
+  { icon: "🧘", title: "Reducción del tiempo administrativo", desc: "Menor carga en convivencia, inspección y equipos directivos por casos de ciberacoso." },
+  { icon: "⏱️", title: "ROI operacional", desc: "Reducción del 33% en suspensiones estudiantiles con implementación institucional." },
+  { icon: "👨‍👩‍👧", title: "ROI académico", desc: "Más horas pedagógicas recuperadas y mejor continuidad del aprendizaje por curso." },
+];
+
+const corpBenefits = [
+  { icon: "🎯", title: "Reuniones con foco real", desc: "Menos desvíos y mayor calidad de decisión en comités, directorios y sesiones clave." },
+  { icon: "🔒", title: "Resguardo de información sensible", desc: "Protocolos claros para salas críticas, visitas externas y conversaciones confidenciales." },
+  { icon: "💰", title: "ROI operacional visible", desc: "Menos fricción de coordinación y mejor continuidad en ejecución de tareas críticas." },
+  { icon: "🏢", title: "Operación estándar por área", desc: "Un mismo criterio para liderazgo, operaciones, RR.HH. y áreas de soporte." },
+];
+
+const govBenefits = [
+  { icon: "🛡️", title: "Cadena de custodia clara", desc: "Responsables y etapas definidos de principio a fin." },
+  { icon: "🧾", title: "Trazabilidad formal", desc: "Registro de excepciones, aperturas y devoluciones." },
+  { icon: "⚖️", title: "Resguardo legal", desc: "Menor riesgo en congreso, audiencias y diligencias." },
+  { icon: "👮", title: "Operación sin fricción", desc: "Protocolo ejecutable en recintos, operativos y reuniones sensibles." },
+];
+
+const eventBenefits = [
+  { icon: "🎭", title: "Protección de contenido", desc: "Sin grabaciones piratas de shows y presentaciones." },
+  { icon: "✨", title: "Experiencia inmersiva", desc: "Público 100% presente en el momento." },
+  { icon: "📸", title: "Momentos designados", desc: "Desbloqueo controlado para fotos oficiales." },
+  { icon: "🎪", title: "Diferenciación premium", desc: "Experiencia exclusiva que destaca tu evento." },
+];
+
+const sections = [
+  { id: "educacion", kicker: "Educación", title: "Colegios y", accent: "Universidades", desc: "Las distracciones digitales son el mayor obstáculo para el aprendizaje. BloKKit permite crear ambientes de estudio óptimos sin conflictos por confiscación.", benefits: eduBenefits, stats: [{ big: "211h", desc: "horas pedagógicas recuperadas por curso" }, { big: "-33%", desc: "en suspensiones estudiantiles" }, { big: "-43%", desc: "en incidentes de bullying con protocolo" }] },
+  { id: "empresas", kicker: "Corporativo", title: "Empresas y", accent: "Oficinas", desc: "Las reuniones productivas y el trabajo enfocado son esenciales para el rendimiento empresarial. BloKKit crea zonas libres de distracciones para momentos críticos.", benefits: corpBenefits, stats: [{ big: "8-12min", desc: "de pérdida por reunión sin protocolo" }, { big: "-25%", desc: "menos interrupciones en bloques críticos" }, { big: "<1%", desc: "del presupuesto operativo anual" }], dark: true },
+  { id: "gobierno", kicker: "Gobierno y Justicia", title: "Congreso, juzgados y", accent: "cadena de custodia", desc: "En reuniones sensibles y procedimientos legales, la custodia de dispositivos no puede quedar al criterio individual.", benefits: govBenefits, stats: [{ big: "100%", desc: "trazabilidad documentada" }, { big: "<3s", desc: "desbloqueo con personal autorizado" }, { big: "+control", desc: "menos incidentes por manejo informal" }] },
+  { id: "eventos", kicker: "Entretenimiento", title: "Eventos y", accent: "Espectáculos", desc: "Protege la propiedad intelectual de artistas y creadores. Crea experiencias inmersivas sin pantallas de por medio.", benefits: eventBenefits, stats: [{ big: "95%", desc: "del público usa celular durante shows" }, { big: "72hrs", desc: "antes de contenido pirata online" }, { big: "4.8★", desc: "satisfacción en eventos sin celulares" }], dark: true },
+];
+---
+
+<BaseLayout>
+  <Header slot="header" />
+
+  <section class="hero hero--sub hero-mesh-bg" style="padding-bottom: 40px; min-height: auto;">
+    <div class="mesh-gradient" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero__content container">
+      <span class="label fade-in-up" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.1); border-radius: var(--radius-full); border: 1px solid rgba(127, 206, 236, 0.4); color: var(--accent); letter-spacing: 0.1em; margin-bottom: var(--space-4); font-size: 0.75rem; font-weight: 700;">Fundas Bloqueadoras de Señal</span>
+      <h1 class="heading-1 hero__title" style="text-transform: uppercase;">
+        <TextSplitReveal client:load text="BENEFICIOS" as="span" splitBy="word" delay={0.15} />
+        <TextSplitReveal client:load text="PARA" as="span" className="text-accent" splitBy="word" delay={0.25} /><br/>
+        <TextSplitReveal client:load text="CADA SECTOR" as="span" splitBy="word" delay={0.35} />
+      </h1>
+      <ScrollReveal client:load delay={0.4}>
+        <p class="hero__subtitle body-lg" style="margin-top: var(--space-6);">
+          Resultados comprobados que impactan al colegio, el equipo<br/>docente y la convivencia de los alumnos.
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <div class="sectors-wrapper">
+    {sections.map((s, idx) => (
+      <section id={s.id} class={`sector-section ${s.dark ? "sector-section--dark" : "sector-section--light"}`}>
+        <div class="container">
+          <div class={`sector-grid ${idx % 2 === 1 ? "sector-grid--reverse" : ""}`}>
+            <ScrollReveal client:visible className="sector-info">
+              <span class="label">{s.kicker}</span>
+              <h2 class="heading-2" style="margin-top: var(--space-3)">
+                {s.title} <span class="text-accent">{s.accent}</span>
+              </h2>
+              <p class="body-lg" style="color: var(--text-secondary); margin-top: var(--space-4); max-width: 50ch">{s.desc}</p>
+              
+              <div class="sector-stats-row">
+                {s.stats.map((st, i) => (
+                  <div class="mini-stat">
+                    <span class="mini-stat__val">{st.big}</span>
+                    <span class="mini-stat__desc">{st.desc}</span>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal client:visible delay={0.2} className="sector-benefits">
+              <ul class="benefit-cards">
+                {s.benefits.map((b) => (
+                  <li class="benefit-card">
+                    <span class="benefit-icon">{b.icon}</span>
+                    <div>
+                      <h3 class="heading-6">{b.title}</h3>
+                      <p class="body-sm" style="color: var(--text-secondary); margin-top: var(--space-1)">{b.desc}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </ScrollReveal>
+          </div>
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <section class="section--light-alt section--lg" style="padding-top: 0; padding-bottom: var(--space-24);">
+    <div class="container">
+      <div class="final-cta__card">
+        <div class="final-cta__glow" aria-hidden="true"></div>
+        <div class="final-cta__inner">
+          <ScrollReveal client:visible>
+            <h2 class="heading-2 final-cta__title">¿Qué sector te interesa más?</h2>
+          </ScrollReveal>
+          <ScrollReveal client:visible delay={0.2}>
+            <p class="body-lg final-cta__subtitle">
+              Conversemos sobre cómo BloKKit puede adaptarse a las necesidades específicas de tu organización.
+            </p>
+          </ScrollReveal>
+          <ScrollReveal client:visible delay={0.3}>
+            <button type="button" class="btn btn--primary" data-cal-link="blokkit/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Agendar Reunión</button>
+          </ScrollReveal>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero--sub { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding-top: 180px; padding-bottom: 80px; position: relative; overflow: hidden; }
+  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); margin: 0 auto; }
+  .hero__subtitle { max-width: 680px; color: var(--text-secondary); }
+
+  .sector-section { padding-block: var(--space-20); }
+  .sector-section--light { background: var(--bg-white); color: var(--text-dark); }
+  .sector-section--light .heading-2 { color: var(--text-dark); }
+  .sector-section--light .body-lg { color: var(--text-dark-secondary); }
+  
+  .sector-section--dark { background: var(--bg-surface); }
+
+  .sector-grid { display: grid; gap: var(--space-12); }
+  
+  @media (min-width: 960px) {
+    .sector-grid { grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: start; }
+    .sector-info { position: sticky; top: 120px; }
+    .sector-grid--reverse .sector-benefits { order: -1; }
+  }
+
+  .sector-stats-row { display: flex; gap: var(--space-6); margin-top: var(--space-8); flex-wrap: wrap; }
+  .mini-stat__val { display: block; font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: var(--space-1); }
+  .mini-stat__desc { font-size: var(--text-xs); color: var(--text-muted); max-width: 14ch; display: block; line-height: 1.3; }
+  
+  .sector-section--light .mini-stat__desc { color: var(--text-dark-muted); }
+
+  .benefit-cards { display: grid; gap: var(--space-4); list-style: none; padding: 0; }
+  .benefit-card { display: flex; gap: var(--space-4); padding: var(--space-5); border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); background: var(--surface-glass); transition: transform 0.25s ease, border-color 0.25s ease; }
+  
+  .sector-section--light .benefit-card { background: var(--bg-off-white); border-color: var(--border-light); }
+  
+  .benefit-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+  
+  .benefit-icon { font-size: 1.5rem; flex-shrink: 0; background: var(--accent-muted); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); }
+  
+  .sector-section--light .benefit-icon { background: rgba(127, 206, 236, 0.1); }
+
+  .heading-6 { font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-1); }
+</style>

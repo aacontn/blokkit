@@ -1,0 +1,192 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ScrollReveal from "../components/ui/ScrollReveal.tsx";
+import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+
+const sections = [
+  {
+    title: "1. Información que recopilamos",
+    paragraphs: [
+      'BloKKit SpA ("BloKKit", "nosotros") recopila información personal que usted proporciona voluntariamente al:',
+    ],
+    list: [
+      "Completar formularios de contacto o registro",
+      "Solicitar una demo o cotización",
+      "Utilizar nuestra plataforma digital",
+      "Comunicarse con nuestro equipo",
+    ],
+    after: "Los datos pueden incluir: nombre, cargo, correo electrónico institucional, teléfono, nombre de la organización y sector.",
+  },
+  {
+    title: "2. Uso de la información",
+    paragraphs: ["Utilizamos la información recopilada para:"],
+    list: [
+      "Responder consultas y solicitudes de propuesta",
+      "Diseñar e implementar soluciones personalizadas",
+      "Enviar comunicaciones relevantes sobre nuestros servicios",
+      "Mejorar nuestra plataforma y experiencia de usuario",
+      "Cumplir con obligaciones legales y regulatorias",
+    ],
+  },
+  {
+    title: "3. Protección de datos",
+    paragraphs: [
+      "Implementamos medidas de seguridad técnicas y organizativas para proteger la información personal contra acceso no autorizado, alteración, divulgación o destrucción. Esto incluye cifrado de datos en tránsito y en reposo, controles de acceso basados en roles y auditorías periódicas de seguridad.",
+    ],
+  },
+  {
+    title: "4. Compartir información",
+    paragraphs: [
+      "No vendemos, alquilamos ni compartimos información personal con terceros para fines de marketing. Solo compartimos datos con:",
+    ],
+    list: [
+      "Proveedores de servicios que nos asisten en la operación (bajo acuerdos de confidencialidad)",
+      "Cuando sea requerido por ley o autoridad competente",
+      "Con su consentimiento explícito",
+    ],
+  },
+  {
+    title: "5. Derechos del usuario",
+    paragraphs: ["Usted tiene derecho a:"],
+    list: [
+      "Acceder a sus datos personales",
+      "Solicitar la rectificación de datos inexactos",
+      "Solicitar la eliminación de sus datos",
+      "Oponerse al procesamiento de sus datos",
+      "Solicitar la portabilidad de sus datos",
+    ],
+    afterHtml: 'Para ejercer estos derechos, contacte a <a href="mailto:contacto@blokkit.cl">contacto@blokkit.cl</a>.',
+  },
+  {
+    title: "6. Cookies y tecnologías de seguimiento",
+    paragraphs: [
+      "Utilizamos cookies y tecnologías similares para mejorar la experiencia de navegación, analizar el tráfico del sitio y personalizar contenido. Puede gestionar las preferencias de cookies en la configuración de su navegador.",
+    ],
+  },
+  {
+    title: "7. Retención de datos",
+    paragraphs: [
+      "Conservamos la información personal solo durante el tiempo necesario para los fines descritos en esta política, o según lo requiera la legislación aplicable.",
+    ],
+  },
+  {
+    title: "8. Cambios a esta política",
+    paragraphs: [
+      "Nos reservamos el derecho de actualizar esta política de privacidad periódicamente. Los cambios significativos serán notificados a través de nuestro sitio web o por correo electrónico.",
+    ],
+  },
+  {
+    title: "9. Contacto",
+    paragraphs: ["Para consultas sobre esta política de privacidad, contacte a:"],
+    afterHtml: '<strong>BloKKit SpA</strong><br/>Email: <a href="mailto:contacto@blokkit.cl">contacto@blokkit.cl</a><br/>Santiago, Chile',
+  },
+];
+---
+
+<BaseLayout>
+  <Header slot="header" />
+
+  <section class="hero hero--sub hero-mesh-bg" style="padding-bottom: 40px; min-height: auto;">
+    <div class="mesh-gradient" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero__content container">
+      <span class="label fade-in-up" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.1); border-radius: var(--radius-full); border: 1px solid rgba(127, 206, 236, 0.4); color: var(--accent); letter-spacing: 0.1em; margin-bottom: var(--space-4); font-size: 0.75rem; font-weight: 700;">Legal</span>
+      <h1 class="heading-1 hero__title" style="text-transform: uppercase;">
+        <TextSplitReveal client:load text="Política de" as="span" splitBy="word" delay={0.15} /><br/>
+        <TextSplitReveal client:load text="Privacidad" as="span" className="text-accent" splitBy="word" delay={0.25} />
+      </h1>
+      <ScrollReveal client:load delay={0.4}>
+        <p class="hero__subtitle body-lg" style="margin-top: var(--space-6);">
+          Última actualización: enero 2025
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <section class="section--lg section--light-alt">
+    <div class="container legal-container">
+      {sections.map((s, i) => (
+        <ScrollReveal client:visible delay={i * 0.05}>
+          <div class="legal-card">
+            <h2 class="legal-card__title">{s.title}</h2>
+            {s.paragraphs?.map((p) => <p class="legal-card__text">{p}</p>)}
+            {s.list && (
+              <ul class="legal-card__list">
+                {s.list.map((item) => <li>{item}</li>)}
+              </ul>
+            )}
+            {s.after && <p class="legal-card__text">{s.after}</p>}
+            {s.afterHtml && <p class="legal-card__text" set:html={s.afterHtml} />}
+          </div>
+        </ScrollReveal>
+      ))}
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero--sub { min-height: 50vh; display: flex; flex-direction: column; justify-content: center; padding-top: 160px; padding-bottom: 60px; position: relative; overflow: hidden; }
+  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); margin: 0 auto; }
+  .hero__subtitle { max-width: 600px; color: var(--text-secondary); }
+
+  .legal-container { max-width: 820px; margin-inline: auto; display: flex; flex-direction: column; gap: var(--space-6); }
+
+  .legal-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+  .legal-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+
+  .legal-card__title {
+    font-family: var(--font-heading);
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: var(--space-4);
+  }
+
+  .legal-card__text {
+    color: var(--text-dark-secondary);
+    line-height: 1.75;
+    font-size: var(--text-base);
+    margin-bottom: var(--space-3);
+  }
+  .legal-card__text:last-child { margin-bottom: 0; }
+
+  .legal-card__text :global(a) {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s ease;
+  }
+  .legal-card__text :global(a:hover) { opacity: 0.8; }
+
+  .legal-card__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-left: var(--space-6);
+    margin-bottom: var(--space-4);
+  }
+  .legal-card__list li {
+    color: var(--text-dark-secondary);
+    line-height: 1.7;
+    font-size: var(--text-base);
+  }
+  .legal-card__list li::marker {
+    color: var(--accent);
+  }
+</style>

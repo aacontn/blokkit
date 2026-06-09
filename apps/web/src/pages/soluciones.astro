@@ -1,0 +1,221 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ScrollReveal from "../components/ui/ScrollReveal.tsx";
+import MagneticButton from "../components/ui/MagneticButton.tsx";
+import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+
+const sectors = [
+  {
+    id: "educacion", num: "01", kicker: "Educación",
+    title: "Cumplimiento pedagógico diario",
+    subtitle: "Colegios, liceos y universidades",
+    summary: "BloKKit baja la norma al aula: el estudiante conserva su teléfono, pero sin uso durante la clase, con protocolo visible para docentes y apoderados.",
+    challenge: "La prohibición por sí sola genera uso oculto, conflictos de convivencia y alta carga administrativa para el equipo directivo.",
+    flow: [
+      { title: "Inicio de jornada con cierre validado", detail: "Cada estudiante guarda su teléfono, realiza cierre magnético y parte la clase con el mismo criterio para todos." },
+      { title: "Bloqueo durante actividades", detail: "El dispositivo permanece inhabilitado sin confiscación y sin discusiones recurrentes en sala." },
+      { title: "Apertura autorizada al cierre", detail: "La liberación se realiza solo en dock autorizado al finalizar la actividad o en contingencias definidas." },
+      { title: "Registro de excepciones", detail: "Salud, emergencia o uso pedagógico quedan documentados bajo responsables designados." },
+    ],
+    modules: ["Funda por estudiante para uso diario", "Dock fijo o portátil para aperturas controladas", "Protocolo institucional alineado al reglamento interno"],
+    results: ["Hasta 10 minutos pedagógicos recuperados por bloque", "Menor tensión entre docencia, convivencia y familias", "Evidencia operativa para fiscalización y mejora continua"],
+    ctaLabel: "Ver marco ley 2026", ctaHref: "/ley-celulares-2026",
+  },
+  {
+    id: "empresas", num: "02", kicker: "Empresas",
+    title: "Foco y confidencialidad en operaciones críticas",
+    subtitle: "Directorios, comités, training y salas de decisión",
+    summary: "Definimos zonas y momentos sin teléfono para reuniones críticas, trabajo profundo y sesiones con información sensible.",
+    challenge: "Sin un mecanismo simple, los acuerdos de no uso se rompen rápido y el equipo vuelve a interrupciones constantes.",
+    flow: [
+      { title: "Diseño por tipo de sesión", detail: "Se establecen espacios y reuniones donde el protocolo BloKKit es obligatorio según riesgo e impacto." },
+      { title: "Activación en ingreso", detail: "Cada participante inicia la sesión con bloqueo físico, evitando notificaciones y uso paralelo del teléfono." },
+      { title: "Custodia sin fricción", detail: "El teléfono sigue con su dueño, lo que reduce resistencia frente a esquemas de entrega o retiro manual." },
+      { title: "Reporte para liderazgo", detail: "Se mide adopción y cumplimiento por área para sostener la práctica en el tiempo." },
+    ],
+    modules: ["Fundas para comités y equipos clave", "Docks por piso o salas de reunión", "Panel para seguimiento por unidad de negocio"],
+    results: ["Menos interrupciones en sesiones de alto costo", "Mayor disciplina de reunión y mejor calidad de decisión", "Control simple de cumplimiento por área"],
+    ctaLabel: "Solicitar diseño para mi operación", ctaHref: "/contacto",
+  },
+  {
+    id: "gobierno", num: "03", kicker: "Gobierno, Policías y Justicia",
+    title: "Cadena de custodia con trazabilidad",
+    subtitle: "Congreso, audiencias, diligencias y recintos sensibles",
+    summary: "BloKKit estandariza ingreso, resguardo y devolución de dispositivos con responsables y trazas claras en entornos de alta sensibilidad.",
+    challenge: "El manejo informal de teléfonos en procesos sensibles eleva riesgo legal, operacional y reputacional.",
+    flow: [
+      { title: "Ingreso bajo protocolo único", detail: "Se define punto de control, responsable y tipo de resguardo según la naturaleza de la diligencia." },
+      { title: "Bloqueo verificable", detail: "El dispositivo queda inutilizado para captura o comunicación no autorizada durante el proceso." },
+      { title: "Apertura con personal autorizado", detail: "Solo roles habilitados operan los docks para liberar equipos al cierre del procedimiento." },
+      { title: "Trazabilidad y respaldo", detail: "Las excepciones, aperturas y devoluciones quedan registradas para auditoría y control interno." },
+    ],
+    modules: ["Fundas con identificación por usuario o caso", "Dock estándar o Smart según nivel de control", "Registro de incidentes y excepciones"],
+    results: ["Operación consistente en sesiones sensibles", "Reducción de incidentes por manejo discrecional", "Soporte documental para compliance y auditoría"],
+    ctaLabel: "Hablar con equipo técnico", ctaHref: "/contacto",
+  },
+  {
+    id: "eventos", num: "04", kicker: "Eventos y Espectáculos",
+    title: "Control de experiencia y propiedad intelectual",
+    subtitle: "Conciertos, lanzamientos, premieres y activaciones",
+    summary: "Aplicamos un flujo rápido de ingreso y salida para evitar grabaciones no autorizadas, filtraciones y distracción de audiencia.",
+    challenge: "Cuando no existe protocolo de custodia, sube el riesgo de filtraciones y baja la calidad de experiencia en vivo.",
+    flow: [
+      { title: "Configuración previa por aforo", detail: "Definimos cantidad de fundas, puntos de apertura y staff necesario según tipo de evento." },
+      { title: "Ingreso ordenado", detail: "El público bloquea su teléfono en entrada con apoyo de personal entrenado y señalética clara." },
+      { title: "Operación durante show", detail: "Se mantiene la experiencia sin pantallas y con procedimientos para contingencias autorizadas." },
+      { title: "Salida fluida", detail: "La apertura se ejecuta por estaciones para liberar al público sin cuellos de botella." },
+    ],
+    modules: ["Kit de fundas por capacidad de evento", "Docks distribuidos por accesos y salida", "Soporte de activación y guion operativo"],
+    results: ["Protección efectiva de contenido", "Experiencia inmersiva para audiencia", "Operación escalable para eventos recurrentes"],
+    ctaLabel: "Evaluar mi evento", ctaHref: "/contacto",
+  },
+];
+---
+
+<BaseLayout>
+  <Header slot="header" />
+
+  <section class="hero hero--sub hero-mesh-bg" style="padding-bottom: 40px; min-height: auto;">
+    <div class="mesh-gradient" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero__content container">
+      <span class="label fade-in-up" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.1); border-radius: var(--radius-full); border: 1px solid rgba(127, 206, 236, 0.4); color: var(--accent); letter-spacing: 0.1em; margin-bottom: var(--space-4); font-size: 0.75rem; font-weight: 700;">Fundas Bloqueadoras de Señal</span>
+      <h1 class="heading-1 hero__title" style="text-transform: uppercase;">
+        <TextSplitReveal client:load text="SOLUCIONES QUE" as="span" splitBy="word" delay={0.15} /><br/>
+        <TextSplitReveal client:load text="SÍ SE" as="span" className="text-accent" splitBy="word" delay={0.25} />
+        <TextSplitReveal client:load text="IMPLEMENTAN" as="span" splitBy="word" delay={0.35} />
+      </h1>
+      <ScrollReveal client:load delay={0.4}>
+        <p class="hero__subtitle body-lg" style="margin-top: var(--space-6);">
+          Convertimos una política interna en operación diaria con protocolo, control de apertura y trazabilidad por contexto.
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  {sectors.map((s, idx) => {
+    const isLight = idx % 2 === 0;
+    
+    return (
+      <section id={s.id} class={`section--lg ${isLight ? "section--light-alt" : "section--dark"}`} style={`position: relative; overflow: hidden; ${idx === 0 ? 'padding-top: var(--space-20);' : ''}`}>
+        {isLight ? (
+          <>
+            <div class="ley__mesh-gradient" aria-hidden="true"></div>
+            <div class="ley__grid-overlay" aria-hidden="true"></div>
+          </>
+        ) : (
+          <>
+            <div class="mesh-gradient" aria-hidden="true"></div>
+            <div class="hero-glow" aria-hidden="true"></div>
+            <div class="hero-grid" aria-hidden="true"></div>
+          </>
+        )}
+        <div class="container" style="position: relative; z-index: 1;">
+          <ScrollReveal client:visible>
+            <div class="sector-header">
+              <span class="sector-num">{s.num}</span>
+              <div>
+                <span class="label">{s.kicker}</span>
+                <h2 class="heading-2" style="margin-top: var(--space-2)">{s.title}</h2>
+                <p class="body-sm" style={`color: ${isLight ? 'var(--text-dark-muted)' : 'var(--text-muted)'}; margin-top: var(--space-2)`}>{s.subtitle}</p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          <div class="sector-grid">
+            <ScrollReveal client:visible delay={0.1} className="sector-main">
+              <p class="body-lg" style={`color: ${isLight ? 'var(--text-dark-secondary)' : 'var(--text-secondary)'}; margin-bottom: var(--space-6)`}>{s.summary}</p>
+              <div class="sector-challenge">
+                <h3 class="heading-6" style={`color: ${isLight ? 'var(--text-dark)' : 'var(--text-primary)'}; margin-bottom: var(--space-2)`}>Desafío que resolvemos</h3>
+                <p class="body-sm" style={`color: ${isLight ? 'var(--text-dark-secondary)' : 'var(--text-secondary)'}`}>{s.challenge}</p>
+              </div>
+              <div class="sector-flow">
+                {s.flow.map((step) => (
+                  <div class="flow-step">
+                    <h4 class="heading-6" style={`color: ${isLight ? 'var(--text-dark)' : 'var(--text-primary)'}; margin-bottom: var(--space-1)`}>{step.title}</h4>
+                    <p class="body-xs" style={`color: ${isLight ? 'var(--text-dark-muted)' : 'var(--text-muted)'}; margin-top: var(--space-1)`}>{step.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </ScrollReveal>
+
+            <ScrollReveal client:visible delay={0.3} className="sector-aside">
+              <div class="glass-card" style="padding: var(--space-6)">
+                <h3 class="heading-6" style={`color: ${isLight ? 'var(--text-dark)' : 'var(--text-primary)'}; margin-bottom: var(--space-4)`}>Módulos activados</h3>
+                <ul class="sector-list">
+                  {s.modules.map((m) => <li class="body-sm" style={`color: ${isLight ? 'var(--text-dark-secondary)' : 'var(--text-secondary)'}`}>{m}</li>)}
+                </ul>
+              </div>
+              <div class="glass-card" style="padding: var(--space-6)">
+                <h3 class="heading-6" style={`color: ${isLight ? 'var(--text-dark)' : 'var(--text-primary)'}; margin-bottom: var(--space-4)`}>Resultado operativo</h3>
+                <ul class="sector-list sector-list--dot">
+                  {s.results.map((r) => <li class="body-sm" style={`color: ${isLight ? 'var(--text-dark-secondary)' : 'var(--text-secondary)'}`}>{r}</li>)}
+                </ul>
+              </div>
+              <div style="margin-top: auto; padding-top: var(--space-8);">
+                <a href={s.ctaHref} class="btn btn--primary">
+                  {s.ctaLabel}
+                </a>
+              </div>
+            </ScrollReveal>
+          </div>
+      </section>
+    );
+  })}
+
+  <section class="section--light-alt" style="padding-top: var(--space-20); padding-bottom: var(--space-24); position: relative; overflow: hidden;">
+    <div class="hero-grid" aria-hidden="true" style="opacity: 0.3;"></div>
+    
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="final-cta__card">
+        <div class="final-cta__glow" aria-hidden="true"></div>
+        <div class="final-cta__inner">
+          <h2 class="heading-2 final-cta__title">¿Listo para definir tu solución BloKKit?</h2>
+          <p class="body-lg final-cta__subtitle">
+            Agendamos una reunión y te proponemos el flujo exacto para tu institución, equipo o evento.
+          </p>
+          <button type="button" data-cal-link="blokkit/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}' class="btn btn--primary">Agendar Reunión</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .hero--sub { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding-top: 180px; padding-bottom: 80px; position: relative; overflow: hidden; }
+  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); margin: 0 auto; }
+  .hero__subtitle { max-width: 680px; color: var(--text-secondary); }
+
+  .sector-header { display: flex; align-items: flex-start; gap: var(--space-6); margin-bottom: var(--space-8); }
+  .sector-num { font-family: var(--font-heading); font-size: var(--text-5xl); font-weight: 700; color: var(--accent); opacity: 0.15; line-height: 1; }
+
+  .sector-grid { display: grid; gap: var(--space-8); }
+  @media (min-width: 960px) { .sector-grid { grid-template-columns: 1.5fr 1fr; } }
+  
+  .sector-main { display: flex; flex-direction: column; gap: var(--space-6); }
+
+  .sector-challenge { padding: var(--space-5); border-left: 2px solid var(--accent); background: linear-gradient(90deg, rgba(127, 206, 236, 0.05) 0%, transparent 100%); border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+
+  .sector-flow { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-top: var(--space-2); }
+  @media (max-width: 640px) { .sector-flow { grid-template-columns: 1fr; } }
+
+  .flow-step { padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.03); transition: border-color 0.2s ease; }
+  .section--light-alt .flow-step { background: var(--bg-white); border: 1px solid var(--border-light); }
+  .flow-step:hover { border-color: var(--accent); }
+  .flow-step h4 { color: var(--text-primary); margin-bottom: var(--space-1); }
+  .section--light-alt .flow-step h4 { color: var(--text-dark); }
+
+  .sector-aside { display: flex; flex-direction: column; gap: var(--space-16); position: sticky; top: 100px; height: fit-content; }
+  
+  .sector-list { display: flex; flex-direction: column; gap: var(--space-2); margin-top: var(--space-3); }
+  .sector-list li { position: relative; padding-left: var(--space-5); color: var(--text-secondary); font-size: var(--text-sm); }
+  .section--light-alt .sector-list li { color: var(--text-dark-secondary); }
+  .sector-list li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  .sector-list--dot li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); top: 0.5em; left: 4px; }
+  .sector-list--dot li { padding-left: var(--space-5); }
+</style>

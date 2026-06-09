@@ -1,0 +1,546 @@
+---
+const navItems = [
+  { label: "Producto", href: "/producto" },
+  { label: "Beneficios", href: "/beneficios" },
+  { label: "Soluciones", href: "/soluciones" },
+  { label: "Evidencia", href: "/evidencia" },
+  { label: "Prensa", href: "/prensa" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="header" id="main-header">
+  <div class="header__inner container">
+    <a href="/" class="header__logo" aria-label="BloKKit - Ir al inicio">
+      <img src="/images/Logo-Blokkit-white.png" alt="BloKKit" width="120" height="36" loading="eager" />
+    </a>
+
+    <nav class="header__pill" aria-label="Navegación principal">
+      {navItems.map(({ label, href }) => (
+        <a
+          href={href}
+          class:list={["header__link", { "header__link--active": currentPath === href }]}
+        >
+          {label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="header__actions">
+      <a href="https://app.blokkit.cl" class="header__portal-link" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Mi Portal</span>
+      </a>
+      <a href="https://wa.me/56996472784?text=Hola%2C%20estoy%20interesado%20en%20BloKKit" class="btn btn--primary btn--header" style="color: white;" target="_blank" rel="noopener noreferrer">
+        <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        Hablemos
+      </a>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      class="header__hamburger"
+      id="menu-toggle"
+      aria-label="Abrir menú"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span class="header__hamburger-line"></span>
+      <span class="header__hamburger-line"></span>
+      <span class="header__hamburger-line"></span>
+    </button>
+  </div>
+</header>
+
+<!-- Mobile fullscreen menu — OUTSIDE <header> because .header has transform which breaks position:fixed for descendants -->
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <nav class="mobile-menu__nav" aria-label="Navegación móvil">
+        <span class="mobile-menu__label" style="--i: 0">Navegación</span>
+        <a href="/" class:list={["mobile-menu__link", { "mobile-menu__link--active": currentPath === "/" }]} style="--i: 1">
+          Inicio
+        </a>
+        {navItems.map(({ label, href }, i) => (
+          <a
+            href={href}
+            class:list={["mobile-menu__link", { "mobile-menu__link--active": currentPath === href }]}
+            style={`--i: ${i + 2}`}
+          >
+            {label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="mobile-menu__footer" style={`--i: ${navItems.length + 3}`}>
+        <a href="https://wa.me/56996472784?text=Hola%2C%20estoy%20interesado%20en%20BloKKit" class="btn btn--primary mobile-menu__cta" style="color: white;" target="_blank" rel="noopener noreferrer">
+          <svg class="btn__icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M.057 24l1.687-6.163a11.867 11.867 0 01-1.587-5.946C.16 5.335 5.495 0 12.05 0a11.817 11.817 0 018.413 3.488 11.824 11.824 0 013.48 8.414c-.003 6.555-5.338 11.89-11.893 11.89a11.9 11.9 0 01-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.611-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+          Hablemos
+        </a>
+        <a href="https://app.blokkit.cl" class="mobile-menu__portal" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Mi Portal
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .header {
+    position: fixed;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: var(--container-max);
+    z-index: var(--z-sticky);
+    transition: top 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      max-width 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      background 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      border-radius 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid transparent;
+  }
+
+  .header--scrolled {
+    top: 24px;
+    max-width: 900px;
+    background: rgba(31, 31, 31, 0.78);          /* charcoal warm (matches deck) */
+    backdrop-filter: blur(20px) saturate(140%);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  @media (max-width: 1023px) {
+    .header {
+      width: calc(100% - 32px);
+    }
+  }
+
+  .header__inner {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    transition: height 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+      padding 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .header--scrolled .header__inner {
+    height: 52px;
+    padding-inline: var(--space-4);
+  }
+
+  .header__logo {
+    flex-shrink: 0;
+    z-index: calc(var(--z-overlay) + 2);
+    transform-origin: left center;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+  }
+
+  .header--scrolled .header__logo {
+    transform: scale(0.85);
+  }
+
+  .header__logo img {
+    height: 32px;
+    width: auto;
+  }
+
+  /* ── Pill nav (centered links) ── */
+  .header__pill {
+    display: none;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* When scrolled, show the pill proper */
+  .header--scrolled .header__pill {
+    display: flex; /* Ensure it's flex */
+    background: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    gap: var(--space-1);
+    padding: 0;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Initial state for links in desktop — absolutely centered in header__inner */
+  @media (min-width: 1024px) {
+    .header__pill {
+      display: flex;
+      opacity: 1;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .header--scrolled .header__pill {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .header__link {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: var(--space-2) var(--space-3);
+    border-radius: 100px;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+
+  .header__link:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .header__link--active {
+    color: var(--accent);
+    background: rgba(127, 206, 236, 0.10);
+  }
+
+  .header__actions {
+    display: none;
+    align-items: center;
+    gap: var(--space-3);
+    transition: gap 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .header--scrolled .header__actions {
+    gap: var(--space-2);
+  }
+
+  .header__portal-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    padding: var(--space-2) var(--space-3);
+    border-radius: 100px;
+    transition: all 0.3s ease;
+    overflow: hidden;
+  }
+
+  .header__portal-link span {
+    transition: max-width 0.3s ease, opacity 0.3s ease;
+    max-width: 100px;
+    opacity: 1;
+    white-space: nowrap;
+  }
+
+  .header--scrolled .header__portal-link {
+    padding: var(--space-2);
+    gap: 0;
+  }
+  
+  .header--scrolled .header__portal-link span {
+    max-width: 0;
+    opacity: 0;
+  }
+
+  .header__portal-link:hover {
+    color: var(--accent);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .btn--header {
+    padding: 6px var(--space-3);
+    font-size: 11px;
+    border-radius: 100px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
+    gap: 6px;
+  }
+
+  .btn--header svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .header--scrolled .btn--header {
+    padding: 5px 10px;
+    font-size: 10px;
+  }
+
+  /* ── Hamburger ── */
+  .header__hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    z-index: calc(var(--z-overlay) + 2);
+    position: relative;
+  }
+
+  .header__hamburger-line {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 1px;
+    transition: all 0.35s cubic-bezier(0.77, 0, 0.175, 1);
+    transform-origin: center;
+  }
+
+  .header__hamburger--open .header__hamburger-line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .header__hamburger--open .header__hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+
+  .header__hamburger--open .header__hamburger-line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* ── Mobile menu — fullscreen overlay ── */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-overlay);
+    background: var(--bg-dark);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: none;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s linear 0.5s;
+  }
+
+  .mobile-menu--open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+    transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      visibility 0s linear 0s;
+  }
+
+  .mobile-menu__inner {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 80px var(--space-6) var(--space-8);
+    overflow: hidden;
+  }
+
+  /* Navigation label */
+  .mobile-menu__label {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: var(--space-4);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.3s ease 0s, transform 0.3s ease 0s;
+  }
+
+  .mobile-menu--open .mobile-menu__label {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease calc(var(--i) * 0.07s + 0.15s),
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) calc(var(--i) * 0.07s + 0.15s);
+  }
+
+  /* Navigation links */
+  .mobile-menu__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    justify-content: center;
+    padding: 0 var(--space-2);
+  }
+
+  .mobile-menu__link {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 6vw, 2.8rem);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+    color: var(--text-secondary);
+    padding: var(--space-2) 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease 0s,
+      transform 0.3s ease 0s,
+      color 0.2s ease;
+  }
+
+  .mobile-menu--open .mobile-menu__link {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease calc(var(--i) * 0.07s + 0.15s),
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) calc(var(--i) * 0.07s + 0.15s),
+      color 0.2s ease;
+  }
+
+  .mobile-menu__link:hover {
+    color: var(--text-primary);
+  }
+
+  .mobile-menu__link--active {
+    color: var(--accent);
+  }
+
+  /* Footer */
+  .mobile-menu__footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: 0 var(--space-2);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.3s ease 0s, transform 0.3s ease 0s;
+  }
+
+  .mobile-menu--open .mobile-menu__footer {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.4s ease calc(var(--i) * 0.07s + 0.15s),
+      transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) calc(var(--i) * 0.07s + 0.15s);
+  }
+
+  .mobile-menu__cta {
+    width: 100%;
+    text-align: center;
+    padding: var(--space-4) var(--space-6);
+    font-size: var(--text-base);
+  }
+
+  .mobile-menu__portal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: var(--space-3) var(--space-4);
+    font-family: var(--font-heading);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-md);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .mobile-menu__portal:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ── Desktop ── */
+  @media (min-width: 1024px) {
+    .header__pill {
+      display: flex;
+    }
+
+    .header__actions {
+      display: flex;
+    }
+
+    .header__hamburger {
+      display: none;
+    }
+
+    .mobile-menu {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Scroll effect → glassmorphism
+  const header = document.getElementById("main-header");
+  if (header) {
+    const onScroll = () => {
+      header.classList.toggle("header--scrolled", window.scrollY > 40);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+
+  // Mobile menu toggle
+  const menuToggle = document.getElementById("menu-toggle");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  if (menuToggle && mobileMenu) {
+    const toggleMenu = (open?: boolean) => {
+      const nowOpen = open !== undefined
+        ? (() => { open ? mobileMenu.classList.add("mobile-menu--open") : mobileMenu.classList.remove("mobile-menu--open"); return open; })()
+        : mobileMenu.classList.toggle("mobile-menu--open");
+      menuToggle.classList.toggle("header__hamburger--open", nowOpen);
+      menuToggle.setAttribute("aria-expanded", String(nowOpen));
+      mobileMenu.setAttribute("aria-hidden", String(!nowOpen));
+
+      // Lock scroll on both html and body
+      const scrollLock = nowOpen ? "hidden" : "";
+      document.body.style.overflow = scrollLock;
+      document.documentElement.style.overflow = scrollLock;
+      if (nowOpen) {
+        document.body.style.touchAction = "none";
+        document.body.style.overscrollBehavior = "none";
+      } else {
+        document.body.style.touchAction = "";
+        document.body.style.overscrollBehavior = "";
+      }
+    };
+
+    menuToggle.addEventListener("click", () => toggleMenu());
+
+    // Close on link click
+    mobileMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => toggleMenu(false));
+    });
+
+    // Close on Escape
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && mobileMenu.classList.contains("mobile-menu--open")) {
+        toggleMenu(false);
+      }
+    });
+
+    // Prevent touch scroll on the menu overlay
+    mobileMenu.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+    }, { passive: false });
+  }
+</script>
