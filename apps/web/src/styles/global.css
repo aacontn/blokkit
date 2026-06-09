@@ -88,7 +88,7 @@ body {
 
 .section--light .label,
 .section--light-alt .label {
-    color: var(--accent-dark);
+    color: var(--accent-strong);
 }
 
 /* Dark section — deep navy bg (default page scope) */
@@ -122,7 +122,7 @@ body {
 }
 
 .section--slate .label {
-    color: var(--accent-dark);
+    color: var(--accent-strong);
 }
 
 /* ── Typography — Archivo Black (heavy, blocky, structural) ── */
@@ -732,8 +732,8 @@ body {
 
 .btn--primary:hover {
     background: #FFFFFF;                          /* invert: white pill */
-    color: var(--accent-dark);                     /* dark cyan for contrast on white (WCAG AA) */
-    box-shadow: inset 0 0 0 1px var(--accent-dark);
+    color: var(--accent-strong);                     /* dark cyan for contrast on white (WCAG AA) */
+    box-shadow: inset 0 0 0 1px var(--accent-strong);
 }
 
 .btn--primary .btn__icon {
@@ -743,12 +743,12 @@ body {
 }
 
 .btn--primary:hover .btn__icon {
-    color: var(--accent-dark);                     /* icon dark cyan on hover */
+    color: var(--accent-strong);                     /* icon dark cyan on hover */
 }
 
 /* Arrow circle bg also matches inversion on hover */
 .btn--primary:hover::after {
-    background: var(--accent-dark);
+    background: var(--accent-strong);
     color: #FFFFFF;
 }
 
@@ -837,15 +837,15 @@ body {
 
 .btn--header:hover {
     background: #FFFFFF !important;
-    color: var(--accent-dark) !important;
+    color: var(--accent-strong) !important;
     transform: translateY(-2px) !important;
     box-shadow:
         0 8px 32px var(--accent-glow),
-        inset 0 0 0 1px var(--accent-dark) !important;
+        inset 0 0 0 1px var(--accent-strong) !important;
 }
 
 .btn--header:hover .btn__icon {
-    color: var(--accent-dark) !important;
+    color: var(--accent-strong) !important;
     fill: currentColor !important;
 }
 
@@ -899,8 +899,8 @@ body {
 .section--light .btn--ghost:hover,
 .section--light-alt .btn--ghost:hover,
 .section--slate .btn--ghost:hover {
-    border-color: var(--accent-dark);
-    color: var(--accent-dark);
+    border-color: var(--accent-strong);
+    color: var(--accent-strong);
 }
 
 .btn--lg {
@@ -1120,7 +1120,7 @@ body {
     justify-content: center;
     border-radius: var(--radius-xl);
     background: linear-gradient(135deg, rgba(127, 206, 236, 0.1), rgba(127, 206, 236, 0.02));
-    color: var(--accent-dark);
+    color: var(--accent-strong);
     box-shadow: inset 0 0 0 1px rgba(127, 206, 236, 0.15);
 }
 
@@ -1150,7 +1150,7 @@ body {
     letter-spacing: 0.1em;
     padding: 4px 12px;
     background: rgba(127, 206, 236, 0.1);
-    color: var(--accent-dark);
+    color: var(--accent-strong);
     border-radius: var(--radius-full);
     text-transform: uppercase;
 }
