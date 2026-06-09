@@ -62,9 +62,8 @@ body {
     color: var(--text-dark);
 }
 
-.section--cream .heading-accent {
-    color: var(--accent-strong);   /* on cream, use stronger cyan for contrast */
-}
+/* USER RULE (2026-06-09): heading accents are ALWAYS brand cyan #7FCEEC,
+   on light and dark alike. Do not add per-section overrides. */
 
 .section--light .heading-1,
 .section--light .heading-2,
@@ -102,7 +101,8 @@ body {
     color: var(--text-primary);
 }
 
-/* Slate section — soft teal from Velara reference */
+/* Slate section — intermediate step between dark and light.
+   Must read clearly lighter than --bg-dark (#1F1F1F). */
 .section--slate {
     background: var(--bg-surface-light);
     color: var(--text-primary);
@@ -116,13 +116,58 @@ body {
     color: var(--text-primary);
 }
 
+.section--slate .heading-accent {
+    color: var(--accent);
+}
+
 .section--slate .body-lg,
 .section--slate .body-sm {
     color: var(--text-secondary);
 }
 
 .section--slate .label {
+    color: var(--accent);
+}
+
+/* ── Shared section header pattern: label pill + title + lead.
+   Colors come ONLY from the section--* theme — no inline styles. ── */
+.section-head {
+    max-width: 720px;
+    margin-bottom: var(--space-12);
+}
+
+.section-head--center {
+    margin-inline: auto;
+    text-align: center;
+}
+
+.section-head .label {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-accent);
+    background: var(--accent-muted);
+    margin-bottom: var(--space-4);
+}
+
+.section--light .section-head .label,
+.section--light-alt .section-head .label,
+.section--cream .section-head .label {
+    border-color: rgba(63, 168, 224, 0.35);
+    background: rgba(63, 168, 224, 0.10);
     color: var(--accent-strong);
+}
+
+.section-head .heading-2 {
+    margin: 0 0 var(--space-4) 0;
+}
+
+.section-head--center .heading-2 {
+    margin-inline: auto;
+}
+
+.section-head .body-lg {
+    margin: 0;
 }
 
 /* ── Typography — Archivo Black (heavy, blocky, structural) ── */
@@ -139,21 +184,23 @@ body {
 }
 
 .heading-2 {
+    /* Section titles — contained, not hero-scale */
     font-family: var(--font-display);
-    font-size: clamp(2.25rem, 4.5vw, 4rem);
+    font-size: clamp(1.5rem, 2.6vw, 2.375rem);
     font-weight: 400;
     letter-spacing: -0.01em;
     text-transform: uppercase;
-    line-height: 0.95;
+    line-height: 1.05;
+    max-width: 26ch;
 }
 
 .heading-3 {
     font-family: var(--font-display);
-    font-size: clamp(1.875rem, 3.5vw, 3rem);
+    font-size: clamp(1.25rem, 2vw, 1.75rem);
     font-weight: 400;
     letter-spacing: -0.005em;
     text-transform: uppercase;
-    line-height: 1.0;
+    line-height: 1.1;
 }
 
 .heading-4 {
