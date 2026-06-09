@@ -704,7 +704,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
   </section>
 
   <!-- ═══════════════ CTA FINAL ═══════════════ -->
-  <section class="section--slate section--lg" style="padding-bottom: var(--space-24);">
+  <section class="section--light-alt section--lg" style="padding-bottom: var(--space-24);">
     <div class="container">
       <div class="final-cta__card">
         <div class="final-cta__glow" aria-hidden="true"></div>
@@ -865,20 +865,21 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     }
   }
 
+  /* Solid charcoal cards on cream — same pattern as segments cards */
   .how__step-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: var(--bg-dark);
+    border: 1px solid rgba(31, 31, 31, 0.9);
     border-radius: var(--radius-xl);
     padding: var(--space-6) var(--space-4);
     text-align: center;
     position: relative;
-    transition: transform 0.3s ease, background 0.3s ease;
+    box-shadow: 0 12px 32px rgba(31, 31, 31, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .how__step-card:hover {
     transform: translateY(-6px);
-    background: rgba(255, 255, 255, 0.14);
+    box-shadow: 0 20px 44px rgba(31, 31, 31, 0.28);
   }
 
   .how__step-number {

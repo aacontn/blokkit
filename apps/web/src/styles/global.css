@@ -851,9 +851,10 @@ body {
 }
 
 .btn--primary:hover::after {
-    /* Modern animation: arrow slides slightly up-right, circle scales up a tiny bit, color changes to accent */
+    /* Arrow slides up-right; circle goes MEDIUM cyan so the white arrow
+       stays visible on the white hover pill (pale cyan was invisible) */
     background-position: calc(50% + 3px) calc(50% - 3px);
-    background-color: var(--accent);
+    background-color: var(--accent-strong);
     transform: scale(1.08);
 }
 
@@ -995,7 +996,7 @@ body {
     --pill-i: 0;
     --pill-track-bg: rgba(255, 255, 255, 0.92);
     --pill-track-border: rgba(15, 23, 42, 0.14);
-    --pill-active-bg: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+    --pill-active-bg: linear-gradient(135deg, var(--accent-strong) 0%, var(--accent-dark) 100%);  /* darker base so white label reads */
     --pill-active-fg: #ffffff;
     --pill-inactive-fg: rgba(15, 23, 42, 0.78);
     position: relative;
