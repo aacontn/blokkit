@@ -757,9 +757,23 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
 
   @media (min-width: 768px) {
     .hero__split {
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-16);
+      /* minmax(0,1fr): without it, the nowrap title rows force the text
+         column to min-content width and crush the image column */
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-12);
       padding-block: var(--space-20);
+    }
+
+    .hero__text,
+    .hero__visual {
+      min-width: 0;
+    }
+  }
+
+  /* Tablet: title scales to fit its half-column (rows are nowrap) */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero__title-row {
+      font-size: clamp(1.4rem, 3.2vw, 2rem);
     }
   }
   /* ── Animated Mesh Gradient for "Cómo Funciona" ── */
@@ -955,7 +969,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
 
   @media (min-width: 1024px) {
     .hero__split {
-      grid-template-columns: 58% 42%;     /* slightly more space for text */
+      grid-template-columns: minmax(0, 58fr) minmax(0, 42fr);
       gap: var(--space-20);                /* widen gap so visual breathes right */
     }
   }
@@ -1022,9 +1036,16 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
   .hero__eyebrow {
     display: flex;
     align-items: center;
+    justify-content: center;          /* mobile: hero is centered → eyebrow too */
     gap: var(--space-3);
     margin-bottom: 0;                 /* gap is handled by .hero__text flex gap */
     flex-wrap: wrap;
+  }
+
+  @media (min-width: 768px) {
+    .hero__eyebrow {
+      justify-content: flex-start;
+    }
   }
 
   /* Tighten the gap between eyebrow H1 and display title specifically */
@@ -1091,6 +1112,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     flex-wrap: wrap;
     gap: var(--space-4);
     align-items: center;
+    justify-content: center;          /* mobile: centered like the rest of hero */
     margin-top: var(--space-6);
     padding-top: var(--space-5);
     border-top: 1px solid var(--border-subtle);
@@ -1100,6 +1122,12 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
     letter-spacing: 0.16em;
     text-transform: uppercase;
     color: var(--text-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .hero__sectors {
+      justify-content: flex-start;
+    }
   }
 
   .hero__sectors li {
