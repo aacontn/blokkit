@@ -14,5 +14,9 @@
     "build": "npm run build:web && npm run build:app",
     "preview:web": "npm --workspace @blokkit/web run preview",
     "preview:app": "npm --workspace @blokkit/app run preview"
+  },
+  "overrides": {
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
   }
 }
