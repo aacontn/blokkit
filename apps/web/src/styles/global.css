@@ -385,6 +385,98 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════
+   SECTION AMBIENT BACKGROUNDS — depth without photos.
+   Soft cyan orbs + grain so flat sections breathe and
+   glass surfaces actually have something to refract.
+   Apply alongside section--dark / --slate / --light-alt.
+   ═══════════════════════════════════════════════════ */
+.section-ambient {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.section-ambient::before,
+.section-ambient::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.section-ambient > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Dark/slate variant: two soft cyan glows, opposite corners */
+.section-ambient::before {
+    background:
+        radial-gradient(ellipse 60% 45% at 88% 8%, rgba(127, 206, 236, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 40% at 8% 92%, rgba(63, 168, 224, 0.07) 0%, transparent 60%);
+    filter: blur(12px);
+}
+
+/* Grain — analog feel, kills the "flat vector" look */
+.section-ambient::after {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    mix-blend-mode: overlay;
+    opacity: 0.05;
+}
+
+/* Light variant: barely-there cyan tint, grain multiplied */
+.section-ambient--light::before {
+    background:
+        radial-gradient(ellipse 55% 40% at 85% 0%, rgba(63, 168, 224, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 45% 35% at 5% 100%, rgba(127, 206, 236, 0.05) 0%, transparent 55%);
+    filter: blur(10px);
+}
+
+.section-ambient--light::after {
+    opacity: 0.035;
+    mix-blend-mode: multiply;
+}
+
+/* ── Photo-backed section: image heavily darkened + blurred behind glass ── */
+.section-photo-bg {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.section-photo-bg::before {
+    content: "";
+    position: absolute;
+    inset: -24px;                          /* bleed so blur edges don't show */
+    z-index: 0;
+    background-image: var(--photo-bg);
+    background-size: cover;
+    background-position: center;
+    filter: blur(10px) saturate(80%) brightness(0.55);
+    pointer-events: none;
+}
+
+.section-photo-bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    /* charcoal veil keeps text readable and palette warm */
+    background: linear-gradient(180deg,
+        rgba(31, 31, 31, 0.88) 0%,
+        rgba(31, 31, 31, 0.72) 45%,
+        rgba(31, 31, 31, 0.90) 100%);
+    pointer-events: none;
+}
+
+.section-photo-bg > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* ═══════════════════════════════════════════════════
    LIQUID GLASS MATERIAL SYSTEM
    .glass          — regular card material (dark sections)
    .glass--subtle  — chrome (nav, pills, small UI)
