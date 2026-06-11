@@ -52,7 +52,6 @@ const orgSchema = {
   logo: toAbsoluteUrl(ORG_LOGO),
   contactPoint: {
     "@type": "ContactPoint",
-    telephone: "+56-9-9039-9130",
     email: "hola@blokkit.cl",
     contactType: "sales",
     areaServed: "CL",
@@ -187,6 +186,9 @@ const pageSchema: Record<string, unknown> = {
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         touchMultiplier: 1.5,
       });
+      // expose the instance so components can scrollTo through Lenis
+      // (native hash jumps get overridden by its raf loop)
+      (window as any).lenis = lenis;
 
       function raf(time: number) {
         lenis.raf(time);
@@ -217,14 +219,33 @@ const pageSchema: Record<string, unknown> = {
     Cal("init", "30min", {origin:"https://app.cal.com"});
 
       Cal.ns["30min"]("ui", {
+        "theme": "light",
         "hideEventTypeDetails": false,
         "layout": "month_view",
         "styles": {
-          "branding": { "brandColor": "#3CC8D0" }
+          "branding": { "brandColor": "#1F1F1F" }
         },
         "cssVarsPerTheme": {
           "light": {
-            "cal-border-booker": "1px solid #e5e7eb",
+            /* brand = charcoal BloKKit: fechas seleccionadas y botones primarios */
+            "cal-brand": "#1F1F1F",
+            "cal-brand-emphasis": "#000000",
+            "cal-brand-text": "#FFFFFF",
+            /* superficies crema, como el resto del sitio */
+            "cal-bg": "#F2F2F2",
+            "cal-bg-emphasis": "#E8E8E6",
+            "cal-bg-subtle": "#ECECEA",
+            "cal-bg-muted": "#EFEFED",
+            /* tipografía charcoal con jerarquía */
+            "cal-text": "#1F1F1F",
+            "cal-text-emphasis": "#1F1F1F",
+            "cal-text-subtle": "#6B6E73",
+            "cal-text-muted": "#8A8D93",
+            /* bordes suaves */
+            "cal-border": "#DEDEDC",
+            "cal-border-subtle": "#E6E6E4",
+            "cal-border-emphasis": "#9A9A98",
+            "cal-border-booker": "#DEDEDC",
             "cal-border-booker-width": "1px"
           }
         }
@@ -233,7 +254,7 @@ const pageSchema: Record<string, unknown> = {
     <style>
       /* Cal.com modal overrides */
       :root {
-        --cal-brand-color: #3CC8D0;
+        --cal-brand-color: #1F1F1F;
       }
       /* Hide Cal.com branding watermark */
       [data-cal-namespace] a[href*="cal.com"],
@@ -242,11 +263,12 @@ const pageSchema: Record<string, unknown> = {
       a[data-testid="powered-by-cal"] {
         display: none !important;
       }
-      /* Give the modal more inner padding and rounded corners */
+      /* The modal card: same radius/shadow language as the rest of the site */
       cal-modal-box,
       [data-cal-namespace="30min"] > div {
-        border-radius: 20px !important;
+        border-radius: 24px !important;
         overflow: hidden;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45) !important;
       }
     </style>
     <!-- Cal element-click embed code ends -->

@@ -3,66 +3,74 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ScrollReveal from "../components/ui/ScrollReveal.tsx";
-import MagneticButton from "../components/ui/MagneticButton.tsx";
-import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+import FinalCta from "../components/FinalCta.astro";
+import PageHero from "../components/PageHero.astro";
+
+/* Stroke icon set (24-box, currentColor) — no emojis in the design system */
+const I = {
+  trend: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+  clock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  shieldCheck: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>`,
+  book: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>`,
+  target: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`,
+  lock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+  coins: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>`,
+  building: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>`,
+  shield: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1 1 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>`,
+  clipboard: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M12 11h4"/><path d="M12 16h4"/><path d="M8 11h.01"/><path d="M8 16h.01"/></svg>`,
+  scale: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>`,
+  check: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>`,
+  cameraOff: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="2" x2="22" y2="22"/><path d="M7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h14"/><path d="M9.5 4h5L17 7h3a2 2 0 0 1 2 2v7.5"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/></svg>`,
+  sparkles: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5 8.5 14.06 2.36 12.48a.5.5 0 0 1 0-.96L8.5 9.94l1.44-1.44 1.58-6.14a.5.5 0 0 1 .96 0l1.58 6.14 1.44 1.44 6.14 1.58a.5.5 0 0 1 0 .96l-6.14 1.58-1.44 1.44-1.58 6.14a.5.5 0 0 1-.96 0z"/></svg>`,
+  camera: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>`,
+  star: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`,
+};
 
 const eduBenefits = [
-  { icon: "📈", title: "ROI administrativo medible", desc: "Menos tiempo dedicado a gestionar incidentes con teléfonos y conflictos digitales." },
-  { icon: "🧘", title: "Reducción del tiempo administrativo", desc: "Menor carga en convivencia, inspección y equipos directivos por casos de ciberacoso." },
-  { icon: "⏱️", title: "ROI operacional", desc: "Reducción del 33% en suspensiones estudiantiles con implementación institucional." },
-  { icon: "👨‍👩‍👧", title: "ROI académico", desc: "Más horas pedagógicas recuperadas y mejor continuidad del aprendizaje por curso." },
+  { icon: I.trend, title: "ROI administrativo medible", desc: "Menos tiempo dedicado a gestionar incidentes con teléfonos y conflictos digitales." },
+  { icon: I.clock, title: "Reducción del tiempo administrativo", desc: "Menor carga en convivencia, inspección y equipos directivos por casos de ciberacoso." },
+  { icon: I.shieldCheck, title: "ROI operacional", desc: "Reducción del 33% en suspensiones estudiantiles con implementación institucional." },
+  { icon: I.book, title: "ROI académico", desc: "Más horas pedagógicas recuperadas y mejor continuidad del aprendizaje por curso." },
 ];
 
 const corpBenefits = [
-  { icon: "🎯", title: "Reuniones con foco real", desc: "Menos desvíos y mayor calidad de decisión en comités, directorios y sesiones clave." },
-  { icon: "🔒", title: "Resguardo de información sensible", desc: "Protocolos claros para salas críticas, visitas externas y conversaciones confidenciales." },
-  { icon: "💰", title: "ROI operacional visible", desc: "Menos fricción de coordinación y mejor continuidad en ejecución de tareas críticas." },
-  { icon: "🏢", title: "Operación estándar por área", desc: "Un mismo criterio para liderazgo, operaciones, RR.HH. y áreas de soporte." },
+  { icon: I.target, title: "Reuniones con foco real", desc: "Menos desvíos y mayor calidad de decisión en comités, directorios y sesiones clave." },
+  { icon: I.lock, title: "Resguardo de información sensible", desc: "Protocolos claros para salas críticas, visitas externas y conversaciones confidenciales." },
+  { icon: I.coins, title: "ROI operacional visible", desc: "Menos fricción de coordinación y mejor continuidad en ejecución de tareas críticas." },
+  { icon: I.building, title: "Operación estándar por área", desc: "Un mismo criterio para liderazgo, operaciones, RR.HH. y áreas de soporte." },
 ];
 
 const govBenefits = [
-  { icon: "🛡️", title: "Cadena de custodia clara", desc: "Responsables y etapas definidos de principio a fin." },
-  { icon: "🧾", title: "Trazabilidad formal", desc: "Registro de excepciones, aperturas y devoluciones." },
-  { icon: "⚖️", title: "Resguardo legal", desc: "Menor riesgo en congreso, audiencias y diligencias." },
-  { icon: "👮", title: "Operación sin fricción", desc: "Protocolo ejecutable en recintos, operativos y reuniones sensibles." },
+  { icon: I.shield, title: "Cadena de custodia clara", desc: "Responsables y etapas definidos de principio a fin." },
+  { icon: I.clipboard, title: "Trazabilidad formal", desc: "Registro de excepciones, aperturas y devoluciones." },
+  { icon: I.scale, title: "Resguardo legal", desc: "Menor riesgo en congreso, audiencias y diligencias." },
+  { icon: I.check, title: "Operación sin fricción", desc: "Protocolo ejecutable en recintos, operativos y reuniones sensibles." },
 ];
 
 const eventBenefits = [
-  { icon: "🎭", title: "Protección de contenido", desc: "Sin grabaciones piratas de shows y presentaciones." },
-  { icon: "✨", title: "Experiencia inmersiva", desc: "Público 100% presente en el momento." },
-  { icon: "📸", title: "Momentos designados", desc: "Desbloqueo controlado para fotos oficiales." },
-  { icon: "🎪", title: "Diferenciación premium", desc: "Experiencia exclusiva que destaca tu evento." },
+  { icon: I.cameraOff, title: "Protección de contenido", desc: "Sin grabaciones piratas de shows y presentaciones." },
+  { icon: I.sparkles, title: "Experiencia inmersiva", desc: "Público 100% presente en el momento." },
+  { icon: I.camera, title: "Momentos designados", desc: "Desbloqueo controlado para fotos oficiales." },
+  { icon: I.star, title: "Diferenciación premium", desc: "Experiencia exclusiva que destaca tu evento." },
 ];
 
 const sections = [
-  { id: "educacion", kicker: "Educación", title: "Colegios y", accent: "Universidades", desc: "Las distracciones digitales son el mayor obstáculo para el aprendizaje. BloKKit permite crear ambientes de estudio óptimos sin conflictos por confiscación.", benefits: eduBenefits, stats: [{ big: "211h", desc: "horas pedagógicas recuperadas por curso" }, { big: "-33%", desc: "en suspensiones estudiantiles" }, { big: "-43%", desc: "en incidentes de bullying con protocolo" }] },
-  { id: "empresas", kicker: "Corporativo", title: "Empresas y", accent: "Oficinas", desc: "Las reuniones productivas y el trabajo enfocado son esenciales para el rendimiento empresarial. BloKKit crea zonas libres de distracciones para momentos críticos.", benefits: corpBenefits, stats: [{ big: "8-12min", desc: "de pérdida por reunión sin protocolo" }, { big: "-25%", desc: "menos interrupciones en bloques críticos" }, { big: "<1%", desc: "del presupuesto operativo anual" }], dark: true },
-  { id: "gobierno", kicker: "Gobierno y Justicia", title: "Congreso, juzgados y", accent: "cadena de custodia", desc: "En reuniones sensibles y procedimientos legales, la custodia de dispositivos no puede quedar al criterio individual.", benefits: govBenefits, stats: [{ big: "100%", desc: "trazabilidad documentada" }, { big: "<3s", desc: "desbloqueo con personal autorizado" }, { big: "+control", desc: "menos incidentes por manejo informal" }] },
-  { id: "eventos", kicker: "Entretenimiento", title: "Eventos y", accent: "Espectáculos", desc: "Protege la propiedad intelectual de artistas y creadores. Crea experiencias inmersivas sin pantallas de por medio.", benefits: eventBenefits, stats: [{ big: "95%", desc: "del público usa celular durante shows" }, { big: "72hrs", desc: "antes de contenido pirata online" }, { big: "4.8★", desc: "satisfacción en eventos sin celulares" }], dark: true },
+  { id: "educacion", num: "01", kicker: "Educación", title: "Colegios y", accent: "Universidades", desc: "Las distracciones digitales son el mayor obstáculo para el aprendizaje. BloKKit permite crear ambientes de estudio óptimos sin conflictos por confiscación.", benefits: eduBenefits, stats: [{ big: "211h", desc: "horas pedagógicas recuperadas por curso" }, { big: "-33%", desc: "en suspensiones estudiantiles" }, { big: "-43%", desc: "en incidentes de bullying con protocolo" }] },
+  { id: "empresas", num: "02", kicker: "Corporativo", title: "Empresas y", accent: "Oficinas", desc: "Las reuniones productivas y el trabajo enfocado son esenciales para el rendimiento empresarial. BloKKit crea zonas libres de distracciones para momentos críticos.", benefits: corpBenefits, stats: [{ big: "8-12min", desc: "de pérdida por reunión sin protocolo" }, { big: "-25%", desc: "menos interrupciones en bloques críticos" }, { big: "<1%", desc: "del presupuesto operativo anual" }], dark: true },
+  { id: "gobierno", num: "03", kicker: "Gobierno y Justicia", title: "Congreso, juzgados y", accent: "cadena de custodia", desc: "En reuniones sensibles y procedimientos legales, la custodia de dispositivos no puede quedar al criterio individual.", benefits: govBenefits, stats: [{ big: "100%", desc: "trazabilidad documentada" }, { big: "<3s", desc: "desbloqueo con personal autorizado" }, { big: "+control", desc: "menos incidentes por manejo informal" }] },
+  { id: "eventos", num: "04", kicker: "Entretenimiento", title: "Eventos y", accent: "Espectáculos", desc: "Protege la propiedad intelectual de artistas y creadores. Crea experiencias inmersivas sin pantallas de por medio.", benefits: eventBenefits, stats: [{ big: "95%", desc: "del público usa celular durante shows" }, { big: "72hrs", desc: "antes de contenido pirata online" }, { big: "4.8★", desc: "satisfacción en eventos sin celulares" }], dark: true },
 ];
 ---
 
 <BaseLayout>
   <Header slot="header" />
 
-  <section class="hero hero--sub hero-mesh-bg" style="padding-bottom: 40px; min-height: auto;">
-    <div class="mesh-gradient" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="hero__content container">
-      <span class="label fade-in-up" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.1); border-radius: var(--radius-full); border: 1px solid rgba(127, 206, 236, 0.4); color: var(--accent); letter-spacing: 0.1em; margin-bottom: var(--space-4); font-size: 0.75rem; font-weight: 700;">Fundas Bloqueadoras de Señal</span>
-      <h1 class="heading-1 hero__title" style="text-transform: uppercase;">
-        <TextSplitReveal client:load text="BENEFICIOS" as="span" splitBy="word" delay={0.15} />
-        <TextSplitReveal client:load text="PARA" as="span" className="text-accent" splitBy="word" delay={0.25} /><br/>
-        <TextSplitReveal client:load text="CADA SECTOR" as="span" splitBy="word" delay={0.35} />
-      </h1>
-      <ScrollReveal client:load delay={0.4}>
-        <p class="hero__subtitle body-lg" style="margin-top: var(--space-6);">
-          Resultados comprobados que impactan al colegio, el equipo<br/>docente y la convivencia de los alumnos.
-        </p>
-      </ScrollReveal>
-    </div>
-  </section>
+  <PageHero
+    label="Fundas Bloqueadoras de Señal"
+    title="Beneficios para"
+    accent="cada sector"
+    subtitle="Resultados comprobados en educación, empresas, gobierno y eventos — operación medible para cada contexto."
+  />
 
   <div class="sectors-wrapper">
     {sections.map((s, idx) => (
@@ -70,14 +78,15 @@ const sections = [
         <div class="container">
           <div class={`sector-grid ${idx % 2 === 1 ? "sector-grid--reverse" : ""}`}>
             <ScrollReveal client:visible className="sector-info">
+              <span class="section-number sector-num" aria-hidden="true">{s.num}</span>
               <span class="label">{s.kicker}</span>
               <h2 class="heading-2" style="margin-top: var(--space-3)">
-                {s.title} <span class="text-accent">{s.accent}</span>
+                {s.title} <span class="heading-accent">{s.accent}</span>
               </h2>
-              <p class="body-lg" style="color: var(--text-secondary); margin-top: var(--space-4); max-width: 50ch">{s.desc}</p>
-              
+              <p class="body-lg" style="margin-top: var(--space-4); max-width: 50ch">{s.desc}</p>
+
               <div class="sector-stats-row">
-                {s.stats.map((st, i) => (
+                {s.stats.map((st) => (
                   <div class="mini-stat">
                     <span class="mini-stat__val">{st.big}</span>
                     <span class="mini-stat__desc">{st.desc}</span>
@@ -90,10 +99,10 @@ const sections = [
               <ul class="benefit-cards">
                 {s.benefits.map((b) => (
                   <li class="benefit-card">
-                    <span class="benefit-icon">{b.icon}</span>
+                    <span class="benefit-icon" aria-hidden="true" set:html={b.icon} />
                     <div>
-                      <h3 class="heading-6">{b.title}</h3>
-                      <p class="body-sm" style="color: var(--text-secondary); margin-top: var(--space-1)">{b.desc}</p>
+                      <h3 class="benefit-card__title">{b.title}</h3>
+                      <p class="body-sm" style="margin-top: var(--space-1)">{b.desc}</p>
                     </div>
                   </li>
                 ))}
@@ -105,66 +114,116 @@ const sections = [
     ))}
   </div>
 
-  <section class="section--light-alt section--lg" style="padding-top: 0; padding-bottom: var(--space-24);">
-    <div class="container">
-      <div class="final-cta__card">
-        <div class="final-cta__glow" aria-hidden="true"></div>
-        <div class="final-cta__inner">
-          <ScrollReveal client:visible>
-            <h2 class="heading-2 final-cta__title">¿Qué sector te interesa más?</h2>
-          </ScrollReveal>
-          <ScrollReveal client:visible delay={0.2}>
-            <p class="body-lg final-cta__subtitle">
-              Conversemos sobre cómo BloKKit puede adaptarse a las necesidades específicas de tu organización.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal client:visible delay={0.3}>
-            <button type="button" class="btn btn--primary" data-cal-link="blokkit/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>Agendar Reunión</button>
-          </ScrollReveal>
-        </div>
-      </div>
-    </div>
-  </section>
+  <FinalCta
+    title="¿Qué sector te interesa más?"
+    subtitle="Conversemos sobre cómo BloKKit puede adaptarse a las necesidades específicas de tu organización."
+  />
 
   <Footer slot="footer" />
 </BaseLayout>
 
 <style>
-  .hero--sub { min-height: 70vh; display: flex; flex-direction: column; justify-content: center; padding-top: 180px; padding-bottom: 80px; position: relative; overflow: hidden; }
-  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); margin: 0 auto; }
-  .hero__subtitle { max-width: 680px; color: var(--text-secondary); }
-
   .sector-section { padding-block: var(--space-20); }
-  .sector-section--light { background: var(--bg-white); color: var(--text-dark); }
+
+  /* Light sectors: cream section, solid white cards (deck pattern) */
+  .sector-section--light { background: var(--bg-off-white); color: var(--text-dark); }
   .sector-section--light .heading-2 { color: var(--text-dark); }
   .sector-section--light .body-lg { color: var(--text-dark-secondary); }
-  
+  .sector-section--light .body-sm { color: var(--text-dark-secondary); }
+  .sector-section--light .label { color: var(--accent-strong); }
+
   .sector-section--dark { background: var(--bg-surface); }
+  .sector-section--dark .body-lg { color: var(--text-secondary); }
+  .sector-section--dark .body-sm { color: var(--text-secondary); }
 
   .sector-grid { display: grid; gap: var(--space-12); }
-  
+
   @media (min-width: 960px) {
-    .sector-grid { grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: start; }
-    .sector-info { position: sticky; top: 120px; }
-    .sector-grid--reverse .sector-benefits { order: -1; }
+    .sector-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-16); align-items: start; }
+    :global(.sector-info) { position: sticky; top: 120px; }
+    .sector-grid--reverse :global(.sector-benefits) { order: -1; }
+  }
+
+  /* Signature outlined numeral, compact scale for the rail */
+  .sector-num {
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  /* custom light class isn't covered by the global light-number rule */
+  .sector-section--light .sector-num {
+    -webkit-text-stroke-color: var(--border-outline-light);
   }
 
   .sector-stats-row { display: flex; gap: var(--space-6); margin-top: var(--space-8); flex-wrap: wrap; }
-  .mini-stat__val { display: block; font-family: var(--font-heading); font-size: var(--text-2xl); font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: var(--space-1); }
+
+  .mini-stat__val {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: var(--text-2xl);
+    font-weight: 400;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: var(--space-1);
+  }
+
+  /* Light sections: stronger cyan for data legibility on cream */
+  .sector-section--light .mini-stat__val { color: var(--accent-strong); }
+
   .mini-stat__desc { font-size: var(--text-xs); color: var(--text-muted); max-width: 14ch; display: block; line-height: 1.3; }
-  
   .sector-section--light .mini-stat__desc { color: var(--text-dark-muted); }
 
-  .benefit-cards { display: grid; gap: var(--space-4); list-style: none; padding: 0; }
-  .benefit-card { display: flex; gap: var(--space-4); padding: var(--space-5); border-radius: var(--radius-lg); border: 1px solid var(--border-subtle); background: var(--surface-glass); transition: transform 0.25s ease, border-color 0.25s ease; }
-  
-  .sector-section--light .benefit-card { background: var(--bg-off-white); border-color: var(--border-light); }
-  
-  .benefit-card:hover { transform: translateY(-2px); border-color: var(--accent); }
-  
-  .benefit-icon { font-size: 1.5rem; flex-shrink: 0; background: var(--accent-muted); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); }
-  
-  .sector-section--light .benefit-icon { background: rgba(127, 206, 236, 0.1); }
+  .benefit-cards { display: grid; gap: var(--space-4); list-style: none; padding: 0; margin: 0; }
 
-  .heading-6 { font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-1); }
+  .benefit-card {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .sector-section--light .benefit-card {
+    background: var(--bg-white);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-card);
+  }
+
+  .benefit-card:hover { transform: translateY(-2px); border-color: var(--border-accent); }
+  .sector-section--light .benefit-card:hover { border-color: rgba(63, 168, 224, 0.4); box-shadow: var(--shadow-card-hover); }
+
+  .benefit-icon {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: var(--accent-muted);
+    border: 1px solid var(--border-accent);
+    color: var(--accent);
+  }
+
+  .sector-section--light .benefit-icon {
+    background: rgba(63, 168, 224, 0.08);
+    border-color: rgba(63, 168, 224, 0.3);
+    color: var(--accent-strong);
+  }
+
+  .benefit-card__title {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .sector-section--light .benefit-card__title { color: var(--text-dark); }
 </style>

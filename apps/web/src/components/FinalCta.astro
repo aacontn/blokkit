@@ -1,0 +1,82 @@
+---
+/**
+ * FinalCta — the shared closing CTA card, identical frame on every page.
+ * Per-page copy comes in via props; the look lives in global.css
+ * (.final-cta__*) so it stays consistent site-wide.
+ *
+ * Primary action defaults to the Cal.com booking embed; pass primaryHref
+ * to use a plain link instead (e.g. mailto: on the press page).
+ */
+import ScrollReveal from "./ui/ScrollReveal.tsx";
+
+interface Props {
+  label?: string;
+  title: string;
+  accent?: string;
+  subtitle: string;
+  primaryText?: string;
+  primaryHref?: string;
+  secondaryText?: string;
+  secondaryHref?: string;
+  micro?: string;
+}
+
+const {
+  label = "Hablemos",
+  title,
+  accent,
+  subtitle,
+  primaryText = "Agendar reunión",
+  primaryHref,
+  secondaryText,
+  secondaryHref,
+  micro,
+} = Astro.props;
+---
+
+<section class="section--light-alt section--lg" style="padding-bottom: var(--space-24);">
+  <div class="container">
+    <div class="final-cta__card">
+      <div class="final-cta__glow" aria-hidden="true"></div>
+      <div class="final-cta__inner">
+        <ScrollReveal client:visible>
+          <span class="final-cta__label">· {label}</span>
+        </ScrollReveal>
+        <ScrollReveal client:visible delay={0.1}>
+          <h2 class="heading-2 final-cta__title">
+            {title}
+            {accent && <span class="final-cta__accent">{accent}</span>}
+          </h2>
+        </ScrollReveal>
+        <ScrollReveal client:visible delay={0.2}>
+          <p class="body-lg final-cta__subtitle">{subtitle}</p>
+        </ScrollReveal>
+        <ScrollReveal client:visible delay={0.3}>
+          <div class="final-cta__buttons">
+            {primaryHref ? (
+              <a href={primaryHref} class="btn btn--primary btn--lg">{primaryText}</a>
+            ) : (
+              <button
+                type="button"
+                class="btn btn--primary btn--lg"
+                data-cal-link="blokkit/30min"
+                data-cal-namespace="30min"
+                data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'
+              >
+                {primaryText}
+              </button>
+            )}
+            {secondaryHref && (
+              <a href={secondaryHref} class="btn btn--ghost btn--lg">{secondaryText}</a>
+            )}
+          </div>
+        </ScrollReveal>
+        {micro && (
+          <ScrollReveal client:visible delay={0.4}>
+            <span class="final-cta__micro">{micro}</span>
+          </ScrollReveal>
+        )}
+      </div>
+    </div>
+  </div>
+</section>

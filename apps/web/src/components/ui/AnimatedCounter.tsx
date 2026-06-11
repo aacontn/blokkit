@@ -49,8 +49,10 @@ export default function AnimatedCounter({
     }, [spring, prefix, suffix, value]);
 
     return (
+        // SSR shows the real value so it's never stuck at 0 if the
+        // in-view animation doesn't run; the spring counts 0→value on entry
         <span ref={ref} className={className}>
-            {prefix}0{suffix}
+            {prefix}{value}{suffix}
         </span>
     );
 }

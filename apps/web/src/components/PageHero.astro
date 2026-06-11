@@ -1,0 +1,37 @@
+---
+/**
+ * PageHero — the standardized hero for every internal page.
+ * Uniform height and type scale site-wide (the index keeps its
+ * own full-bleed hero). Renders THE page <h1>; pages must not
+ * declare another h1. Styles live in global.css (.page-hero__*).
+ */
+import ScrollReveal from "./ui/ScrollReveal.tsx";
+
+interface Props {
+  label?: string;
+  title: string;
+  accent?: string;
+  subtitle?: string;
+}
+
+const { label, title, accent, subtitle } = Astro.props;
+---
+
+<section class="page-hero section--dark hero-mesh-bg">
+  <div class="container">
+    <ScrollReveal client:load>
+      {label && (
+        <span class="page-hero__eyebrow">
+          <span class="label">{label}</span>
+          <span class="arrow-down-right" aria-hidden="true"></span>
+        </span>
+      )}
+      <h1 class="page-hero__title">
+        {title}
+        {accent && <span class="heading-accent page-hero__accent">{accent}</span>}
+      </h1>
+      {subtitle && <p class="page-hero__sub body-lg">{subtitle}</p>}
+      <slot />
+    </ScrollReveal>
+  </div>
+</section>

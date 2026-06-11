@@ -147,10 +147,11 @@ const ROUTES: RouteSeoEntry[] = [
     },
     {
         path: "/ley-celulares-2026",
-        title: "Ley de Celulares 2026 — BloKKit | Cumplimiento Sin Conflicto",
+        title: "Ley 21.801: Celulares en Colegios de Chile | BloKKit",
         description:
-            "Todo sobre la nueva ley que prohíbe celulares en colegios chilenos desde marzo 2026. Requisitos, excepciones y cumplimiento operativo.",
+            "La Ley 21.801 rige desde marzo 2026: alcance por nivel, las 5 excepciones, plazo RICE al 30 de junio y cómo implementarla — verificado en la fuente oficial.",
         keywords: [
+            "ley 21.801",
             "ley de celulares 2026 chile",
             "prohibición de celulares en colegios",
             "RICE celulares",
@@ -158,11 +159,12 @@ const ROUTES: RouteSeoEntry[] = [
             "cumplimiento normativa escolar",
         ],
         llmSummary:
-            "Guía práctica sobre la ley chilena de 2026 para uso de celulares en colegios: vigencia, exigencias, excepciones, riesgos de implementación y propuesta operativa.",
+            "Dossier de la Ley 21.801 (Chile): publicada el 11-02-2026, vigente desde marzo 2026; prohibición total en parvularia y básica, uso regulado por RICE en media; 5 excepciones; RICE actualizado antes del 30-06-2026; evaluación Mineduc en 2030. Incluye cómo BloKKit resuelve la implementación.",
         changefreq: "weekly",
         priority: 0.9,
         type: "article",
         publishedTime: "2026-01-01T00:00:00-03:00",
+        modifiedTime: "2026-06-11T12:00:00-04:00",
     },
     {
         path: "/privacidad",

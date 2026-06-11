@@ -272,6 +272,7 @@ body {
 }
 
 .section--light .section-number,
+.section--light-alt .section-number,
 .section--cream .section-number {
     -webkit-text-stroke-color: var(--border-outline-light);
     text-stroke-color: var(--border-outline-light);
@@ -454,7 +455,7 @@ body {
     background-image: var(--photo-bg);
     background-size: cover;
     background-position: center;
-    filter: blur(10px) saturate(80%) brightness(0.55);
+    filter: blur(2px) saturate(85%) brightness(0.7);
     pointer-events: none;
 }
 
@@ -465,9 +466,9 @@ body {
     z-index: 0;
     /* charcoal veil keeps text readable and palette warm */
     background: linear-gradient(180deg,
-        rgba(31, 31, 31, 0.88) 0%,
-        rgba(31, 31, 31, 0.72) 45%,
-        rgba(31, 31, 31, 0.90) 100%);
+        rgba(31, 31, 31, 0.78) 0%,
+        rgba(31, 31, 31, 0.52) 45%,
+        rgba(31, 31, 31, 0.82) 100%);
     pointer-events: none;
 }
 
@@ -1304,10 +1305,10 @@ body {
 .final-cta__card {
     position: relative;
     overflow: hidden;
-    background: #FFFFFF;
+    background: var(--bg-dark);          /* charcoal card on cream — deck pattern */
     border-radius: var(--radius-2xl);
     padding: var(--space-16) var(--space-6);
-    border: 1px solid var(--border-medium);
+    border: 1px solid rgba(31, 31, 31, 0.9);
     box-shadow: var(--shadow-elevated);
 }
 
@@ -1358,11 +1359,34 @@ body {
     color: rgba(255, 255, 255, 0.7) !important;
 }
 
+.final-cta__label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+
+.final-cta__accent {
+    display: block;
+    color: var(--accent);
+}
+
 .final-cta__buttons {
     display: flex;
     gap: var(--space-4);
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.final-cta__micro {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
 }
 
 /* Ghost button inside dark CTA card → glass style */
@@ -1381,4 +1405,217 @@ body {
 .final-cta__card .btn--ghost:hover {
     border-color: var(--accent);
     color: var(--accent);
+}
+/* ═══════════════════════════════════════════════════
+   SECTOR CARD ICONS (index · Para quién)
+   Animated themed icons injected via set:html — they get
+   no Astro scope attribute, so their rules live here.
+   ═══════════════════════════════════════════════════ */
+.sector-card__icon svg {
+    width: 28px;
+    height: 28px;
+    overflow: visible;
+}
+
+/* Educación — swinging tassel */
+.sector-card__icon .ico-tassel {
+    transform-origin: 21px 9px;
+    animation: ico-swing 3.8s ease-in-out infinite;
+}
+
+/* Empresas — windows lighting up */
+.sector-card__icon .ico-win {
+    opacity: 0.25;
+    animation: ico-light 4.6s ease-in-out infinite;
+}
+
+.sector-card__icon .ico-w2 { animation-delay: 0.4s; }
+.sector-card__icon .ico-w3 { animation-delay: 0.9s; }
+.sector-card__icon .ico-w4 { animation-delay: 1.3s; }
+.sector-card__icon .ico-w5 { animation-delay: 1.8s; }
+.sector-card__icon .ico-w6 { animation-delay: 2.2s; }
+
+/* Gobierno — gavel strike */
+.sector-card__icon .ico-gavel {
+    transform-origin: 7px 19px;
+    animation: ico-strike 3.4s ease-in-out infinite;
+}
+
+.sector-card__icon .ico-hit {
+    opacity: 0;
+    animation: ico-hit 3.4s ease-in-out infinite;
+}
+
+/* Eventos — ticket wiggle + spark */
+.sector-card__icon .ico-ticket {
+    transform-origin: 11px 12px;
+    animation: ico-wiggle 4.2s ease-in-out infinite;
+}
+
+.sector-card__icon .ico-spark {
+    opacity: 0;
+    animation: ico-spark 4.2s ease-in-out infinite;
+}
+
+@keyframes ico-swing {
+    0%, 55%, 100% { transform: rotate(0deg); }
+    65% { transform: rotate(12deg); }
+    78% { transform: rotate(-7deg); }
+    88% { transform: rotate(3deg); }
+}
+
+@keyframes ico-light {
+    0%, 12%, 80%, 100% { opacity: 0.25; }
+    25%, 60% { opacity: 1; }
+}
+
+@keyframes ico-strike {
+    0%, 50%, 78%, 100% { transform: rotate(0deg); }
+    62% { transform: rotate(-14deg); }
+    70% { transform: rotate(4deg); }
+}
+
+@keyframes ico-hit {
+    0%, 66%, 82%, 100% { opacity: 0; }
+    70%, 76% { opacity: 1; }
+}
+
+@keyframes ico-wiggle {
+    0%, 60%, 100% { transform: rotate(0deg); }
+    70% { transform: rotate(-5deg); }
+    80% { transform: rotate(4deg); }
+    90% { transform: rotate(-1.5deg); }
+}
+
+@keyframes ico-spark {
+    0%, 62%, 95%, 100% { opacity: 0; }
+    72%, 86% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sector-card__icon .ico-tassel,
+    .sector-card__icon .ico-win,
+    .sector-card__icon .ico-gavel,
+    .sector-card__icon .ico-hit,
+    .sector-card__icon .ico-ticket,
+    .sector-card__icon .ico-spark {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+/* ═══════════════════════════════════════════════════
+   ARCH CARD VIGNETTES (index · Arquitectura Integral)
+   Mini product art injected via set:html — unscoped rules.
+   ═══════════════════════════════════════════════════ */
+.arch-card__icon svg {
+    width: 50px;
+    height: 50px;
+    overflow: visible;
+}
+
+/* Funda — pin pulse */
+.arch-card__icon .vig-pin-ring {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: vig-pulse 3.6s ease-in-out infinite;
+}
+
+@keyframes vig-pulse {
+    0%, 58%, 100% { opacity: 0; transform: scale(0.55); }
+    70% { opacity: 0.9; transform: scale(1); }
+    88% { opacity: 0; transform: scale(1.3); }
+}
+
+/* Dock — magnet wave */
+.arch-card__icon .vig-wave {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: vig-pulse 3.6s ease-in-out 0.6s infinite;
+}
+
+/* Plataforma — live KPI bars */
+.arch-card__icon .vig-bar {
+    transform-box: fill-box;
+    transform-origin: bottom;
+    animation: vig-bars 3.2s ease-in-out infinite;
+}
+
+.arch-card__icon .vig-b2 { animation-delay: 0.2s; }
+.arch-card__icon .vig-b3 { animation-delay: 0.4s; }
+.arch-card__icon .vig-b4 { animation-delay: 0.6s; }
+
+@keyframes vig-bars {
+    0%, 100% { transform: scaleY(0.55); }
+    50% { transform: scaleY(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .arch-card__icon .vig-pin-ring,
+    .arch-card__icon .vig-wave,
+    .arch-card__icon .vig-bar {
+        animation: none;
+    }
+    .arch-card__icon .vig-bar { transform: none; }
+}
+
+/* ═══════════════════════════════════════════════════
+   PAGE HERO — standardized internal-page hero
+   Same height and type scale on every internal page.
+   ═══════════════════════════════════════════════════ */
+.page-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* floor above the tallest page's content so every internal hero
+       renders the exact same height at a given viewport */
+    min-height: clamp(500px, 52vh, 580px);
+    padding: 132px 0 var(--space-10);
+    overflow: hidden;
+}
+
+.page-hero .container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.page-hero__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.page-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.85rem, 1.3rem + 2.4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    line-height: 0.98;
+    color: var(--text-primary);
+    margin: 0 auto;
+    max-width: 22ch;
+}
+
+.page-hero__accent {
+    display: block;
+}
+
+.page-hero__sub {
+    margin-top: var(--space-5);
+    margin-inline: auto;
+    max-width: 580px;
+    color: var(--text-secondary);
+}
+
+/* ═══════════════════════════════════════════════════
+   BENEFIT CARD ICONS (beneficios) — set:html, unscoped
+   ═══════════════════════════════════════════════════ */
+.benefit-icon svg {
+    width: 22px;
+    height: 22px;
 }

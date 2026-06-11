@@ -3,7 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ScrollReveal from "../components/ui/ScrollReveal.tsx";
-import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+import PageHero from "../components/PageHero.astro";
 
 const sections = [
   {
@@ -73,23 +73,12 @@ const sections = [
 <BaseLayout>
   <Header slot="header" />
 
-  <section class="hero hero--sub hero-mesh-bg" style="padding-bottom: 40px; min-height: auto;">
-    <div class="mesh-gradient" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="hero__content container">
-      <span class="label fade-in-up" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.1); border-radius: var(--radius-full); border: 1px solid rgba(127, 206, 236, 0.4); color: var(--accent); letter-spacing: 0.1em; margin-bottom: var(--space-4); font-size: 0.75rem; font-weight: 700;">Legal</span>
-      <h1 class="heading-1 hero__title" style="text-transform: uppercase;">
-        <TextSplitReveal client:load text="Términos y" as="span" splitBy="word" delay={0.15} /><br/>
-        <TextSplitReveal client:load text="Condiciones" as="span" className="text-accent" splitBy="word" delay={0.25} />
-      </h1>
-      <ScrollReveal client:load delay={0.4}>
-        <p class="hero__subtitle body-lg" style="margin-top: var(--space-6);">
-          Última actualización: enero 2025
-        </p>
-      </ScrollReveal>
-    </div>
-  </section>
+  <PageHero
+    label="Legal"
+    title="Términos y"
+    accent="Condiciones"
+    subtitle="Última actualización: enero 2025"
+  />
 
   <section class="section--lg section--light-alt">
     <div class="container legal-container">
@@ -119,10 +108,6 @@ const sections = [
 </BaseLayout>
 
 <style>
-  .hero--sub { min-height: 50vh; display: flex; flex-direction: column; justify-content: center; padding-top: 160px; padding-bottom: 60px; position: relative; overflow: hidden; }
-  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-5); margin: 0 auto; }
-  .hero__subtitle { max-width: 600px; color: var(--text-secondary); }
-
   .legal-container { max-width: 820px; margin-inline: auto; display: flex; flex-direction: column; gap: var(--space-6); }
 
   .legal-card {

@@ -124,6 +124,21 @@ const currentPath = Astro.url.pathname;
     }
   }
 
+  /* While the mobile menu is open, lift the header above the overlay so the
+     hamburger→X stays visible/tappable (the header's transform traps its
+     z-index below the menu otherwise) */
+  .header--menu-open {
+    z-index: calc(var(--z-overlay) + 1);
+  }
+
+  .header--menu-open.header--scrolled {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .header__inner {
     position: relative;
     display: flex;
@@ -171,17 +186,20 @@ const currentPath = Astro.url.pathname;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* When scrolled, show the pill proper */
-  .header--scrolled .header__pill {
-    display: flex; /* Ensure it's flex */
-    background: transparent;
-    border-color: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    gap: var(--space-1);
-    padding: 0;
-    opacity: 1;
-    transform: scale(1);
+  /* When scrolled, show the pill proper — desktop only: on mobile the
+     pill must stay hidden or it overflows over the hamburger */
+  @media (min-width: 1024px) {
+    .header--scrolled .header__pill {
+      display: flex;
+      background: transparent;
+      border-color: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      gap: var(--space-1);
+      padding: 0;
+      opacity: 1;
+      transform: scale(1);
+    }
   }
 
   /* Initial state for links in desktop — absolutely centered in header__inner */
@@ -509,6 +527,7 @@ const currentPath = Astro.url.pathname;
         ? (() => { open ? mobileMenu.classList.add("mobile-menu--open") : mobileMenu.classList.remove("mobile-menu--open"); return open; })()
         : mobileMenu.classList.toggle("mobile-menu--open");
       menuToggle.classList.toggle("header__hamburger--open", nowOpen);
+      header?.classList.toggle("header--menu-open", nowOpen);
       menuToggle.setAttribute("aria-expanded", String(nowOpen));
       mobileMenu.setAttribute("aria-hidden", String(!nowOpen));
 

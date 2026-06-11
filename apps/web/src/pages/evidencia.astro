@@ -3,197 +3,317 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ScrollReveal from "../components/ui/ScrollReveal.tsx";
-import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+import FinalCta from "../components/FinalCta.astro";
+import PageHero from "../components/PageHero.astro";
 
-const lineaBase = [
-  { value: 94, suffix: "%", label: "Penetración de smartphones en escolares chilenos de 14 a 17 años." },
-  { value: 8.9, suffix: "", label: "Años es la edad promedio de entrega del primer celular en Chile actualmente." },
-  { value: 4, suffix: "+", label: "Horas diarias de uso que superan los escolares chilenos con equipo propio." },
-  { value: 81, suffix: "%", label: "Penetración de smartphones en niños de 8 a 12 años en Chile." },
+/* Evidencia verificada — cada cifra lleva su fuente (jun 2026).
+   Framing fiel a los papers: LSE = % de una desviación estándar;
+   237 notificaciones = mediana del estudio Common Sense. */
+
+const chileStats = [
+  { value: "87%", claim: "de los estudiantes entre 9 y 17 años ya tiene celular propio.", source: "Criteria & Claro · 2023" },
+  { value: "8,9", claim: "años es la edad promedio del primer dispositivo con internet en Chile.", source: "Criteria & Claro · 2023" },
+  { value: "237", claim: "notificaciones al día recibe la mitad de los adolescentes monitoreados — ~23% en horario escolar.", source: "Common Sense Media · 2023 (EE.UU.)", href: "https://www.commonsensemedia.org/research/constant-companion-a-week-in-the-life-of-a-young-persons-smartphone-use" },
+  { value: "1 de 4", claim: "menores ha estado involucrado en episodios de ciberacoso; el 52% declara haberlo presenciado.", source: "Superintendencia de Educación · 2023" },
 ];
 
-const impacto = [
-  { 
-    title: "Mejoras en 900 escuelas", 
-    desc: "Tras implementar bloqueadores de señal, escuelas reportaron un 65% de mejora académica, 74% de mejor conducta y 83% de mayor participación estudiantil.",
-    icon: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`
-  },
-  { 
-    title: "Tiempo docente recuperado", 
-    desc: "Docentes reportan hasta diez minutos adicionales por lección para enseñanza efectiva al eliminar la micro-gestión disciplinaria de los teléfonos.",
-    icon: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`
-  },
-  { 
-    title: "Éxito académico sostenido", 
-    desc: "Estudios en EE.UU. a más de 37.000 estudiantes muestran una mejora generalizada en calificaciones después de implementar restricciones físicas.",
-    icon: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>`
-  },
-  { 
-    title: "Riesgo de uso en clase comprobado", 
-    desc: "Investigaciones confirman que la mera presencia de un celular reduce significativamente la capacidad cognitiva y la memoria de trabajo.",
-    icon: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`
-  },
-  { 
-    title: "Mejores resultados en exámenes", 
-    desc: "Escuelas con restricción física efectiva muestran mejores resultados y mayor aprobación en cursos de niveles superiores (11° y 12°).",
-    icon: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>`
-  },
-  { 
-    title: "Calificación Ofsted sobresaliente", 
-    desc: "Secundarias en el Reino Unido con prohibición efectiva de dispositivos tienen mucha más probabilidad de obtener una calificación de excelencia.",
-    icon: `<svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15l-2 5l9-9l-9-9l2 5l-10 2l10 2z"/></svg>`
-  },
+const resultados = [
+  { value: "+5 días", claim: "de año escolar equivale el efecto de una prohibición bien aplicada sobre los puntajes (+6,41% de una desviación estándar).", source: "Beland & Murphy · LSE 2016", href: "https://doi.org/10.1016/j.labeco.2016.04.004" },
+  { value: "×2", claim: "se duplica el beneficio en los alumnos de menor rendimiento (+14,23% de una DE): la medida reduce brechas.", source: "Beland & Murphy · LSE 2016", href: "https://doi.org/10.1016/j.labeco.2016.04.004" },
+  { value: "−46%", claim: "de bullying en niñas tras tres años de prohibición efectiva, con baja significativa en consultas por síntomas psicológicos.", source: "Abrahamsson · NHH 2024", href: "https://openaccess.nhh.no/nhh-xmlui/handle/11250/3119200" },
+  { value: "75%", claim: "de los colegios secundarios reporta alumnos más concentrados tras un año de prohibición nacional; 59% mejor clima y 28% mejores resultados.", source: "Kohnstamm Instituut · Países Bajos 2025" },
+];
+
+const timeline = [
+  { year: "2018", items: ["Francia — primera ley nacional: prohibición de maternelle a collège."] },
+  { year: "2023", items: ["UNESCO recomienda excluir el smartphone del aula cuando no apoye el aprendizaje: solo 1 de cada 4 países lo prohibía."] },
+  { year: "2024", items: ["Países Bajos — directriz nacional en secundaria, extendida a primaria.", "Noruega — recomendación nacional de escuelas sin celular, incluidos recreos."] },
+  { year: "2025", items: ["Brasil — Lei 15.100: toda la educación básica, clases y recreos.", "Italia y Finlandia — extienden la restricción por ley a todos los niveles.", "Inglaterra — el 99,8% de las primarias ya restringe el celular en la jornada."] },
+  { year: "2026", items: ["Chile — Ley 21.801 vigente desde marzo: parvularia, básica y media.", "UNESCO actualiza el conteo: 114 sistemas educativos con prohibición nacional — el 58% de los países."] },
 ];
 
 const kpis = [
   {
     category: "Aprendizaje",
-    items: [
-      "Mejora en notas por asignatura y curso",
-      "Resultados de evaluaciones parciales",
-      "Aumento en la participación general",
-      "Continuidad académica sin interrupciones"
-    ],
-    highlight: "Impacto Académico"
+    highlight: "Impacto Académico",
+    items: ["Mejora en notas por asignatura y curso", "Resultados de evaluaciones parciales", "Aumento en la participación general", "Continuidad académica sin interrupciones"],
   },
   {
     category: "Convivencia",
-    items: [
-      "Baja en incidentes por uso indebido",
-      "Disminución de casos de ciberacoso",
-      "Reducción de medidas disciplinarias",
-      "Mejores interacciones cara a cara"
-    ],
-    highlight: "Impacto Social"
+    highlight: "Impacto Social",
+    items: ["Baja en incidentes por uso indebido", "Disminución de casos de ciberacoso", "Reducción de medidas disciplinarias", "Mejores interacciones cara a cara"],
   },
   {
     category: "Operación",
-    items: [
-      "Uso efectivo y cumplimiento diario",
-      "Registro de aperturas y excepciones",
-      "Tiempos de respuesta del protocolo",
-      "Reducción de decomisos en sala"
-    ],
-    highlight: "Impacto en Gestión"
-  }
+    highlight: "Impacto en Gestión",
+    items: ["Uso efectivo y cumplimiento diario", "Registro de aperturas y excepciones", "Tiempos de respuesta del protocolo", "Reducción de decomisos en sala"],
+  },
 ];
 
-const global = [
-  { country: "🇫🇷 Francia", detail: "Prohibición nacional desde 2018, actuando como modelo referente global." },
-  { country: "🇳🇱 Países Bajos", detail: "Prohibición general progresiva desde 2024 en todos los niveles educativos." },
-  { country: "🇬🇧 Reino Unido", detail: "Guía oficial gubernamental emitida para respaldar la eliminación total de celulares de las aulas." },
-  { country: "🇦🇺 Australia", detail: "Leyes estatales (como Victoria y NSW) establecen restricción total obligatoria en educación escolar." },
-  { country: "🇺🇸 EE.UU.", detail: "77% de escuelas públicas los prohíben, con rápida adopción de legislaciones estatales en estados clave." },
-  { country: "🇨🇱 Chile", detail: "Nueva ley nacional aprueba restricción desde kínder a media con vigencia desde marzo 2026." },
+const fuentes = [
+  { name: "UNESCO — Global Education Monitoring Report (2023 / actualización marzo 2026)", href: "https://www.unesco.org/gem-report/en/articles/phone-bans-schools-are-spreading-worldwide-policy-debate-rages" },
+  { name: "Beland & Murphy — \"Ill Communication\", Labour Economics 41 (LSE, 2016)", href: "https://doi.org/10.1016/j.labeco.2016.04.004" },
+  { name: "Abrahamsson — \"Smartphone Bans, Student Outcomes and Mental Health\" (NHH, 2024)", href: "https://openaccess.nhh.no/nhh-xmlui/handle/11250/3119200" },
+  { name: "Ward, Duke, Gneezy & Bos — \"Brain Drain\" (UT Austin, JACR 2017)", href: "https://www.journals.uchicago.edu/doi/full/10.1086/691462" },
+  { name: "Gloria Mark — costo de la interrupción, UC Irvine (2006; Attention Span, 2023)", href: "https://news.gallup.com/businessjournal/23146/too-many-interruptions-work.aspx" },
+  { name: "Common Sense Media — \"Constant Companion\" (2023)", href: "https://www.commonsensemedia.org/research/constant-companion-a-week-in-the-life-of-a-young-persons-smartphone-use" },
+  { name: "Kohnstamm Instituut — evaluación oficial neerlandesa (2025)", href: "https://www.japantimes.co.jp/news/2025/07/05/world/dutch-survey-phone-ban-focus/" },
+  { name: "Children's Commissioner for England — encuesta nacional (2025)", href: "https://www.childrenscommissioner.gov.uk/news-and-blogs/press-notice-most-headteachers-restrict-mobile-phones-in-school-hours-but-major-new-survey-shows-online-harms-still-among-their-biggest-concerns/" },
+  { name: "Universidad de Birmingham — SMART Schools, The Lancet Regional Health (2025)" },
+  { name: "Ley 21.801 — Biblioteca del Congreso Nacional de Chile", href: "https://www.bcn.cl/leychile/navegar?idNorma=1221284" },
+  { name: "Criteria & Claro (2023); Superintendencia de Educación (2023); U. de los Andes & Entel (2024)" },
 ];
 ---
 
 <BaseLayout>
   <Header slot="header" />
 
-  <section class="hero hero--sub hero-mesh-bg" style="padding-bottom: 40px; min-height: auto;">
-    <div class="mesh-gradient" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="hero__content container">
-      <div class="hero__labels fade-in-up" style="margin-bottom: var(--space-4);">
-        <span class="label" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.1); border-radius: var(--radius-full); border: 1px solid rgba(127, 206, 236, 0.4); color: var(--accent); letter-spacing: 0.1em; font-size: 0.75rem; font-weight: 700;">Fundamentos de la Solución</span>
-      </div>
-      <h1 class="heading-1 hero__title fade-in-up" style="text-transform: uppercase; animation-delay: 0.1s;">
-        EVIDENCIA INTERNACIONAL<br/>
-        APLICADA AL <span class="text-accent">CONTEXTO CHILE</span>
-      </h1>
-      <p class="hero__subtitle body-lg fade-in-up" style="margin-top: var(--space-6); animation-delay: 0.2s;">
-        Datos duros, tendencias y métricas reales que respaldan la<br/>decisión de implementar ambientes libres de celulares.
-      </p>
-    </div>
-  </section>
+  <PageHero
+    label="Fundamentos de la Solución"
+    title="Evidencia internacional"
+    accent="aplicada al contexto Chile"
+    subtitle="Cada cifra de esta página tiene nombre, año y fuente. Lo que la investigación dice — y lo que exige para que funcione."
+  />
 
-  <!-- ═══════════════ LÍNEA BASE (Stats) ═══════════════ -->
-  <section class="section--lg section--light-alt" style="position: relative; overflow: hidden; padding-top: var(--space-20);">
-    <!-- Grid Overlay -->
-    <div class="ley__grid-overlay" aria-hidden="true"></div>
+  <!-- ═══════════ 01 · EL PROBLEMA ES GLOBAL (cream) ═══════════ -->
+  <section class="evd section--light-alt section-ambient section-ambient--light" id="problema-global">
     <div class="container" style="position: relative; z-index: 1;">
       <ScrollReveal client:visible>
-        <div class="section-header">
-          <span class="label" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.12); border-radius: var(--radius-full); margin-bottom: var(--space-4);">El Problema</span>
-          <h2 class="heading-2" style="margin-top: 0; line-height: 1.1;">Línea base de uso digital escolar</h2>
-          <p class="body-lg" style="color: var(--text-dark-secondary); margin-top: var(--space-4); max-width: 60ch;">Cifras sobre la adopción y el peso del uso del celular para las actuales generaciones de escolares en Chile.</p>
+        <div class="evd-head">
+          <span class="section-number" aria-hidden="true">01</span>
+          <div>
+            <span class="label">El problema es global</span>
+            <h2 class="heading-2" style="margin-top: var(--space-2)">
+              El mundo ya decidió
+              <span class="heading-accent" style="display: block;">sacar el celular del aula</span>
+            </h2>
+          </div>
         </div>
       </ScrollReveal>
 
-      <div class="grid-4" style="margin-top: var(--space-12);">
-        {lineaBase.map((s, i) => (
-          <ScrollReveal client:visible delay={i * 0.1}>
-            <div class="ev-stat-card">
-              <span class="ev-stat-big">
-                {s.value}<span class="ev-stat-suffix">{s.suffix}</span>
-              </span>
-              <p class="body-sm" style="color: var(--text-dark-secondary); margin-top: var(--space-3); line-height: 1.4;">{s.label}</p>
+      <div class="evd-global">
+        <ScrollReveal client:visible delay={0.1} className="evd-global-stat">
+          <div class="evd-giant-block">
+            <span class="evd-giant">58<em>%</em></span>
+            <p class="evd-giant-label">de los países del mundo ya prohíbe por ley el celular en la escuela — 114 sistemas educativos.</p>
+            <a class="evd-source" href="https://www.unesco.org/gem-report/en/articles/phone-bans-schools-are-spreading-worldwide-policy-debate-rages" target="_blank" rel="noopener">UNESCO · GEM Report, marzo 2026 ↗</a>
+            <div class="evd-progress" aria-hidden="true">
+              <span class="evd-progress-item"><strong>24%</strong> 2023</span>
+              <span class="evd-progress-arrow">→</span>
+              <span class="evd-progress-item"><strong>40%</strong> 2024</span>
+              <span class="evd-progress-arrow">→</span>
+              <span class="evd-progress-item evd-progress-item--now"><strong>58%</strong> 2026</span>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <div class="evd-global-side">
+          <ScrollReveal client:visible delay={0.2}>
+            <div class="evd-card">
+              <h3 class="evd-h">La sola presencia distrae</h3>
+              <p class="body-sm">Con ~800 participantes, el estudio "Brain Drain" demostró que tener el teléfono a la vista —apagado y boca abajo— reduce la capacidad cognitiva disponible: el cerebro gasta recursos en ignorarlo. El mejor desempeño se logró con el teléfono <strong>fuera del alcance</strong>.</p>
+              <a class="evd-source" href="https://www.journals.uchicago.edu/doi/full/10.1086/691462" target="_blank" rel="noopener">Ward et al. · UT Austin 2017 ↗</a>
             </div>
           </ScrollReveal>
-        ))}
+          <ScrollReveal client:visible delay={0.3}>
+            <div class="evd-card">
+              <h3 class="evd-h">Cada interrupción cuesta 23 minutos</h3>
+              <p class="body-sm">Retomar una tarea interrumpida toma en promedio 23 minutos y 15 segundos. En una jornada fragmentada por notificaciones, la concentración profunda simplemente no ocurre.</p>
+              <a class="evd-source" href="https://news.gallup.com/businessjournal/23146/too-many-interruptions-work.aspx" target="_blank" rel="noopener">Gloria Mark · UC Irvine ↗</a>
+            </div>
+          </ScrollReveal>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══════════════ EVIDENCIA DE IMPACTO ═══════════════ -->
-  <section class="section--lg section--dark" style="position: relative; overflow: hidden;">
-    <div class="mesh-gradient" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-grid" aria-hidden="true"></div>
+  <!-- ═══════════ 02 · EL ESCENARIO EN CHILE (dark) ═══════════ -->
+  <section class="evd section--dark section-ambient" id="chile">
     <div class="container" style="position: relative; z-index: 1;">
       <ScrollReveal client:visible>
-        <div class="section-header section-header--center">
-          <span class="label">La Solución</span>
-          <h2 class="heading-2" style="margin-top: var(--space-3);">Evidencia de impacto académico y conducta</h2>
-          <p class="body-lg" style="color: var(--text-secondary); margin-top: var(--space-4); max-width: 650px; margin-inline: auto;">
-            Estudios y encuestas en terreno reflejan mejoras tangibles desde que el uso de estuches restrictivos se adoptó en miles de escuelas internacionalmente.
-          </p>
+        <div class="evd-head">
+          <span class="section-number" aria-hidden="true">02</span>
+          <div>
+            <span class="label">El escenario en Chile</span>
+            <h2 class="heading-2" style="margin-top: var(--space-2)">
+              Datos que
+              <span class="heading-accent">demandan acción</span>
+            </h2>
+          </div>
         </div>
       </ScrollReveal>
 
-      <div class="grid-3" style="margin-top: var(--space-12);">
-        {impacto.map((item, i) => (
+      <div class="evd-stats-grid">
+        {chileStats.map((s, i) => (
           <ScrollReveal client:visible delay={i * 0.08}>
-            <div class="glass-card ev-impact-card">
-              <div class="ev-impact-icon" set:html={item.icon}></div>
-              <h3 class="heading-5" style="margin-top: var(--space-4); margin-bottom: var(--space-2);">{item.title}</h3>
-              <p class="body-sm" style="color: var(--text-secondary); line-height: 1.5;">{item.desc}</p>
+            <div class="evd-stat">
+              <span class="evd-stat__value">{s.value}</span>
+              <p class="evd-stat__claim body-sm">{s.claim}</p>
+              {s.href
+                ? <a class="evd-source" href={s.href} target="_blank" rel="noopener">{s.source} ↗</a>
+                : <span class="evd-source">{s.source}</span>}
             </div>
           </ScrollReveal>
         ))}
       </div>
+
+      <ScrollReveal client:visible delay={0.2}>
+        <div class="evd-deadline">
+          <span class="evd-deadline__tag">Ley 21.801 · Plazo RICE</span>
+          <p>
+            La ley ya rige desde marzo. Y el plazo operativo corre: <strong>los reglamentos internos deben estar actualizados antes del 30 de junio de 2026</strong>, según las instrucciones de la Superintendencia de Educación.
+          </p>
+          <a href="/ley-celulares-2026" class="btn btn--primary">Ver el marco legal completo</a>
+        </div>
+      </ScrollReveal>
     </div>
   </section>
 
-  <!-- ═══════════════ IMPACTO ESPERADO (KPIs) ═══════════════ -->
-  <section class="section--lg section--light-alt" style="position: relative; overflow: hidden;">
-    <!-- Mesh Gradient -->
-    <div class="ley__mesh-gradient" aria-hidden="true"></div>
-    <div class="ley__grid-overlay" aria-hidden="true"></div>
-    
+  <!-- ═══════════ 03 · LA PARADOJA DE LA PROHIBICIÓN (cream) ═══════════ -->
+  <section class="evd section--light-alt section-ambient section-ambient--light" id="paradoja">
     <div class="container" style="position: relative; z-index: 1;">
       <ScrollReveal client:visible>
-        <div class="section-header">
-          <span class="label" style="display: inline-block; padding: 6px 16px; background: rgba(127, 206, 236, 0.12); border-radius: var(--radius-full); margin-bottom: var(--space-4);">Métricas</span>
-          <h2 class="heading-2" style="margin-top: 0; line-height: 1.1;">Impacto esperado y KPIs a medir</h2>
-          <p class="body-lg" style="color: var(--text-dark-secondary); margin-top: var(--space-4); max-width: 60ch;">Una vez implementado BloKKit, estos son los indicadores clave de desempeño que tu ecosistema educativo podrá observar, medir y documentar progresivamente.</p>
+        <div class="evd-head">
+          <span class="section-number" aria-hidden="true">03</span>
+          <div>
+            <span class="label">Intención vs. implementación</span>
+            <h2 class="heading-2" style="margin-top: var(--space-2)">
+              La paradoja:
+              <span class="heading-accent" style="display: block;">prohibir en papel no funciona</span>
+            </h2>
+          </div>
         </div>
       </ScrollReveal>
 
-      <div class="grid-3" style="margin-top: var(--space-12);">
+      <div class="evd-paradox">
+        <ScrollReveal client:visible delay={0.1}>
+          <div class="evd-card evd-card--paper">
+            <span class="evd-card__kicker">Lo que falla</span>
+            <h3 class="evd-h">Política sin mecanismo</h3>
+            <p class="body-sm">El estudio SMART Schools no encontró diferencias de bienestar ni rendimiento entre colegios con políticas restrictivas y permisivas <strong>cuando la regla existe solo en el papel</strong>: no logra reducir el tiempo real de uso. Los propios autores: "solo prohibir no es suficiente".</p>
+            <span class="evd-source">U. de Birmingham · The Lancet Regional Health 2025</span>
+          </div>
+        </ScrollReveal>
+        <ScrollReveal client:visible delay={0.2}>
+          <div class="evd-card evd-card--works">
+            <span class="evd-card__kicker evd-card__kicker--accent">Lo que funciona</span>
+            <h3 class="evd-h">Cumplimiento verificable</h3>
+            <p class="body-sm">El detalle que casi nadie lee en el estudio de la LSE: la ganancia académica aparece en los colegios donde la prohibición <strong>se aplica de forma estricta</strong>. Donde el ban es laxo, el efecto desaparece. La evidencia positiva — Noruega, Países Bajos, LSE — viene de prohibiciones efectivamente implementadas.</p>
+            <a class="evd-source" href="https://doi.org/10.1016/j.labeco.2016.04.004" target="_blank" rel="noopener">Beland & Murphy · LSE 2016 ↗</a>
+          </div>
+        </ScrollReveal>
+      </div>
+
+      <ScrollReveal client:visible delay={0.3}>
+        <p class="evd-conclusion">
+          <strong>Conclusión:</strong> la evidencia no respalda prohibir — respalda <strong>implementar</strong>. Ese es exactamente el espacio de BloKKit: convertir la regla escrita en una rutina física, visible y verificable.
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- ═══════════ 04 · RESULTADOS DEL CUMPLIMIENTO EFECTIVO (dark) ═══════════ -->
+  <section class="evd section--dark section-ambient" id="resultados">
+    <div class="container" style="position: relative; z-index: 1;">
+      <ScrollReveal client:visible>
+        <div class="evd-head">
+          <span class="section-number" aria-hidden="true">04</span>
+          <div>
+            <span class="label">Cumplimiento efectivo</span>
+            <h2 class="heading-2" style="margin-top: var(--space-2)">
+              Lo que pasa cuando
+              <span class="heading-accent">la regla se cumple de verdad</span>
+            </h2>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      <div class="evd-stats-grid">
+        {resultados.map((s, i) => (
+          <ScrollReveal client:visible delay={i * 0.08}>
+            <div class="evd-stat evd-stat--result">
+              <span class="evd-stat__value">{s.value}</span>
+              <p class="evd-stat__claim body-sm">{s.claim}</p>
+              {s.href
+                ? <a class="evd-source" href={s.href} target="_blank" rel="noopener">{s.source} ↗</a>
+                : <span class="evd-source">{s.source}</span>}
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+
+      <ScrollReveal client:visible delay={0.25}>
+        <p class="evd-meta-note">
+          El meta-análisis más amplio a la fecha — <strong>63 estudios, 124.166 estudiantes, 28 países</strong> — confirma la asociación negativa significativa entre uso de smartphones en clase y rendimiento académico.
+          <span class="evd-source">Meta-análisis global · 2024</span>
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- ═══════════ 05 · LA OLA INTERNACIONAL (cream) ═══════════ -->
+  <section class="evd section--light-alt section-ambient section-ambient--light" id="ola">
+    <div class="container" style="position: relative; z-index: 1;">
+      <ScrollReveal client:visible>
+        <div class="evd-head">
+          <span class="section-number" aria-hidden="true">05</span>
+          <div>
+            <span class="label">Contexto internacional</span>
+            <h2 class="heading-2" style="margin-top: var(--space-2)">
+              La ola legislativa,
+              <span class="heading-accent">año a año</span>
+            </h2>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      <ol class="evd-timeline">
+        {timeline.map((t, i) => (
+          <ScrollReveal client:visible delay={i * 0.08}>
+            <li class="evd-tl-row">
+              <span class="evd-tl-year">{t.year}</span>
+              <ul class="evd-tl-items">
+                {t.items.map((item) => <li class="body-sm">{item}</li>)}
+              </ul>
+            </li>
+          </ScrollReveal>
+        ))}
+      </ol>
+
+      <ScrollReveal client:visible delay={0.3}>
+        <p class="evd-culture-note">
+          Y fuera del aula, la misma lógica: Dave Chappelle, Bob Dylan y Jack White llevan años haciendo shows libres de celulares con fundas bloqueadas.
+        </p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- ═══════════ 06 · QUÉ MEDIRÁS CON BLOKKIT (dark) ═══════════ -->
+  <section class="evd section--dark section-ambient" id="kpis">
+    <div class="container" style="position: relative; z-index: 1;">
+      <ScrollReveal client:visible>
+        <div class="evd-head">
+          <span class="section-number" aria-hidden="true">06</span>
+          <div>
+            <span class="label">De la evidencia a tu operación</span>
+            <h2 class="heading-2" style="margin-top: var(--space-2)">
+              Lo que vas a medir
+              <span class="heading-accent">con BloKKit</span>
+            </h2>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      <div class="evd-kpis">
         {kpis.map((kpi, i) => (
           <ScrollReveal client:visible delay={i * 0.1}>
-            <div class="ev-kpi-card">
-              <div class="ev-kpi-header">
-                <span class="ev-kpi-pill">{kpi.highlight}</span>
-                <h3 class="heading-4" style="color: var(--text-dark); margin-top: var(--space-3);">{kpi.category}</h3>
-              </div>
-              <ul class="ev-kpi-list">
-                {kpi.items.map(item => (
+            <div class="evd-kpi-card">
+              <span class="evd-kpi-pill">{kpi.highlight}</span>
+              <h3 class="heading-5" style="margin: var(--space-3) 0 var(--space-4);">{kpi.category}</h3>
+              <ul class="evd-kpi-list">
+                {kpi.items.map((item) => (
                   <li>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -205,199 +325,515 @@ const global = [
     </div>
   </section>
 
-  <!-- ═══════════════ TENDENCIA GLOBAL ═══════════════ -->
-  <section class="section--lg section--dark" style="position: relative; overflow: hidden;">
-    <div class="mesh-gradient" aria-hidden="true"></div>
-    <div class="hero-glow" aria-hidden="true"></div>
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div class="container" style="position: relative; z-index: 1;">
-      <ScrollReveal client:visible>
-        <div class="section-header section-header--center">
-          <span class="label">Contexto Internacional</span>
-          <h2 class="heading-2" style="margin-top: var(--space-3);">Tendencia global de restricción</h2>
-          <p class="body-lg" style="color: var(--text-secondary); max-width: 650px; margin-inline: auto; margin-top: var(--space-4);">
-            El movimiento legislativo es mundial: gobiernos de todos los continentes actúan drásticamente respaldados en la misma evidencia.
-          </p>
-        </div>
-      </ScrollReveal>
-      
-      <div class="grid-3" style="margin-top: var(--space-12);">
-        {global.map((g, i) => (
-          <ScrollReveal client:visible delay={i * 0.1}>
-            <div class="glass-card" style="padding: var(--space-6); display: flex; flex-direction: column; height: 100%;">
-              <h3 class="heading-4" style="margin-bottom: var(--space-3);">{g.country}</h3>
-              <p class="body-sm" style="color: var(--text-secondary); line-height: 1.5;">{g.detail}</p>
-            </div>
-          </ScrollReveal>
+  <!-- ═══════════ FUENTES ═══════════ -->
+  <section class="evd-fuentes section--light-alt">
+    <div class="container">
+      <span class="label">Fuentes</span>
+      <ol class="evd-fuentes-list">
+        {fuentes.map((f) => (
+          <li>
+            {f.href
+              ? <a href={f.href} target="_blank" rel="noopener">{f.name} ↗</a>
+              : f.name}
+          </li>
         ))}
-      </div>
+      </ol>
     </div>
   </section>
 
-  <!-- ═══════════════ CTA FINAL ═══════════════ -->
-  <section class="section--light-alt" style="padding-top: var(--space-20); padding-bottom: var(--space-24); position: relative; overflow: hidden;">
-    <div class="hero-grid" aria-hidden="true" style="opacity: 0.3;"></div>
-    
-    <div class="container" style="position: relative; z-index: 1;">
-      <div class="final-cta__card">
-        <div class="final-cta__glow" aria-hidden="true"></div>
-        <div class="final-cta__inner">
-          <ScrollReveal client:visible>
-            <TextSplitReveal client:visible text="Descubre el impacto de BloKKit en tu institución" className="heading-3 final-cta__title" splitBy="word" delay={0.1} />
-          </ScrollReveal>
-          <ScrollReveal client:visible delay={0.2}>
-            <p class="body-lg final-cta__subtitle">
-              Súmate a la tendencia global y lidera el proceso de descontaminación digital. Agenda tu consultoría estratégica inicial, sin compromiso.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal client:visible delay={0.3}>
-            <button type="button" class="btn btn--primary" style="margin-top: var(--space-2);" data-cal-link="blokkit/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>
-              Agendar Reunión
-            </button>
-          </ScrollReveal>
-        </div>
-      </div>
-    </div>
-  </section>
+  <FinalCta
+    title="La evidencia respalda implementar."
+    accent="Implementemos."
+    subtitle="Agenda una reunión y revisamos cómo se ve un cumplimiento verificable en tu institución, con los KPIs para demostrarlo."
+  />
 
   <Footer slot="footer" />
 </BaseLayout>
 
 <style>
-  /* ── Hero & Common ── */
-  .hero--sub { min-height: 60vh; display: flex; flex-direction: column; justify-content: center; padding-top: 160px; padding-bottom: 60px; position: relative; overflow: hidden; }
-  .hero__content { position: relative; z-index: 1; text-align: center; max-width: 900px; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); margin: 0 auto; }
-  .hero__subtitle { max-width: 600px; color: var(--text-secondary); }
-
-  .section-header { margin-bottom: var(--space-8); }
-  .section-header--center { text-align: center; display: flex; flex-direction: column; align-items: center; }
-
-  /* ── Linea Base Cards ── */
-  .ev-stat-card { 
-    padding: var(--space-6); 
-    background: var(--bg-white); 
-    border: 1px solid var(--border-light); 
-    border-radius: var(--radius-lg); 
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  .ev-stat-card:hover { 
-    transform: translateY(-4px); 
-    border-color: var(--accent);
-    box-shadow: var(--shadow-sm);
-  }
-  .ev-stat-big { 
-    display: block; 
-    font-family: var(--font-heading); 
-    font-size: 3.5rem; 
-    color: var(--accent); 
-    line-height: 1; 
-    font-weight: 700; 
-    letter-spacing: -0.02em; 
-  }
-  .ev-stat-suffix {
-    font-size: 2rem;
-    color: var(--accent-dark);
+  .evd {
+    position: relative;
+    overflow: hidden;
+    padding-block: var(--space-20);
   }
 
-  /* ── Evidencia Impacto ── */
-  .ev-impact-card {
-    padding: var(--space-6);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    transition: transform 0.2s ease, border-color 0.2s ease;
-  }
-  .ev-impact-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(127, 206, 236, 0.4);
-  }
-  .ev-impact-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 48px;
-    height: 48px;
-    background: rgba(127, 206, 236, 0.1);
-    color: var(--accent);
-    border-radius: var(--radius-md);
-  }
-
-  /* ── KPIs Cards ── */
-  .ev-kpi-card {
-    padding: var(--space-8);
-    background: var(--bg-white); 
-    border: 1px solid var(--border-light); 
-    border-radius: var(--radius-lg); 
-    height: 100%;
-    transition: transform 0.25s ease, border-color 0.25s ease;
-  }
-  .ev-kpi-card:hover {
-    transform: translateY(-4px);
-    border-color: var(--accent);
-    box-shadow: var(--shadow-md);
-  }
-  .ev-kpi-pill {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    background: rgba(127, 206, 236, 0.1);
-    padding: 4px 12px;
-    border-radius: var(--radius-full);
-  }
-  .ev-kpi-list {
-    margin-top: var(--space-6);
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-  .ev-kpi-list li {
+  /* ── Section head: numeral + kicker + title ── */
+  .evd-head {
     display: flex;
     align-items: flex-start;
-    gap: var(--space-3);
-    color: var(--text-dark-secondary);
-    font-size: var(--text-sm);
-    line-height: 1.4;
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
   }
-  .ev-kpi-list li svg {
+
+  .evd-head .section-number {
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
     flex-shrink: 0;
     margin-top: 2px;
   }
 
-  /* ── Background Elements Re-used ── */
-  .ley__mesh-gradient {
-    position: absolute;
-    inset: -20% -20% -20% -20%;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(ellipse 60% 60% at 20% 30%, rgba(127, 206, 236, 0.08) 0%, transparent 60%),
-      radial-gradient(ellipse 70% 70% at 80% 70%, rgba(15, 45, 85, 0.05) 0%, transparent 60%),
-      radial-gradient(ellipse 50% 50% at 50% 50%, rgba(255, 255, 255, 0.8) 0%, transparent 60%);
-    background-size: 130% 130%;
-    animation: mesh-drift 15s ease-in-out infinite alternate;
+  /* ── Source chip — the credibility unit ── */
+  .evd-source {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px dotted transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
   }
-  .ley__grid-overlay {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background-image: 
-      linear-gradient(to right, rgba(15, 45, 85, 0.03) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(15, 45, 85, 0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
+
+  a.evd-source:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
   }
-  
-  @keyframes mesh-drift {
-    0% { background-position: 0% 0%, 100% 100%, 50% 50%; }
-    50% { background-position: 10% 20%, 90% 80%, 60% 40%; }
-    100% { background-position: 0% 100%, 100% 0%, 40% 60%; }
+
+  .section--light-alt .evd-source {
+    color: var(--text-dark-muted);
+  }
+
+  .section--light-alt a.evd-source:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent-dark);
+  }
+
+  /* ── Small display heading ── */
+  .evd-h {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-2);
+  }
+
+  .section--light-alt .evd-h {
+    color: var(--text-dark);
+  }
+
+  /* ── 01: global block ── */
+  .evd-global {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-8);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .evd-global {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      gap: var(--space-12);
+    }
+  }
+
+  .evd-giant {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(5rem, 13vw, 10rem);
+    line-height: 0.85;
+    letter-spacing: -0.02em;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--border-outline-light);
+  }
+
+  .evd-giant em {
+    font-style: normal;
+    -webkit-text-stroke-color: var(--accent);
+  }
+
+  .evd-giant-label {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+    color: var(--text-dark);
+    max-width: 380px;
+  }
+
+  .evd-progress {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.08em;
+    color: var(--text-dark-muted);
+  }
+
+  .evd-progress-item strong {
+    color: var(--text-dark);
+    font-weight: 500;
+    margin-right: 4px;
+  }
+
+  .evd-progress-item--now strong {
+    color: var(--accent-strong);
+  }
+
+  .evd-progress-arrow {
+    color: var(--accent-strong);
+  }
+
+  .evd-global-side {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  /* ── Evidence cards ── */
+  .evd-card {
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    height: 100%;
+  }
+
+  .section--light-alt .evd-card {
+    background: var(--bg-white);
+    border-color: var(--border-light);
+    box-shadow: var(--shadow-card);
+  }
+
+  .evd-card p {
+    margin: 0;
+  }
+
+  .evd-card strong {
+    color: inherit;
+  }
+
+  /* ── 02 & 04: stat grids ── */
+  .evd-stats-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 700px) {
+    .evd-stats-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .evd-stats-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .evd-stat {
+    height: 100%;
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .evd-stat:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-accent);
+  }
+
+  .evd-stat__value {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 3.6vw, 3rem);
+    line-height: 0.95;
+    color: var(--accent);
+    letter-spacing: -0.01em;
+  }
+
+  .evd-stat__claim {
+    margin: var(--space-3) 0 0;
+    color: var(--text-secondary);
+    flex: 1;
+  }
+
+  /* ── 02: Ley deadline callout ── */
+  .evd-deadline {
+    margin-top: var(--space-10);
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px dashed var(--border-accent);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 900px) {
+    .evd-deadline {
+      flex-direction: row;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .evd-deadline p {
+      flex: 1;
+    }
+  }
+
+  .evd-deadline__tag {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--data-coral);
+    border: 1px solid rgba(251, 110, 96, 0.4);
+    padding: 6px 12px;
+    border-radius: var(--radius-full);
+  }
+
+  .evd-deadline p {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+
+  .evd-deadline strong {
+    color: var(--text-primary);
+  }
+
+  .evd-deadline .btn {
+    flex-shrink: 0;
+  }
+
+  /* ── 03: paradox ── */
+  .evd-paradox {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 900px) {
+    .evd-paradox {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+  }
+
+  .evd-card__kicker {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-dark-muted);
+    margin-bottom: var(--space-3);
+  }
+
+  .evd-card__kicker--accent {
+    color: var(--accent-dark);
+  }
+
+  .evd-card--works {
+    border-color: rgba(63, 168, 224, 0.4);
+    background: linear-gradient(180deg, rgba(127, 206, 236, 0.08) 0%, rgba(255, 255, 255, 1) 50%);
+  }
+
+  .evd-conclusion {
+    margin: var(--space-8) 0 0;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--accent-strong);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    color: var(--text-dark-secondary);
+    max-width: 70ch;
+  }
+
+  .evd-conclusion strong {
+    color: var(--text-dark);
+  }
+
+  /* ── 04: meta-analysis note ── */
+  .evd-meta-note {
+    margin: var(--space-8) 0 0;
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--accent);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    color: var(--text-secondary);
+    max-width: 70ch;
+  }
+
+  .evd-meta-note strong {
+    color: var(--text-primary);
+  }
+
+  .evd-meta-note .evd-source {
+    display: block;
+    margin-top: var(--space-2);
+  }
+
+  /* ── 05: timeline ── */
+  .evd-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .evd-tl-row {
+    display: grid;
+    grid-template-columns: 86px minmax(0, 1fr);
+    gap: var(--space-6);
+    padding: var(--space-5) 0;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .evd-tl-year {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--border-outline-light);
+  }
+
+  .evd-tl-items {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .evd-tl-items li {
+    position: relative;
+    padding-left: var(--space-5);
+    color: var(--text-dark-secondary);
+  }
+
+  .evd-tl-items li::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent-strong);
+  }
+
+  .evd-culture-note {
+    margin: var(--space-8) 0 0;
+    font-size: var(--text-sm);
+    font-style: normal;
+    color: var(--text-dark-muted);
+    max-width: 64ch;
+  }
+
+  /* ── 06: KPI cards ── */
+  .evd-kpis {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 900px) {
+    .evd-kpis {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6);
+    }
+  }
+
+  .evd-kpi-card {
+    height: 100%;
+    padding: var(--space-6);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+  }
+
+  .evd-kpi-pill {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid var(--border-accent);
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+  }
+
+  .evd-kpi-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .evd-kpi-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    color: var(--text-secondary);
+    font-size: var(--text-sm);
+    line-height: 1.45;
+  }
+
+  .evd-kpi-list li svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--accent);
+  }
+
+  /* ── Fuentes ── */
+  .evd-fuentes {
+    padding-block: var(--space-12);
+    border-top: 1px solid var(--border-light);
+  }
+
+  .evd-fuentes-list {
+    margin: var(--space-5) 0 0;
+    padding-left: 1.2em;
+    columns: 1;
+    font-size: var(--text-xs);
+    line-height: 1.6;
+    color: var(--text-dark-muted);
+  }
+
+  @media (min-width: 900px) {
+    .evd-fuentes-list {
+      columns: 2;
+      column-gap: var(--space-12);
+    }
+  }
+
+  .evd-fuentes-list li {
+    margin-bottom: var(--space-2);
+    break-inside: avoid;
+  }
+
+  .evd-fuentes-list a {
+    color: var(--text-dark-secondary);
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(31, 31, 31, 0.3);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .evd-fuentes-list a:hover {
+    color: var(--accent-dark);
+    border-bottom-color: var(--accent-dark);
   }
 </style>

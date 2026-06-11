@@ -1,0 +1,25 @@
+# BloKKit
+
+> Sistema integral de custodia de celulares para instituciones en Chile: fundas con bloqueo de señal (GSM, Bluetooth y WiFi), dock de apertura magnética y plataforma con registro de uso por persona (asignación por QR). El teléfono nunca cambia de manos: queda sellado en su funda junto al usuario, inutilizable hasta el dock de salida. Para colegios, universidades, empresas, gobierno y eventos.
+
+Datos clave (verificados en fuentes oficiales):
+
+- Ley N° 21.801 (Chile): publicada el 11-02-2026 en el Diario Oficial, vigente desde marzo de 2026. Prohibición total de celulares en educación parvularia y básica; en enseñanza media el uso se regula en el reglamento interno (RICE) de cada establecimiento. Cinco excepciones: uso pedagógico, salud del estudiante, necesidades educativas especiales, emergencias y casos calificados en el RICE. Los reglamentos internos deben estar actualizados antes del 30-06-2026 según la Superintendencia de Educación. Evaluación del Mineduc en marzo de 2030.
+- UNESCO (GEM Report, marzo 2026): 114 sistemas educativos — el 58% de los países — prohíben por ley el celular en la escuela.
+- Piloto de fundas en Lo Barnechea (Chile) calificado de exitoso, con cobertura de prensa nacional (Emol) e internacional (AP News).
+
+## Páginas
+
+- [Inicio](https://blokkit.cl/): qué es BloKKit y cómo funciona en 5 pasos
+- [Producto](https://blokkit.cl/producto): la funda, el dock de apertura y la plataforma de trazabilidad
+- [Beneficios](https://blokkit.cl/beneficios): foco, convivencia y cumplimiento institucional
+- [Soluciones](https://blokkit.cl/soluciones): educación, empresas, gobierno y eventos
+- [Evidencia](https://blokkit.cl/evidencia): investigación internacional con fuentes citadas
+- [Ley 21.801](https://blokkit.cl/ley-celulares-2026): alcance por nivel, excepciones y plazos de la ley chilena
+- [Prensa](https://blokkit.cl/prensa): cobertura del piloto y del contexto regulatorio
+- [Contacto](https://blokkit.cl/contacto): diagnóstico, protocolo y propuesta por institución
+
+## Contacto
+
+- Email: hola@blokkit.cl
+- Sitio: https://blokkit.cl
