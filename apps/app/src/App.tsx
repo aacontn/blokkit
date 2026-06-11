@@ -10,6 +10,7 @@ import PortalTicketNew from "./pages/tickets/PortalTicketNew";
 import PortalTicketDetail from "./pages/tickets/PortalTicketDetail";
 import AdminTickets from "./pages/admin/AdminTickets";
 import AdminTicketDetail from "./pages/admin/AdminTicketDetail";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -76,6 +77,14 @@ export default function App() {
           element={
             <RequireSession loading={loading} session={session}>
               <AdminTickets session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/admin/users"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <AdminUsers session={session as Session} />
             </RequireSession>
           }
         />

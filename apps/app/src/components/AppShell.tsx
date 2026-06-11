@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
+import { useMyAccess } from "../lib/access";
 
 interface AppShellProps {
   title: string;
@@ -12,6 +13,8 @@ const navLinkClass = ({ isActive }: { isActive: boolean }) =>
   }`;
 
 export default function AppShell({ title, children }: AppShellProps) {
+  const access = useMyAccess();
+
   return (
     <div className="min-h-screen">
       <header className="border-b border-white/10 px-6 py-4">
@@ -29,9 +32,16 @@ export default function AppShell({ title, children }: AppShellProps) {
             <NavLink to="/tickets/new" className={navLinkClass}>
               Nuevo ticket
             </NavLink>
-            <NavLink to="/admin/tickets" className={navLinkClass}>
-              Admin
-            </NavLink>
+            {access?.isStaff && (
+              <NavLink to="/admin/tickets" className={navLinkClass}>
+                Admin
+              </NavLink>
+            )}
+            {access?.isSysAdmin && (
+              <NavLink to="/admin/users" className={navLinkClass}>
+                Usuarios
+              </NavLink>
+            )}
           </nav>
         </div>
       </header>
