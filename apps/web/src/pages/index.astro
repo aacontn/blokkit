@@ -454,7 +454,10 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
           </ScrollReveal>
         </div>
 
-        <ScrollReveal client:visible delay={0.25} className="why-matters__photo-reveal">
+        <!-- foto estática a propósito: es contenido (la prueba), no decoración —
+             no puede quedar detrás de un reveal JS (en prod quedaba opacity:0
+             si la hidratación del island no llegaba) -->
+        <div class="why-matters__photo-reveal">
           <figure class="why-matters__photo">
             <img
               src="/images/press-classroom.png"
@@ -468,7 +471,7 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
               <span><strong>Resultado:</strong> operación estable y cumplimiento sostenible.</span>
             </figcaption>
           </figure>
-        </ScrollReveal>
+        </div>
       </div>
 
       <!-- Conclusion strip -->
