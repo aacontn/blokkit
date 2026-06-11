@@ -100,6 +100,55 @@ const hitos = [
   },
 ];
 
+/* Schema FAQPage — las respuestas espejan el contenido visible de la
+   página (ficha, niveles, excepciones, plazos); no inventar nada aquí */
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "¿Desde cuándo rige la Ley 21.801 de celulares en colegios?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La Ley N° 21.801 fue publicada en el Diario Oficial el 11 de febrero de 2026 y rige desde marzo de 2026, con el año escolar.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿A qué niveles educativos aplica la prohibición de celulares?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "En educación parvularia y básica la prohibición de uso es total. En enseñanza media el uso se regula en el reglamento interno (RICE) de cada establecimiento, que define espacios y momentos permitidos.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Qué excepciones contempla la Ley 21.801?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Cinco: uso pedagógico supervisado por el docente, salud del estudiante (condiciones médicas acreditadas), necesidades educativas especiales, situaciones de emergencia y casos calificados que cada establecimiento regula en su RICE.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Cuál es el plazo para actualizar el reglamento interno (RICE)?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Los reglamentos internos deben estar actualizados antes del 30 de junio de 2026, según las instrucciones de la Superintendencia de Educación.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "¿Cómo pueden los colegios implementar la ley en la práctica?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "La ley exige el qué, no resuelve el cómo. Sistemas de custodia como las fundas con cierre magnético BloKKit resuelven la operación diaria: el teléfono queda sellado junto al estudiante, se libera en el dock al salir, y la asignación por QR deja registro trazable para inspectoría y la Superintendencia.",
+      },
+    },
+  ],
+};
+
 const brechas = [
   {
     q: "¿Dónde se guardan los teléfonos?",
@@ -125,6 +174,9 @@ const brechas = [
 ---
 
 <BaseLayout>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
   <Header slot="header" />
 
   <PageHero

@@ -12,9 +12,31 @@ const rolloutSteps = [
   { step: "02", title: "Despliegue por capas", desc: "Implementamos funda + dock + plataforma con onboarding para equipos directivos y operativos." },
   { step: "03", title: "Medición continua", desc: "Seguimos indicadores de uso, incidencias y cumplimiento para ajustar sin fricción." },
 ];
+
+/* Schema Product — el término comercial exacto ("funda con bloqueo
+   de señal / bloqueo magnético") que buscan los AI overviews */
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  name: "Funda BloKKit con bloqueo de señal para celulares",
+  brand: { "@type": "Brand", name: "BloKKit" },
+  description:
+    "Funda con bloqueo magnético para celulares: el teléfono queda sellado junto a su dueño e inutilizable hasta el dock de apertura. Sistema de custodia para colegios, universidades, empresas y eventos en Chile, con asignación por QR y registro de uso por persona.",
+  image: "https://blokkit.cl/images/blokkit-fundas.webp",
+  category: "Fundas con bloqueo de señal para celulares",
+  audience: {
+    "@type": "Audience",
+    audienceType: "Colegios, universidades, empresas, gobierno y eventos",
+  },
+  areaServed: "CL",
+  url: "https://blokkit.cl/producto",
+};
 ---
 
 <BaseLayout>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  </Fragment>
   <Header slot="header" />
 
   <!-- Hero -->
