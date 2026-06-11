@@ -1,23 +1,29 @@
 /** @type {import('tailwindcss').Config} */
+// Paleta de marca BloKKit (mismo sistema que apps/web):
+// charcoal #1F1F1F · cream #F2F2F2 · cyan #7FCEEC · cyan-strong #3FA8E0 · coral #FB6E60
+// Se conservan los NOMBRES de clase originales (ink/frost/gold/...) remapeados
+// a los valores de marca, para rebrandear todas las vistas sin tocarlas.
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        ink: "#0b0f17",
-        slate: "#101826",
-        frost: "#e6eefc",
-        gold: "#f2c572",
-        mint: "#9de3d6",
-        cobalt: "#4c7bf3"
+        ink: "#1F1F1F",
+        slate: "#26272A",
+        frost: "#F2F2F2",
+        gold: "#7FCEEC",
+        mint: "#7FCEEC",
+        cobalt: "#3FA8E0",
+        coral: "#FB6E60"
       },
       fontFamily: {
-        display: ["Space Grotesk", "sans-serif"],
-        body: ["Manrope", "sans-serif"]
+        display: ["'Archivo Black'", "sans-serif"],
+        body: ["Inter", "sans-serif"],
+        mono: ["'JetBrains Mono'", "monospace"]
       },
       boxShadow: {
-        glow: "0 0 40px rgba(76, 123, 243, 0.25)",
-        glass: "0 20px 60px rgba(11, 15, 23, 0.35)"
+        glow: "0 0 40px rgba(127, 206, 236, 0.18)",
+        glass: "0 20px 60px rgba(0, 0, 0, 0.35)"
       }
     }
   },

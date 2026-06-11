@@ -6,55 +6,39 @@ interface AppShellProps {
   children: ReactNode;
 }
 
+const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `font-mono text-[11px] uppercase tracking-[0.16em] transition-colors ${
+    isActive ? "text-gold" : "text-white/60 hover:text-white"
+  }`;
+
 export default function AppShell({ title, children }: AppShellProps) {
   return (
     <div className="min-h-screen">
       <header className="border-b border-white/10 px-6 py-4">
-        <div className="mx-auto flex max-w-6xl items-center justify-between">
-          <div className="flex items-center gap-3">
-            <span className="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-xs font-semibold">
-              BK
-            </span>
-            <div className="text-xs uppercase tracking-[0.3em] text-white/60">Blokkit Suite</div>
-          </div>
-          <nav className="flex flex-wrap items-center gap-4 text-sm text-white/70">
-            <NavLink
-              to="/home"
-              className={({ isActive }) =>
-                isActive ? "text-white" : "hover:text-white"
-              }
-            >
-              Home
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
+          <NavLink to="/home" className="flex items-center" aria-label="Portal BloKKit">
+            <img src="/Logo-Blokkit-white.png" alt="BloKKit" className="h-7 w-auto" />
+          </NavLink>
+          <nav className="flex flex-wrap items-center gap-5">
+            <NavLink to="/home" className={navLinkClass}>
+              Inicio
             </NavLink>
-            <NavLink
-              to="/tickets"
-              className={({ isActive }) =>
-                isActive ? "text-white" : "hover:text-white"
-              }
-            >
+            <NavLink to="/tickets" end className={navLinkClass}>
               Tickets
             </NavLink>
-            <NavLink
-              to="/tickets/new"
-              className={({ isActive }) =>
-                isActive ? "text-white" : "hover:text-white"
-              }
-            >
-              New Ticket
+            <NavLink to="/tickets/new" className={navLinkClass}>
+              Nuevo ticket
             </NavLink>
-            <NavLink
-              to="/admin/tickets"
-              className={({ isActive }) =>
-                isActive ? "text-white" : "hover:text-white"
-              }
-            >
+            <NavLink to="/admin/tickets" className={navLinkClass}>
               Admin
             </NavLink>
           </nav>
         </div>
       </header>
       <main className="mx-auto max-w-6xl px-6 py-10">
-        <div className="mb-6 text-sm uppercase tracking-[0.3em] text-white/40">{title}</div>
+        <div className="mb-6 font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
+          · {title}
+        </div>
         {children}
       </main>
     </div>

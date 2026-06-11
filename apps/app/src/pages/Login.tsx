@@ -2,7 +2,6 @@ import { FormEvent, useState } from "react";
 import { Navigate } from "react-router-dom";
 import type { Session } from "@supabase/supabase-js";
 import { supabase } from "../lib/supabase";
-import AppShell from "../components/AppShell";
 
 interface LoginProps {
   loading: boolean;
@@ -11,7 +10,7 @@ interface LoginProps {
 
 export default function Login({ loading, session }: LoginProps) {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<string | null>(null);
+  const [status, setStatus] = useState<{ kind: "ok" | "error"; text: string } | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   if (session) {
@@ -24,55 +23,77 @@ export default function Login({ loading, session }: LoginProps) {
     setStatus(null);
 
     const { error } = await supabase.auth.signInWithOtp({
-      email
+      email,
+      options: { emailRedirectTo: window.location.origin },
     });
 
     if (error) {
-      setStatus(error.message);
+      setStatus({ kind: "error", text: `No pudimos enviar el link: ${error.message}` });
     } else {
-      setStatus("Check your email for the login link.");
+      setStatus({ kind: "ok", text: "Listo — revisa tu correo y abre el link de acceso." });
     }
 
     setSubmitting(false);
   };
 
   return (
-    <AppShell title="Login">
-      <div className="glass max-w-xl p-8">
-        <h1 className="text-2xl font-semibold text-white">Acceso a la suite</h1>
-        <p className="mt-2 text-sm text-white/70">
-          Ingresa tu email. Recibiras un link seguro para entrar.
+    // pantalla propia, sin el nav del shell: desde aquí no hay a dónde navegar
+    <div className="flex min-h-screen flex-col items-center justify-center px-6 py-12">
+      <img src="/Logo-Blokkit-white.png" alt="BloKKit" className="h-9 w-auto" />
+
+      <div className="glass mt-8 w-full max-w-md p-8 sm:p-10">
+        <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
+          · Portal BloKKit
+        </span>
+        <h1 className="mt-3 font-display text-2xl uppercase leading-tight text-white">
+          Acceso al portal
+        </h1>
+        <p className="mt-3 text-sm leading-relaxed text-white/65">
+          Ingresa tu email institucional y te enviamos un link seguro de acceso. Sin contraseñas.
         </p>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <label className="block text-sm text-white/70">
-            Email
+        <form onSubmit={handleSubmit} className="mt-7 space-y-4">
+          <label className="block">
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/50">
+              Email
+            </span>
             <input
               type="email"
               required
               value={email}
               onChange={(event) => setEmail(event.target.value)}
-              className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cobalt"
-              placeholder="tu@email.com"
+              className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/35 focus:border-gold/60 focus:outline-none focus:ring-2 focus:ring-gold/40"
+              placeholder="nombre@institucion.cl"
+              autoComplete="email"
             />
           </label>
           <button
             type="submit"
             disabled={submitting || loading}
-            className="w-full rounded-xl bg-gold px-4 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-70"
+            className="w-full rounded-full bg-gold px-4 py-3.5 font-mono text-[12px] font-semibold uppercase tracking-[0.14em] text-ink transition hover:-translate-y-0.5 hover:shadow-glow disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {submitting ? "Enviando..." : "Enviar link"}
+            {submitting ? "Enviando…" : "Enviar link de acceso"}
           </button>
         </form>
 
         {status && (
-          <p className="mt-4 text-sm text-white/70">{status}</p>
+          <p
+            className={`mt-5 text-sm leading-relaxed ${
+              status.kind === "error" ? "text-coral" : "text-gold"
+            }`}
+            role="status"
+          >
+            {status.text}
+          </p>
         )}
-
-        <p className="mt-6 text-xs uppercase tracking-[0.2em] text-white/40">
-          CSR only. Supabase auth runs in the browser.
-        </p>
       </div>
-    </AppShell>
+
+      <a
+        href="https://blokkit.cl"
+        className="mt-8 font-mono text-[11px] uppercase tracking-[0.16em] text-white/40 transition-colors hover:text-white/70"
+      >
+        ← Volver a blokkit.cl
+      </a>
+    </div>
   );
 }
