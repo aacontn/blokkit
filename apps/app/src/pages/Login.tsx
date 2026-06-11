@@ -24,11 +24,24 @@ export default function Login({ loading, session }: LoginProps) {
 
     const { error } = await supabase.auth.signInWithOtp({
       email,
-      options: { emailRedirectTo: window.location.origin },
+      options: {
+        emailRedirectTo: window.location.origin,
+        // el portal es solo para cuentas creadas/invitadas por BloKKit:
+        // el formulario jamás registra usuarios nuevos
+        shouldCreateUser: false,
+      },
     });
 
     if (error) {
-      setStatus({ kind: "error", text: `No pudimos enviar el link: ${error.message}` });
+      const notAllowed = /signup|not allowed|otp_disabled/i.test(
+        `${error.message} ${("code" in error && error.code) || ""}`
+      );
+      setStatus({
+        kind: "error",
+        text: notAllowed
+          ? "Este correo no está habilitado en el portal. Escríbenos a hola@blokkit.cl para solicitar acceso."
+          : `No pudimos enviar el link: ${error.message}`,
+      });
     } else {
       setStatus({ kind: "ok", text: "Listo — revisa tu correo y abre el link de acceso." });
     }
