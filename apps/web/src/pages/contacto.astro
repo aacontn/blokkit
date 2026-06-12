@@ -465,7 +465,9 @@ const WHATSAPP = "https://wa.me/56996472784?text=Hola%2C%20estoy%20interesado%20
         const formData = new FormData(form);
         const payload = Object.fromEntries(formData.entries());
 
-        const response = await fetch("/api/contact", {
+        // endpoint público (edge function con honeypot + validación);
+        // el viejo /api/contact nunca existió — los leads se perdían
+        const response = await fetch("https://elzneskmoftedmyfhkgi.supabase.co/functions/v1/contact-lead", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(payload),

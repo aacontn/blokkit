@@ -75,7 +75,7 @@ export default function AdminUsers(_props: AdminUsersProps) {
   const refresh = useCallback(async () => {
     setLoading(true);
     const [t, r, p, m] = await Promise.all([
-      supabase.from("tenants").select("id, name").order("name"),
+      supabase.from("tenants").select("id, name").eq("is_customer", true).order("name"),
       supabase.from("roles").select("name").order("name"),
       supabase.from("profiles").select("id, full_name, email, created_at").order("created_at"),
       supabase.from("memberships").select("id, user_id, tenant_id, active, roles(name), tenants(name)"),

@@ -185,7 +185,12 @@ export default function Fundas({ session }: FundasProps) {
     let mounted = true;
     const load = async () => {
       if (access.isSysAdmin) {
-        const { data } = await supabase.from("tenants").select("id, name").order("name");
+        // solo clientes operativos — los prospectos del CRM no operan fundas
+        const { data } = await supabase
+          .from("tenants")
+          .select("id, name")
+          .eq("is_customer", true)
+          .order("name");
         if (mounted) setTenants((data as Tenant[]) ?? []);
       } else if (operativeTenantIds.length > 0) {
         const { data } = await supabase

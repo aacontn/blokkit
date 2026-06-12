@@ -22,6 +22,7 @@ interface TenantRow {
   contact_email: string | null;
   contact_phone: string | null;
   notes: string | null;
+  is_customer: boolean;
 }
 
 interface DealRow {
@@ -32,6 +33,9 @@ interface DealRow {
   amount: number | string | null;
   notes: string | null;
   created_at: string;
+  source: string;
+  contact_name: string | null;
+  contact_email: string | null;
   tenants: { name: string } | { name: string }[] | null;
 }
 
@@ -101,6 +105,7 @@ interface AccountFormState {
   contact_email: string;
   contact_phone: string;
   notes: string;
+  is_customer: boolean;
 }
 
 const EMPTY_ACCOUNT_FORM: AccountFormState = {
@@ -110,6 +115,7 @@ const EMPTY_ACCOUNT_FORM: AccountFormState = {
   contact_email: "",
   contact_phone: "",
   notes: "",
+  is_customer: false,
 };
 
 export default function AdminCrm({ session }: AdminCrmProps) {
@@ -142,11 +148,13 @@ export default function AdminCrm({ session }: AdminCrmProps) {
     const [t, d] = await Promise.all([
       supabase
         .from("tenants")
-        .select("id, name, kind, comuna, contact_name, contact_email, contact_phone, notes")
+        .select("id, name, kind, comuna, contact_name, contact_email, contact_phone, notes, is_customer")
         .order("name"),
       supabase
         .from("deals")
-        .select("id, tenant_id, prospect_name, stage, amount, notes, created_at, tenants(name)")
+        .select(
+          "id, tenant_id, prospect_name, stage, amount, notes, created_at, source, contact_name, contact_email, tenants(name)"
+        )
         .order("created_at", { ascending: false }),
     ]);
     setTenants((t.data as TenantRow[]) ?? []);
@@ -183,6 +191,12 @@ export default function AdminCrm({ session }: AdminCrmProps) {
     return map;
   }, [deals]);
 
+  // bandeja: leads que llegaron solos desde el formulario del sitio
+  const webLeads = useMemo(
+    () => deals.filter((d) => d.source === "web" && d.stage === "lead"),
+    [deals]
+  );
+
   const startEdit = (tenant: TenantRow) => {
     setEditingId(tenant.id);
     setEditForm({
@@ -192,6 +206,7 @@ export default function AdminCrm({ session }: AdminCrmProps) {
       contact_email: tenant.contact_email ?? "",
       contact_phone: tenant.contact_phone ?? "",
       notes: tenant.notes ?? "",
+      is_customer: tenant.is_customer,
     });
     setNotice(null);
   };
@@ -201,9 +216,11 @@ export default function AdminCrm({ session }: AdminCrmProps) {
     if (!newName.trim()) return;
     setCreatingAccount(true);
     setNotice(null);
+    // las cuentas creadas desde el CRM nacen como PROSPECTO: no aparecen en
+    // los selectores operativos (Fundas/Usuarios) hasta marcarlas Cliente
     const { error } = await supabase
       .from("tenants")
-      .insert({ name: newName.trim(), kind: newKind });
+      .insert({ name: newName.trim(), kind: newKind, is_customer: false });
     if (error) {
       setNotice({
         kind: "error",
@@ -232,6 +249,7 @@ export default function AdminCrm({ session }: AdminCrmProps) {
         contact_email: editForm.contact_email.trim() || null,
         contact_phone: editForm.contact_phone.trim() || null,
         notes: editForm.notes.trim() || null,
+        is_customer: editForm.is_customer,
       })
       .eq("id", editingId);
     if (error) {
@@ -328,6 +346,71 @@ export default function AdminCrm({ session }: AdminCrmProps) {
           </p>
         )}
 
+        {/* ── Leads entrantes del sitio ── */}
+        {webLeads.length > 0 && (
+          <div className="glass border-gold/30 p-7">
+            <div className="flex items-baseline justify-between gap-4">
+              <h2 className="font-display text-lg uppercase text-white">Leads del sitio</h2>
+              <span className="rounded-full bg-gold/15 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
+                {webLeads.length} sin atender
+              </span>
+            </div>
+            <div className="mt-5 space-y-3">
+              {webLeads.map((lead) => (
+                <div
+                  key={lead.id}
+                  className="flex flex-wrap items-start justify-between gap-4 rounded-xl border border-white/10 bg-white/5 p-4"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-sm font-medium text-white">
+                        {lead.prospect_name ?? lead.contact_name ?? "—"}
+                      </span>
+                      <span className="rounded-full border border-gold/40 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-gold">
+                        Web
+                      </span>
+                      <span className="font-mono text-[10px] text-white/40">
+                        {new Date(lead.created_at).toLocaleDateString("es-CL", {
+                          day: "2-digit",
+                          month: "short",
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </span>
+                    </div>
+                    {(lead.contact_name || lead.contact_email) && (
+                      <div className="mt-1 text-xs text-white/60">
+                        {[lead.contact_name, lead.contact_email].filter(Boolean).join(" · ")}
+                      </div>
+                    )}
+                    {lead.notes && (
+                      <p className="mt-2 whitespace-pre-line text-xs leading-relaxed text-white/50">
+                        {lead.notes}
+                      </p>
+                    )}
+                  </div>
+                  <div className="flex shrink-0 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => handleStageChange(lead, "contactado")}
+                      className="rounded-full bg-gold px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.12em] text-ink transition hover:-translate-y-0.5"
+                    >
+                      Tomar
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleStageChange(lead, "perdido")}
+                      className="rounded-full border border-white/20 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-white/60 transition hover:border-coral/60 hover:text-coral"
+                    >
+                      Descartar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* ── Cuentas ── */}
         <div className="glass p-7">
           <div className="flex items-baseline justify-between gap-4">
@@ -391,9 +474,20 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                     <tr key={tenant.id} className="border-b border-white/5">
                       <td className="py-3 pr-4 text-white">{tenant.name}</td>
                       <td className="py-3 pr-4">
-                        <span className="rounded-full border border-white/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-white/70">
-                          {tenant.kind ? KIND_LABELS[tenant.kind] : "—"}
-                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          <span className="rounded-full border border-white/15 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-white/70">
+                            {tenant.kind ? KIND_LABELS[tenant.kind] : "—"}
+                          </span>
+                          <span
+                            className={`rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] ${
+                              tenant.is_customer
+                                ? "bg-gold/15 text-gold"
+                                : "border border-white/15 text-white/45"
+                            }`}
+                          >
+                            {tenant.is_customer ? "Cliente" : "Prospecto"}
+                          </span>
+                        </div>
                       </td>
                       <td className="py-3 pr-4 text-white/80">{tenant.comuna ?? "—"}</td>
                       <td className="py-3 pr-4">
@@ -495,6 +589,22 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                     placeholder="Contexto comercial, acuerdos, próximos pasos…"
                     className={inputClass}
                   />
+                </label>
+                <label className="flex items-center gap-3 sm:col-span-2 lg:col-span-3">
+                  <input
+                    type="checkbox"
+                    checked={editForm.is_customer}
+                    onChange={(e) =>
+                      setEditForm((f) => ({ ...f, is_customer: e.target.checked }))
+                    }
+                    className="h-4 w-4 rounded border-white/20 bg-white/5 accent-[#7FCEEC]"
+                  />
+                  <span className="text-sm text-white/80">
+                    Cliente operativo
+                    <span className="ml-2 text-xs text-white/45">
+                      (habilita la cuenta en Fundas y Usuarios; los prospectos no aparecen ahí)
+                    </span>
+                  </span>
                 </label>
               </div>
               <div className="mt-5 flex flex-wrap gap-3">
@@ -631,8 +741,15 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                             key={deal.id}
                             className="rounded-xl border border-white/10 bg-white/5 p-3"
                           >
-                            <div className="truncate text-sm text-white">
-                              {deal.tenant_id ? one(deal.tenants) : deal.prospect_name ?? "—"}
+                            <div className="flex items-center gap-1.5">
+                              <span className="truncate text-sm text-white">
+                                {deal.tenant_id ? one(deal.tenants) : deal.prospect_name ?? "—"}
+                              </span>
+                              {deal.source === "web" && (
+                                <span className="shrink-0 rounded-full border border-gold/40 px-1.5 py-0.5 font-mono text-[8px] uppercase tracking-[0.1em] text-gold">
+                                  Web
+                                </span>
+                              )}
                             </div>
                             <div className={`mt-1 text-xs ${STAGE_CLASS[deal.stage]}`}>
                               {deal.amount != null ? clp.format(Number(deal.amount)) : "Sin monto"}
