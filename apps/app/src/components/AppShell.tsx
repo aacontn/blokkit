@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import { useMyAccess } from "../lib/access";
+import { hasFundasAccess, useMyAccess } from "../lib/access";
 
 interface AppShellProps {
   title: string;
@@ -32,15 +32,25 @@ export default function AppShell({ title, children }: AppShellProps) {
             <NavLink to="/tickets/new" className={navLinkClass}>
               Nuevo ticket
             </NavLink>
+            {access && hasFundasAccess(access) && (
+              <NavLink to="/fundas" className={navLinkClass}>
+                Fundas
+              </NavLink>
+            )}
             {access?.isStaff && (
               <NavLink to="/admin/tickets" className={navLinkClass}>
                 Admin
               </NavLink>
             )}
             {access?.isSysAdmin && (
-              <NavLink to="/admin/users" className={navLinkClass}>
-                Usuarios
-              </NavLink>
+              <>
+                <NavLink to="/admin/crm" className={navLinkClass}>
+                  CRM
+                </NavLink>
+                <NavLink to="/admin/users" className={navLinkClass}>
+                  Usuarios
+                </NavLink>
+              </>
             )}
           </nav>
         </div>

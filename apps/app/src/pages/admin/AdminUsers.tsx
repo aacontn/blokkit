@@ -36,6 +36,9 @@ interface MembershipRow {
 const ROLE_LABELS: Record<string, string> = {
   CLIENT_USER: "Cliente · Usuario",
   CLIENT_ADMIN: "Cliente · Admin",
+  CLIENT_SUPERVISOR: "Cliente · Supervisor",
+  CLIENT_TEACHER: "Cliente · Profesor",
+  CLIENT_STUDENT: "Cliente · Alumno",
   INTERNAL_SUPPORT: "BloKKit · Soporte",
   INTERNAL_OPERATIONS: "BloKKit · Operaciones",
   INTERNAL_SALES: "BloKKit · Ventas",

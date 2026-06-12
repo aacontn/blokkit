@@ -11,6 +11,9 @@ import PortalTicketDetail from "./pages/tickets/PortalTicketDetail";
 import AdminTickets from "./pages/admin/AdminTickets";
 import AdminTicketDetail from "./pages/admin/AdminTicketDetail";
 import AdminUsers from "./pages/admin/AdminUsers";
+import AdminCrm from "./pages/admin/AdminCrm";
+import AdminQuotes from "./pages/admin/AdminQuotes";
+import Fundas from "./pages/fundas/Fundas";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -85,6 +88,30 @@ export default function App() {
           element={
             <RequireSession loading={loading} session={session}>
               <AdminUsers session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/fundas"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <Fundas session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/admin/crm"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <AdminCrm session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/admin/cotizaciones"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <AdminQuotes session={session as Session} />
             </RequireSession>
           }
         />
