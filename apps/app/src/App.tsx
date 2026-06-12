@@ -12,6 +12,7 @@ import AdminTickets from "./pages/admin/AdminTickets";
 import AdminTicketDetail from "./pages/admin/AdminTicketDetail";
 import AdminUsers from "./pages/admin/AdminUsers";
 import AdminCrm from "./pages/admin/AdminCrm";
+import AdminDealDetail from "./pages/admin/AdminDealDetail";
 import AdminQuotes from "./pages/admin/AdminQuotes";
 import Fundas from "./pages/fundas/Fundas";
 
@@ -104,6 +105,14 @@ export default function App() {
           element={
             <RequireSession loading={loading} session={session}>
               <AdminCrm session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/admin/crm/deal/:id"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <AdminDealDetail session={session as Session} />
             </RequireSession>
           }
         />

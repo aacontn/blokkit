@@ -389,7 +389,13 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                       </p>
                     )}
                   </div>
-                  <div className="flex shrink-0 gap-2">
+                  <div className="flex shrink-0 items-center gap-2">
+                    <Link
+                      to={`/admin/crm/deal/${lead.id}`}
+                      className="font-mono text-[10px] uppercase tracking-[0.12em] text-white/60 transition hover:text-gold"
+                    >
+                      Abrir →
+                    </Link>
                     <button
                       type="button"
                       onClick={() => handleStageChange(lead, "contactado")}
@@ -773,12 +779,20 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                                 </option>
                               ))}
                             </select>
-                            <Link
-                              to={`/admin/cotizaciones?deal=${deal.id}`}
-                              className="mt-2 inline-block font-mono text-[10px] uppercase tracking-[0.12em] text-white/60 transition hover:text-gold"
-                            >
-                              Cotizar →
-                            </Link>
+                            <div className="mt-2 flex gap-3">
+                              <Link
+                                to={`/admin/crm/deal/${deal.id}`}
+                                className="font-mono text-[10px] uppercase tracking-[0.12em] text-gold transition hover:text-white"
+                              >
+                                Abrir →
+                              </Link>
+                              <Link
+                                to={`/admin/cotizaciones?deal=${deal.id}`}
+                                className="font-mono text-[10px] uppercase tracking-[0.12em] text-white/60 transition hover:text-gold"
+                              >
+                                Cotizar →
+                              </Link>
+                            </div>
                           </div>
                         ))
                       )}
