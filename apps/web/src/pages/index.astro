@@ -2311,6 +2311,9 @@ const pageDescription = "Implementación rápida y sin confrontación de la Ley 
 
   .why-matters__photo {
     position: relative;
+    /* todo el contenido interno es absolute → sin width explícito la
+       figura colapsa a 0 como flex item (la foto "desaparecía") */
+    width: 100%;
     height: 100%;
     margin: 0;
     min-height: 340px;
