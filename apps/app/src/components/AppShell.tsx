@@ -79,6 +79,12 @@ export default function AppShell({ title, children }: AppShellProps) {
                 <NavLink to="/admin/cotizaciones" className={linkClass}>
                   Cotizaciones
                 </NavLink>
+                <NavLink to="/admin/operaciones" className={linkClass}>
+                  Operaciones
+                </NavLink>
+                <NavLink to="/admin/implementaciones" className={linkClass}>
+                  Implementaciones
+                </NavLink>
                 <NavLink to="/admin/users" className={linkClass}>
                   Usuarios
                 </NavLink>
