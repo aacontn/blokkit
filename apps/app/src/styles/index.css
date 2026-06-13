@@ -17,3 +17,15 @@ body {
 .glass {
   @apply bg-white/[0.04] border border-white/10 backdrop-blur-xl shadow-glass rounded-2xl;
 }
+
+/* entrada de modales — paneles centrados, no cajones */
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

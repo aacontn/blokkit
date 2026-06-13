@@ -2,6 +2,7 @@ import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "re
 import type { Session } from "@supabase/supabase-js";
 import { useSearchParams } from "react-router-dom";
 import AppShell from "../../components/AppShell";
+import Modal from "../../components/Modal";
 import { supabase } from "../../lib/supabase";
 import { useMyAccess } from "../../lib/access";
 
@@ -1025,9 +1026,14 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
                 {quotes.length} en total
               </span>
             </div>
-            <button type="button" onClick={() => openNew()} className={btnPrimary}>
-              Nueva cotización
-            </button>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => setCatalogOpen(true)} className={btnSecondary}>
+                Catálogo y precios
+              </button>
+              <button type="button" onClick={() => openNew()} className={btnPrimary}>
+                Nueva cotización
+              </button>
+            </div>
           </div>
 
           {loading ? (
@@ -1109,19 +1115,14 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
           )}
         </div>
 
-        {/* ── Editor ── */}
-        {editorOpen && (
-          <div className="glass p-7">
-            <div className="flex flex-wrap items-center justify-between gap-4">
-              <h2 className="font-display text-lg uppercase text-white">
-                {editing ? `Editar cotización BK${editing.quote_number}` : "Nueva cotización"}
-              </h2>
-              <button type="button" onClick={closeEditor} className={btnSecondary}>
-                Cerrar
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="mt-5 space-y-6">
+        {/* ── Editor (modal centrado, no cajón) ── */}
+        <Modal
+          open={editorOpen}
+          onClose={closeEditor}
+          size="xl"
+          title={editing ? `Editar cotización BK${editing.quote_number}` : "Nueva cotización"}
+        >
+          <form onSubmit={handleSave} className="space-y-6">
               <label className="block max-w-xl">
                 <span className={labelClass}>Oportunidad</span>
                 <select
@@ -1475,32 +1476,24 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
                 )}
               </div>
             </form>
-          </div>
-        )}
+        </Modal>
 
-        {/* ── Catálogo de productos ── */}
-        <div className="glass p-7">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-baseline gap-4">
-              <h2 className="font-display text-lg uppercase text-white">Catálogo</h2>
-              <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/40">
-                {products.length} producto{products.length === 1 ? "" : "s"}
-              </span>
-            </div>
-            <button
-              type="button"
-              onClick={() => setCatalogOpen((o) => !o)}
-              className={btnSecondary}
-            >
-              {catalogOpen ? "Ocultar" : "Mostrar"}
-            </button>
-          </div>
-
-          {catalogOpen &&
-            (products.length === 0 ? (
-              <p className="mt-6 text-sm text-white/50">Aún no hay productos en el catálogo.</p>
-            ) : (
-              <div className="mt-5 overflow-x-auto">
+        {/* ── Catálogo de productos (modal) ── */}
+        <Modal
+          open={catalogOpen}
+          onClose={() => setCatalogOpen(false)}
+          size="xl"
+          title="Catálogo y precios"
+          headerAside={
+            <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/40">
+              {products.length} producto{products.length === 1 ? "" : "s"}
+            </span>
+          }
+        >
+          {products.length === 0 ? (
+            <p className="text-sm text-white/50">Aún no hay productos en el catálogo.</p>
+          ) : (
+              <div className="overflow-x-auto">
                 <table className="w-full text-left text-sm">
                   <thead>
                     <tr className="border-b border-white/10 font-mono text-[10px] uppercase tracking-[0.16em] text-white/40">
@@ -1601,8 +1594,8 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
                   </tbody>
                 </table>
               </div>
-            ))}
-        </div>
+          )}
+        </Modal>
       </div>
     </AppShell>
   );

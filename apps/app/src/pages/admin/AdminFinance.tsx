@@ -1,6 +1,7 @@
 import { FormEvent, Fragment, useCallback, useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import AppShell from "../../components/AppShell";
+import Modal from "../../components/Modal";
 import { supabase } from "../../lib/supabase";
 import { useMyAccess } from "../../lib/access";
 
@@ -716,15 +717,12 @@ export default function AdminFinance({ session }: { session: Session }) {
 
   /* ── panel de pago compartido (Facturas y Por cobrar) ── */
   const renderPayForm = (inv: InvoiceRow) => (
-    <form
-      onSubmit={(e) => handleRegisterPayment(e, inv)}
-      className="rounded-xl border border-gold/30 bg-white/5 p-5"
-    >
-      <h3 className="font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
-        Registrar pago · {clientLabel(inv)}
-        {inv.folio ? ` · folio ${inv.folio}` : ""}
-      </h3>
-      <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <form onSubmit={(e) => handleRegisterPayment(e, inv)}>
+      <p className="mb-4 text-sm text-white/60">
+        {clientLabel(inv)}
+        {inv.folio ? ` · folio ${inv.folio}` : ""} · saldo {clp.format(Number(inv.balance) || 0)}
+      </p>
+      <div className="grid gap-4 sm:grid-cols-2">
         <label className="block">
           <span className={labelClass}>Monto (CLP)</span>
           <input
@@ -783,10 +781,8 @@ export default function AdminFinance({ session }: { session: Session }) {
   );
 
   const renderPaymentsHistory = (inv: InvoiceRow) => (
-    <div className="rounded-xl border border-white/10 bg-white/5 p-5">
-      <h3 className="font-mono text-[11px] uppercase tracking-[0.16em] text-white/50">
-        Pagos · {clientLabel(inv)}
-      </h3>
+    <div>
+      <p className="mb-4 text-sm text-white/60">{clientLabel(inv)}</p>
       {loadingPayments ? (
         <p className="mt-4 text-sm text-white/50">Cargando…</p>
       ) : paymentRows.length === 0 ? (
@@ -892,21 +888,20 @@ export default function AdminFinance({ session }: { session: Session }) {
                       setShowInvoiceForm(true);
                     }
                   }}
-                  className={showInvoiceForm ? secondaryBtnClass : primaryBtnClass}
+                  className={primaryBtnClass}
                 >
-                  {showInvoiceForm ? "Cerrar" : "Nueva factura"}
+                  Nueva factura
                 </button>
               </div>
 
-              {showInvoiceForm && (
-                <form
-                  onSubmit={handleCreateInvoice}
-                  className="mt-6 rounded-xl border border-white/10 bg-white/5 p-5"
-                >
-                  <h3 className="font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
-                    Nueva factura
-                  </h3>
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              <Modal
+                open={showInvoiceForm}
+                onClose={() => setShowInvoiceForm(false)}
+                size="lg"
+                title="Nueva factura"
+              >
+                <form onSubmit={handleCreateInvoice}>
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <label className="block sm:col-span-2 lg:col-span-2">
                       <span className={labelClass}>Orden (opcional)</span>
                       <select
@@ -1033,7 +1028,7 @@ export default function AdminFinance({ session }: { session: Session }) {
                     </button>
                   </div>
                 </form>
-              )}
+              </Modal>
 
               {loading ? (
                 <p className="mt-6 text-sm text-white/50">Cargando…</p>
@@ -1148,20 +1143,6 @@ export default function AdminFinance({ session }: { session: Session }) {
                               </div>
                             </td>
                           </tr>
-                          {payForId === inv.id && (
-                            <tr className="border-b border-white/5">
-                              <td colSpan={8} className="py-3">
-                                {renderPayForm(inv)}
-                              </td>
-                            </tr>
-                          )}
-                          {paymentsForId === inv.id && (
-                            <tr className="border-b border-white/5">
-                              <td colSpan={8} className="py-3">
-                                {renderPaymentsHistory(inv)}
-                              </td>
-                            </tr>
-                          )}
                         </Fragment>
                       ))}
                     </tbody>
@@ -1260,13 +1241,6 @@ export default function AdminFinance({ session }: { session: Session }) {
                                 </button>
                               </td>
                             </tr>
-                            {payForId === inv.id && (
-                              <tr className="border-b border-white/5">
-                                <td colSpan={6} className="py-3">
-                                  {renderPayForm(inv)}
-                                </td>
-                              </tr>
-                            )}
                           </Fragment>
                         );
                       })}
@@ -1494,6 +1468,30 @@ export default function AdminFinance({ session }: { session: Session }) {
             </div>
           </div>
         )}
+
+        {/* ── Modales de pago (centrados, no cajones) ── */}
+        <Modal
+          open={!!payForId}
+          onClose={() => setPayForId(null)}
+          size="lg"
+          title="Registrar pago"
+        >
+          {(() => {
+            const inv = invoices.find((i) => i.id === payForId);
+            return inv ? renderPayForm(inv) : null;
+          })()}
+        </Modal>
+        <Modal
+          open={!!paymentsForId}
+          onClose={() => setPaymentsForId(null)}
+          size="md"
+          title="Pagos de la factura"
+        >
+          {(() => {
+            const inv = invoices.find((i) => i.id === paymentsForId);
+            return inv ? renderPaymentsHistory(inv) : null;
+          })()}
+        </Modal>
       </div>
     </AppShell>
   );

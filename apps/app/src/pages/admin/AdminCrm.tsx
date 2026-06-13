@@ -2,6 +2,7 @@ import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { Link } from "react-router-dom";
 import AppShell from "../../components/AppShell";
+import Modal from "../../components/Modal";
 import { supabase } from "../../lib/supabase";
 import { useMyAccess } from "../../lib/access";
 
@@ -535,15 +536,14 @@ export default function AdminCrm({ session }: AdminCrmProps) {
             </div>
           )}
 
-          {editingTenant && (
-            <form
-              onSubmit={handleSaveAccount}
-              className="mt-6 rounded-xl border border-white/10 bg-white/5 p-5"
-            >
-              <h3 className="font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
-                Editar · {editingTenant.name}
-              </h3>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Modal
+            open={!!editingTenant}
+            onClose={() => setEditingId(null)}
+            size="lg"
+            title={editingTenant ? `Editar · ${editingTenant.name}` : "Editar cuenta"}
+          >
+            <form onSubmit={handleSaveAccount}>
+              <div className="grid gap-4 sm:grid-cols-2">
                 <label className="block">
                   <span className={labelClass}>Tipo</span>
                   <select
@@ -641,7 +641,7 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                 </button>
               </div>
             </form>
-          )}
+          </Modal>
         </div>
 
         {/* ── Nueva oportunidad ── */}
