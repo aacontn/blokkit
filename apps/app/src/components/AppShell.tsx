@@ -178,9 +178,10 @@ export default function AppShell({ title, children }: AppShellProps) {
         </div>
       )}
 
-      {/* ── contenido ── */}
-      <main className="px-5 py-8 lg:pl-60 lg:pt-10">
-        <div className="mx-auto max-w-6xl lg:px-8">
+      {/* ── contenido: ocupa el ancho disponible junto al sidebar, no una
+           columna estrecha centrada (cap generoso para ultra-wide) ── */}
+      <main className="px-5 py-8 lg:pl-[260px] lg:pr-10 lg:pt-10">
+        <div className="w-full max-w-[1680px]">
           <div className="mb-6 font-mono text-[11px] uppercase tracking-[0.16em] text-gold">
             · {title}
           </div>
