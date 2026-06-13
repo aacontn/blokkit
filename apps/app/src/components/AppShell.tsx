@@ -73,6 +73,9 @@ export default function AppShell({ title, children }: AppShellProps) {
             </NavLink>
             {access.isSysAdmin && (
               <>
+                <NavLink to="/admin/dashboard" className={linkClass}>
+                  Dashboard
+                </NavLink>
                 <NavLink to="/admin/crm" className={linkClass}>
                   CRM
                 </NavLink>
@@ -84,6 +87,9 @@ export default function AppShell({ title, children }: AppShellProps) {
                 </NavLink>
                 <NavLink to="/admin/implementaciones" className={linkClass}>
                   Implementaciones
+                </NavLink>
+                <NavLink to="/admin/finanzas" className={linkClass}>
+                  Finanzas
                 </NavLink>
                 <NavLink to="/admin/users" className={linkClass}>
                   Usuarios

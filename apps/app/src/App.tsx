@@ -16,6 +16,8 @@ import AdminDealDetail from "./pages/admin/AdminDealDetail";
 import AdminQuotes from "./pages/admin/AdminQuotes";
 import AdminOps from "./pages/admin/AdminOps";
 import AdminImplementations from "./pages/admin/AdminImplementations";
+import AdminFinance from "./pages/admin/AdminFinance";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import Fundas from "./pages/fundas/Fundas";
 
 export default function App() {
@@ -139,6 +141,22 @@ export default function App() {
           element={
             <RequireSession loading={loading} session={session}>
               <AdminImplementations session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/admin/finanzas"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <AdminFinance session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <AdminDashboard session={session as Session} />
             </RequireSession>
           }
         />

@@ -62,6 +62,7 @@ export default function Home({ session }: HomeProps) {
 
   if (access?.isSysAdmin) {
     links.push(
+      { to: "/admin/dashboard", title: "Dashboard", desc: "El negocio completo de un vistazo: ventas, finanzas y operación." },
       { to: "/admin/crm", title: "CRM", desc: "Cuentas, pipeline de ventas y seguimiento comercial." },
       { to: "/admin/cotizaciones", title: "Cotizaciones", desc: "Crea y gestiona cotizaciones con numeración automática." },
       { to: "/admin/users", title: "Usuarios", desc: "Invita usuarios por colegio y administra accesos." }

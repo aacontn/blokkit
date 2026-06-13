@@ -141,6 +141,7 @@ export default function AdminCrm({ session }: AdminCrmProps) {
   const [dealProspect, setDealProspect] = useState("");
   const [dealAmount, setDealAmount] = useState("");
   const [dealNotes, setDealNotes] = useState("");
+  const [dealSource, setDealSource] = useState("manual");
   const [creatingDeal, setCreatingDeal] = useState(false);
 
   const refresh = useCallback(async () => {
@@ -296,6 +297,7 @@ export default function AdminCrm({ session }: AdminCrmProps) {
       amount,
       notes: dealNotes.trim() || null,
       owner_id: session.user.id,
+      source: dealSource,
     });
     if (error) {
       setNotice({
@@ -680,6 +682,20 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                 placeholder="2500000"
                 className={inputClass}
               />
+            </label>
+            <label className="block">
+              <span className={labelClass}>Fuente</span>
+              <select
+                value={dealSource}
+                onChange={(e) => setDealSource(e.target.value)}
+                className={selectClass}
+              >
+                <option value="manual">Manual</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="feria">Feria</option>
+                <option value="referido">Referido</option>
+                <option value="otro">Otro</option>
+              </select>
             </label>
             <label className="block">
               <span className={labelClass}>Notas</span>
