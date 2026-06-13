@@ -59,8 +59,14 @@ export default function AppShell({ title, children }: AppShellProps) {
         {access && hasFundasAccess(access) && (
           <>
             <SectionLabel>Operación</SectionLabel>
+            <NavLink to="/escanear" className={linkClass}>
+              Escanear
+            </NavLink>
             <NavLink to="/fundas" className={linkClass}>
               Fundas
+            </NavLink>
+            <NavLink to="/registro" className={linkClass}>
+              Registro de uso
             </NavLink>
           </>
         )}

@@ -56,6 +56,11 @@ export default function Home({ session }: HomeProps) {
         title: "Fundas",
         desc: "Cursos, alumnos, inventario y asignaciones de hoy.",
       },
+      {
+        to: "/registro",
+        title: "Registro de uso",
+        desc: "Quién usó funda cada día, por curso. Sirve de asistencia.",
+      },
     );
   }
 

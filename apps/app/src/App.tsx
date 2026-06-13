@@ -20,6 +20,7 @@ import AdminFinance from "./pages/admin/AdminFinance";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import Fundas from "./pages/fundas/Fundas";
 import ScanFlow from "./pages/fundas/ScanFlow";
+import RegistroUso from "./pages/fundas/RegistroUso";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -110,6 +111,14 @@ export default function App() {
           element={
             <RequireSession loading={loading} session={session}>
               <ScanFlow session={session as Session} />
+            </RequireSession>
+          }
+        />
+        <Route
+          path="/registro"
+          element={
+            <RequireSession loading={loading} session={session}>
+              <RegistroUso session={session as Session} />
             </RequireSession>
           }
         />
