@@ -45,11 +45,18 @@ export default function Home({ session }: HomeProps) {
   ];
 
   if (access && hasFundasAccess(access)) {
-    links.push({
-      to: "/fundas",
-      title: "Fundas",
-      desc: "Asignación diaria por QR, cursos, alumnos e inventario.",
-    });
+    links.unshift(
+      {
+        to: "/escanear",
+        title: "Escanear y asignar",
+        desc: "Registro diario por QR: escanea, elige curso y alumno.",
+      },
+      {
+        to: "/fundas",
+        title: "Fundas",
+        desc: "Cursos, alumnos, inventario y asignaciones de hoy.",
+      },
+    );
   }
 
   if (access?.isStaff) {

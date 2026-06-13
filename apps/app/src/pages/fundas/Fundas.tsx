@@ -1,5 +1,6 @@
 import { FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
+import { Link } from "react-router-dom";
 import AppShell from "../../components/AppShell";
 import { supabase } from "../../lib/supabase";
 import { canManageTenant, canOperateTenant, OPERATE_ROLES, useMyAccess } from "../../lib/access";
@@ -730,6 +731,30 @@ export default function Fundas({ session }: FundasProps) {
   return (
     <AppShell title="Fundas">
       <div className="space-y-6">
+        {/* ── acceso destacado: el flujo diario de asignación por QR ── */}
+        <Link
+          to="/escanear"
+          className="group flex items-center justify-between gap-4 rounded-2xl border border-gold/30 bg-gold/[0.07] px-6 py-5 transition hover:border-gold/60 hover:bg-gold/[0.12]"
+        >
+          <div className="flex items-center gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gold/15 text-gold">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3" strokeLinecap="round" />
+                <rect x="7" y="7" width="10" height="10" rx="1.5" />
+              </svg>
+            </span>
+            <div>
+              <div className="font-display text-lg uppercase text-white">Escanear y asignar</div>
+              <div className="mt-0.5 text-sm text-white/60">
+                Registro diario por QR: escanea, elige curso y alumno.
+              </div>
+            </div>
+          </div>
+          <span className="hidden shrink-0 font-mono text-[11px] uppercase tracking-[0.14em] text-gold transition group-hover:translate-x-0.5 sm:block">
+            Abrir →
+          </span>
+        </Link>
+
         {/* ── institución + resumen ── */}
         <div className="glass p-7">
           <div className="flex flex-wrap items-end justify-between gap-5">
