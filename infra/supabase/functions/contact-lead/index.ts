@@ -62,6 +62,16 @@ Deno.serve(async (req: Request) => {
   const sector = clean(body.sector, 60);
   const message = clean(body.message, 2000);
 
+  // atribución de campaña (whitelist de llaves, valores acotados)
+  let utm: Record<string, string> | null = null;
+  if (body.utm && typeof body.utm === "object") {
+    const allowed = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content", "referrer"];
+    const entries = allowed
+      .map((k) => [k, clean((body.utm as Record<string, unknown>)[k], 200)] as const)
+      .filter(([, v]) => v);
+    if (entries.length) utm = Object.fromEntries(entries);
+  }
+
   if (!name || !message || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
     return json({ message: "Revisa nombre, email y mensaje — son obligatorios." }, 400, origin);
   }
@@ -100,6 +110,7 @@ Deno.serve(async (req: Request) => {
     contact_name: name,
     contact_email: email,
     notes,
+    utm,
   });
 
   if (insertErr) {

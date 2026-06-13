@@ -176,6 +176,29 @@ const pageSchema: Record<string, unknown> = {
     </main>
     <slot name="footer" />
 
+    <!-- Atribución: UTMs/referrer de la primera visita → form de contacto -->
+    <script>
+      try {
+        const params = new URLSearchParams(location.search);
+        const keys = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+        if (!sessionStorage.getItem("bk_utm")) {
+          const utm: Record<string, string> = {};
+          keys.forEach((k) => {
+            const v = params.get(k);
+            if (v) utm[k] = v.slice(0, 200);
+          });
+          if (document.referrer && !document.referrer.includes(location.hostname)) {
+            utm.referrer = document.referrer.slice(0, 200);
+          }
+          if (Object.keys(utm).length > 0) {
+            sessionStorage.setItem("bk_utm", JSON.stringify(utm));
+          }
+        }
+      } catch {
+        /* atribución es best-effort */
+      }
+    </script>
+
     <!-- Scroll progress + Lenis -->
     <script>
       import Lenis from "lenis";

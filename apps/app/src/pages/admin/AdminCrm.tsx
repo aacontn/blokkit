@@ -36,6 +36,7 @@ interface DealRow {
   source: string;
   contact_name: string | null;
   contact_email: string | null;
+  utm: Record<string, string> | null;
   tenants: { name: string } | { name: string }[] | null;
 }
 
@@ -154,7 +155,7 @@ export default function AdminCrm({ session }: AdminCrmProps) {
       supabase
         .from("deals")
         .select(
-          "id, tenant_id, prospect_name, stage, amount, notes, created_at, source, contact_name, contact_email, tenants(name)"
+          "id, tenant_id, prospect_name, stage, amount, notes, created_at, source, contact_name, contact_email, utm, tenants(name)"
         )
         .order("created_at", { ascending: false }),
     ]);
@@ -371,6 +372,14 @@ export default function AdminCrm({ session }: AdminCrmProps) {
                       <span className="rounded-full border border-gold/40 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-gold">
                         Web
                       </span>
+                      {lead.utm?.utm_campaign && (
+                        <span
+                          className="rounded-full border border-white/15 px-2 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-white/60"
+                          title={`Fuente: ${lead.utm.utm_source ?? "—"} · Medio: ${lead.utm.utm_medium ?? "—"}`}
+                        >
+                          {lead.utm.utm_campaign}
+                        </span>
+                      )}
                       <span className="font-mono text-[10px] text-white/40">
                         {new Date(lead.created_at).toLocaleDateString("es-CL", {
                           day: "2-digit",

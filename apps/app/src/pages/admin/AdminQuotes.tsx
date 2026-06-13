@@ -16,6 +16,8 @@ interface QuoteItem {
   descripcion: string;
   cantidad: number;
   precio_unitario: number;
+  /** costo unitario del catálogo al momento de cotizar — interno, nunca va al documento */
+  costo_unitario?: number;
 }
 
 /** Fila editable del editor: los inputs numéricos se manejan como string. */
@@ -23,6 +25,7 @@ interface DraftItem {
   descripcion: string;
   cantidad: string;
   precio_unitario: string;
+  costo_unitario?: string;
 }
 
 /** Datos del cliente congelados en la cotización (client_snapshot jsonb). */
@@ -89,6 +92,7 @@ interface ProductRow {
   description: string | null;
   unit: string | null;
   unit_price: number | string;
+  unit_cost: number | string;
   footnote: string | null;
   sort: number | null;
   active: boolean;
@@ -541,6 +545,7 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
   // catálogo colapsable
   const [catalogOpen, setCatalogOpen] = useState(false);
   const [priceDrafts, setPriceDrafts] = useState<Record<string, string>>({});
+  const [costDrafts, setCostDrafts] = useState<Record<string, string>>({});
 
   const refresh = useCallback(async () => {
     setLoading(true);
@@ -559,7 +564,7 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
         .order("created_at", { ascending: false }),
       supabase
         .from("products")
-        .select("id, name, description, unit, unit_price, footnote, sort, active")
+        .select("id, name, description, unit, unit_price, unit_cost, footnote, sort, active")
         .order("sort"),
     ]);
     setQuotes((q.data as QuoteRow[]) ?? []);
@@ -616,6 +621,7 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
       descripcion: it.descripcion ?? "",
       cantidad: String(it.cantidad ?? 1),
       precio_unitario: String(it.precio_unitario ?? 0),
+      ...(it.costo_unitario != null ? { costo_unitario: String(it.costo_unitario) } : {}),
     }));
     setItems(loaded.length > 0 ? loaded : [emptyDraftItem()]);
     setDiscountType((quote.discount_type as DiscountType) ?? "none");
@@ -677,10 +683,12 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
   };
 
   const addProductItem = (product: ProductRow) => {
+    const cost = Math.round(Number(product.unit_cost) || 0);
     const row: DraftItem = {
       descripcion: product.name,
       cantidad: "1",
       precio_unitario: String(Math.round(Number(product.unit_price) || 0)),
+      ...(cost > 0 ? { costo_unitario: String(cost) } : {}),
     };
     setItems((prev) => {
       // si la única fila está vacía, la reemplaza
@@ -698,6 +706,16 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
   const neto = subtotal - discount;
   const iva = includeIva ? Math.round(neto * IVA_RATE) : 0;
   const total = neto + iva;
+
+  // margen estimado (interno): ingreso − costo de los ítems con costo conocido, neto de descuento
+  const totalCost = items.reduce((sum, it) => {
+    const cost = Number(it.costo_unitario);
+    const qty = Number(it.cantidad);
+    if (!Number.isFinite(cost) || cost <= 0 || !Number.isFinite(qty)) return sum;
+    return sum + Math.round(cost * qty);
+  }, 0);
+  const margin = totalCost > 0 ? neto - totalCost : null;
+  const marginPct = margin != null && neto > 0 ? Math.round((margin / neto) * 100) : null;
 
   const printableFromRow = (q: QuoteRow): PrintableQuote => ({
     quote_number: q.quote_number,
@@ -773,11 +791,15 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
     }
 
     const cleanItems: QuoteItem[] = items
-      .map((it) => ({
-        descripcion: it.descripcion.trim(),
-        cantidad: Number(it.cantidad),
-        precio_unitario: Number(it.precio_unitario),
-      }))
+      .map((it) => {
+        const cost = Number(it.costo_unitario);
+        return {
+          descripcion: it.descripcion.trim(),
+          cantidad: Number(it.cantidad),
+          precio_unitario: Number(it.precio_unitario),
+          ...(Number.isFinite(cost) && cost > 0 ? { costo_unitario: Math.round(cost) } : {}),
+        };
+      })
       .filter((it) => it.descripcion !== "");
 
     if (cleanItems.length === 0) {
@@ -920,6 +942,39 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
       setNotice({ kind: "error", text: friendlyError(error) });
     } else {
       setNotice({ kind: "ok", text: `Precio de "${product.name}" actualizado a ${clp.format(value)}.` });
+      await refresh();
+    }
+    clearDraft();
+  };
+
+  const commitCost = async (product: ProductRow) => {
+    const draft = costDrafts[product.id];
+    if (draft == null) return;
+    const clearDraft = () =>
+      setCostDrafts((prev) => {
+        const next = { ...prev };
+        delete next[product.id];
+        return next;
+      });
+
+    const value = Math.round(Number(draft));
+    if (!Number.isFinite(value) || value < 0) {
+      setNotice({ kind: "error", text: "El costo debe ser un número de 0 o más (CLP entero)." });
+      clearDraft();
+      return;
+    }
+    if (value === Math.round(Number(product.unit_cost) || 0)) {
+      clearDraft();
+      return;
+    }
+    const { error } = await supabase
+      .from("products")
+      .update({ unit_cost: value })
+      .eq("id", product.id);
+    if (error) {
+      setNotice({ kind: "error", text: friendlyError(error) });
+    } else {
+      setNotice({ kind: "ok", text: `Costo de "${product.name}" actualizado a ${clp.format(value)}.` });
       await refresh();
     }
     clearDraft();
@@ -1352,6 +1407,20 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
                     </span>
                     <span className="font-semibold">{clp.format(total)}</span>
                   </div>
+                  {margin != null && (
+                    <div className="mt-2 flex justify-between gap-8 border-t border-white/10 pt-2">
+                      <span
+                        className="font-mono text-[10px] uppercase tracking-[0.14em] text-white/40"
+                        title="Calculado con los costos del catálogo. No aparece en el documento ni en el correo."
+                      >
+                        Margen estimado (interno)
+                      </span>
+                      <span className={margin >= 0 ? "text-gold" : "text-coral"}>
+                        {clp.format(margin)}
+                        {marginPct != null ? ` · ${marginPct}%` : ""}
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -1438,12 +1507,16 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
                       <th className="pb-3 pr-4 font-medium">Producto</th>
                       <th className="pb-3 pr-4 font-medium">Unidad</th>
                       <th className="pb-3 pr-4 font-medium">Precio (CLP neto)</th>
+                      <th className="pb-3 pr-4 font-medium">Costo unitario</th>
+                      <th className="pb-3 pr-4 font-medium">Margen</th>
                       <th className="pb-3 font-medium">Estado</th>
                     </tr>
                   </thead>
                   <tbody>
                     {products.map((p) => {
                       const price = Math.round(Number(p.unit_price) || 0);
+                      const cost = Math.round(Number(p.unit_cost) || 0);
+                      const unitMargin = price > 0 ? price - cost : null;
                       return (
                         <tr key={p.id} className="border-b border-white/5">
                           <td className="py-3 pr-4">
@@ -1478,6 +1551,35 @@ export default function AdminQuotes(_props: AdminQuotesProps) {
                                 </span>
                               )}
                             </div>
+                          </td>
+                          <td className="py-3 pr-4">
+                            <input
+                              type="number"
+                              min={0}
+                              step={1}
+                              value={costDrafts[p.id] ?? String(cost)}
+                              onChange={(e) =>
+                                setCostDrafts((prev) => ({ ...prev, [p.id]: e.target.value }))
+                              }
+                              onBlur={() => commitCost(p)}
+                              onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                  e.preventDefault();
+                                  (e.target as HTMLInputElement).blur();
+                                }
+                              }}
+                              className="w-32 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm text-white focus:border-gold/60 focus:outline-none focus:ring-2 focus:ring-gold/40"
+                            />
+                          </td>
+                          <td className="py-3 pr-4">
+                            {unitMargin != null ? (
+                              <span className={unitMargin >= 0 ? "text-gold" : "text-coral"}>
+                                {clp.format(unitMargin)}
+                                {price > 0 ? ` · ${Math.round((unitMargin / price) * 100)}%` : ""}
+                              </span>
+                            ) : (
+                              <span className="text-white/30">—</span>
+                            )}
                           </td>
                           <td className="py-3">
                             <button

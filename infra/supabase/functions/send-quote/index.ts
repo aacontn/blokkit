@@ -1,11 +1,14 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
+import { PDFDocument, StandardFonts, rgb } from "npm:pdf-lib@1.17.1";
+import { encodeBase64 } from "jsr:@std/encoding@1/base64";
 
 /**
  * send-quote — envía una cotización por correo con el formato de marca.
  * Solo usuarios CRM (sys admin / ventas internas). Requiere RESEND_API_KEY.
  * Body: { quote_id, to }. Efecto: correo + quote.sent_at/sent_to + status
  * borrador→enviada + registro en email_log (kind='quote').
+ * v3: adjunta el PDF de la cotización (builder pdf-lib validado visualmente).
  * (Deployada vía MCP 2026-06-12, verify_jwt: true. Espejo de referencia.)
  */
 
@@ -41,6 +44,216 @@ const clp = (n: number) =>
 
 function esc(s: unknown): string {
   return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+}
+
+
+/* ── builder del PDF de cotización (validado visualmente) ── */
+const A4: [number, number] = [595.28, 841.89];
+const PM = 50;
+const PDF_CHARCOAL = rgb(0.12, 0.12, 0.12);
+const PDF_GRAY = rgb(0.42, 0.42, 0.44);
+const PDF_LIGHTGRAY = rgb(0.62, 0.62, 0.64);
+const PDF_CYAN = rgb(0.247, 0.659, 0.878);
+const PDF_LINE = rgb(0.88, 0.88, 0.87);
+
+function pdfSafe(s: unknown): string {
+  return String(s ?? "")
+    .replace(/\u2212/g, "-")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"')
+    .replace(/\u2026/g, "...")
+    .replace(/[^\x20-\x7E\u00A0-\u00FF\u2013\u2014\u2022]/g, "");
+}
+
+function pdfClp(n: number): string {
+  const v = Math.round(Number(n) || 0);
+  return "$" + v.toLocaleString("es-CL").replace(/,/g, ".");
+}
+
+interface QuotePdfData {
+  bk: string;
+  fecha: string;
+  validUntil: string | null;
+  snap: Record<string, string>;
+  items: QuoteItem[];
+  totals: { subtotal: number; discount: number; neto: number; iva: number; total: number };
+  conditions: string | null;
+}
+
+let cachedLogo: Uint8Array | null = null;
+async function fetchLogo(): Promise<Uint8Array | null> {
+  if (cachedLogo) return cachedLogo;
+  try {
+    const res = await fetch("https://blokkit.cl/images/Logo-Blokkit-white.png");
+    if (!res.ok) return null;
+    cachedLogo = new Uint8Array(await res.arrayBuffer());
+    return cachedLogo;
+  } catch {
+    return null;
+  }
+}
+
+async function buildQuotePdf(data: QuotePdfData, logoBytes: Uint8Array | null): Promise<Uint8Array> {
+  const pdf = await PDFDocument.create();
+  const helv = await pdf.embedFont(StandardFonts.Helvetica);
+  const bold = await pdf.embedFont(StandardFonts.HelveticaBold);
+  const logo = logoBytes ? await pdf.embedPng(logoBytes) : null;
+
+  let page = pdf.addPage(A4);
+  const W = A4[0] - PM * 2;
+  let y = A4[1] - PM;
+
+  const newPage = () => {
+    page = pdf.addPage(A4);
+    y = A4[1] - PM;
+  };
+  const ensure = (space: number) => {
+    if (y - space < PM + 24) newPage();
+  };
+  const wrap = (text: string, font: typeof helv, size: number, maxW: number): string[] => {
+    const words = pdfSafe(text).split(/\s+/).filter(Boolean);
+    const lines: string[] = [];
+    let line = "";
+    for (const w of words) {
+      const t = line ? line + " " + w : w;
+      if (font.widthOfTextAtSize(t, size) > maxW && line) {
+        lines.push(line);
+        line = w;
+      } else line = t;
+    }
+    if (line) lines.push(line);
+    return lines.length ? lines : [""];
+  };
+  const text = (s: string, x: number, size: number, font: typeof helv, color: ReturnType<typeof rgb>, opts: { alignRight?: boolean } = {}) => {
+    const str = pdfSafe(s);
+    let tx = x;
+    if (opts.alignRight) tx = x - font.widthOfTextAtSize(str, size);
+    page.drawText(str, { x: tx, y, size, font, color });
+  };
+
+  // encabezado: logo blanco sobre pastilla charcoal + título
+  const headH = 34;
+  if (logo) {
+    const lw = (logo.width / logo.height) * 22;
+    page.drawRectangle({ x: PM, y: y - headH + 4, width: lw + 24, height: headH, color: PDF_CHARCOAL });
+    page.drawImage(logo, { x: PM + 12, y: y - headH + 4 + (headH - 22) / 2, width: lw, height: 22 });
+  }
+  y -= 6;
+  text(`COTIZACIÓN ${data.bk}`, PM + W, 16, bold, PDF_CHARCOAL, { alignRight: true });
+  y -= 14;
+  text(data.fecha + (data.validUntil ? `  ·  Válida hasta ${data.validUntil}` : ""), PM + W, 8.5, helv, PDF_GRAY, { alignRight: true });
+  y -= headH - 14 + 14;
+
+  page.drawLine({ start: { x: PM, y }, end: { x: PM + W, y }, thickness: 1.2, color: PDF_CYAN });
+  y -= 22;
+
+  // datos del cliente
+  const snapPairs: [string, string][] = ([
+    ["Institución", data.snap.institucion],
+    ["RUT", data.snap.rut],
+    ["Contacto", data.snap.contacto],
+    ["Cargo", data.snap.cargo],
+    ["Email", data.snap.email],
+    ["Teléfono", data.snap.telefono],
+    ["Dirección", data.snap.direccion],
+    ["Comuna", data.snap.comuna],
+    ["Región", data.snap.region],
+  ] as [string, string][]).filter(([, v]) => v);
+
+  if (snapPairs.length) {
+    ensure(20 + Math.ceil(snapPairs.length / 2) * 14 + 16);
+    text("CLIENTE", PM, 8, bold, PDF_CYAN);
+    y -= 14;
+    const colW = W / 2;
+    const startY = y;
+    snapPairs.forEach(([k, v], i) => {
+      const col = i % 2;
+      const row = Math.floor(i / 2);
+      const px = PM + col * colW;
+      const py = startY - row * 14;
+      page.drawText(pdfSafe(k + ":"), { x: px, y: py, size: 8.5, font: bold, color: PDF_GRAY });
+      page.drawText(pdfSafe(String(v)).slice(0, 60), { x: px + 52, y: py, size: 8.5, font: helv, color: PDF_CHARCOAL });
+    });
+    y = startY - Math.ceil(snapPairs.length / 2) * 14 - 10;
+  }
+
+  // tabla de ítems
+  const cDesc = PM;
+  const cCant = PM + W * 0.62;
+  const cUnit = PM + W * 0.8;
+  const cSub = PM + W;
+
+  ensure(40);
+  page.drawRectangle({ x: PM - 6, y: y - 5, width: W + 12, height: 18, color: rgb(0.949, 0.949, 0.949) });
+  text("DETALLE", cDesc, 8, bold, PDF_GRAY);
+  text("CANT.", cCant, 8, bold, PDF_GRAY, { alignRight: true });
+  text("P. UNITARIO", cUnit, 8, bold, PDF_GRAY, { alignRight: true });
+  text("SUBTOTAL", cSub, 8, bold, PDF_GRAY, { alignRight: true });
+  y -= 20;
+
+  for (const it of data.items) {
+    const lines = wrap(it.descripcion, helv, 9.5, W * 0.55);
+    ensure(lines.length * 12 + 10);
+    const rowTop = y;
+    lines.forEach((ln, i) => {
+      page.drawText(pdfSafe(ln), { x: cDesc, y: rowTop - i * 12, size: 9.5, font: helv, color: PDF_CHARCOAL });
+    });
+    text(String(it.cantidad), cCant, 9.5, helv, PDF_CHARCOAL, { alignRight: true });
+    if (Number(it.precio_unitario) === 0) {
+      text("Incluido", cUnit, 9.5, helv, PDF_GRAY, { alignRight: true });
+      text("—", cSub, 9.5, helv, PDF_GRAY, { alignRight: true });
+    } else {
+      text(pdfClp(it.precio_unitario), cUnit, 9.5, helv, PDF_CHARCOAL, { alignRight: true });
+      text(pdfClp(it.precio_unitario * it.cantidad), cSub, 9.5, helv, PDF_CHARCOAL, { alignRight: true });
+    }
+    y = rowTop - (lines.length - 1) * 12 - 8;
+    page.drawLine({ start: { x: PM, y: y + 2 }, end: { x: PM + W, y: y + 2 }, thickness: 0.5, color: PDF_LINE });
+    y -= 10;
+  }
+
+  // totales
+  const totRows: [string, string, boolean][] = [];
+  if (data.totals.discount > 0) {
+    totRows.push(["Subtotal", pdfClp(data.totals.subtotal), false]);
+    totRows.push(["Descuento", "-" + pdfClp(data.totals.discount), false]);
+  }
+  totRows.push(["Neto", pdfClp(data.totals.neto), false]);
+  if (data.totals.iva > 0) totRows.push(["IVA (19%)", pdfClp(data.totals.iva), false]);
+  totRows.push(["TOTAL", pdfClp(data.totals.total), true]);
+
+  ensure(totRows.length * 16 + 14);
+  for (const [label, value, strong] of totRows) {
+    const f = strong ? bold : helv;
+    const size = strong ? 12 : 9.5;
+    text(label, cUnit, size, f, strong ? PDF_CHARCOAL : PDF_GRAY, { alignRight: true });
+    text(value, cSub, size, f, PDF_CHARCOAL, { alignRight: true });
+    y -= strong ? 18 : 15;
+  }
+  y -= 8;
+
+  // condiciones — split ANTES de pdfSafe (que borraría los \n)
+  if (data.conditions) {
+    ensure(30);
+    text("CONDICIONES", PM, 8, bold, PDF_CYAN);
+    y -= 13;
+    const rawLines = String(data.conditions).split("\n").map((l) => l.trim()).filter(Boolean);
+    for (const raw of rawLines) {
+      const lines = wrap(raw, helv, 8.5, W - 10);
+      for (const ln of lines) {
+        ensure(11);
+        page.drawText(pdfSafe(ln), { x: PM, y, size: 8.5, font: helv, color: PDF_GRAY });
+        y -= 11;
+      }
+      y -= 2;
+    }
+  }
+
+  // pie
+  const footer = "BloKKit · Ambientes libres de distracciones · blokkit.cl · hola@blokkit.cl";
+  const fw = helv.widthOfTextAtSize(footer, 7.5);
+  page.drawText(footer, { x: (A4[0] - fw) / 2, y: PM - 18, size: 7.5, font: helv, color: PDF_LIGHTGRAY });
+
+  return await pdf.save();
 }
 
 Deno.serve(async (req: Request) => {
@@ -152,6 +365,29 @@ Deno.serve(async (req: Request) => {
     <tr><td align=\"center\" style=\"padding:22px 12px 0;\"><p style=\"margin:0;font-family:'Courier New',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#9A9A98;\">BloKKit &middot; Ambientes libres de distracciones<br /><a href=\"https://blokkit.cl\" style=\"color:#3FA8E0;text-decoration:none;\">blokkit.cl</a></p></td></tr>
   </table></td></tr></table>`;
 
+  // PDF adjunto
+  let attachments: { filename: string; content: string }[] = [];
+  try {
+    const logoBytes = await fetchLogo();
+    const pdfBytes = await buildQuotePdf(
+      {
+        bk,
+        fecha,
+        validUntil: quote.valid_until
+          ? new Date(quote.valid_until + "T12:00:00").toLocaleDateString("es-CL")
+          : null,
+        snap,
+        items,
+        totals: { subtotal, discount, neto, iva, total },
+        conditions: quote.conditions ?? null,
+      },
+      logoBytes
+    );
+    attachments = [{ filename: `Cotizacion-${bk}-BloKKit.pdf`, content: encodeBase64(pdfBytes) }];
+  } catch (e) {
+    console.error("send-quote pdf error (se envía sin adjunto)", e);
+  }
+
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${resendKey}`, "Content-Type": "application/json" },
@@ -160,6 +396,7 @@ Deno.serve(async (req: Request) => {
       to: [to],
       reply_to: "hola@blokkit.cl",
       subject: `Cotización ${bk} — BloKKit`,
+      attachments,
       html,
       text: `Cotización ${bk} — BloKKit\n${clientName}\nNeto: ${clp(neto)}${quote.include_iva ? ` · IVA: ${clp(iva)}` : ""} · Total: ${clp(total)}\n\n${quote.conditions ?? ""}\n\nblokkit.cl · hola@blokkit.cl`,
     }),

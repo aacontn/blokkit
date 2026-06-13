@@ -463,7 +463,14 @@ const WHATSAPP = "https://wa.me/56996472784?text=Hola%2C%20estoy%20interesado%20
 
       try {
         const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
+        const payload: Record<string, unknown> = Object.fromEntries(formData.entries());
+        // atribución de campaña capturada al aterrizar en el sitio
+        try {
+          const utm = sessionStorage.getItem("bk_utm");
+          if (utm) payload.utm = JSON.parse(utm);
+        } catch {
+          /* sin atribución */
+        }
 
         // endpoint público (edge function con honeypot + validación);
         // el viejo /api/contact nunca existió — los leads se perdían

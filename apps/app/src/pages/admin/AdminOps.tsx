@@ -32,6 +32,24 @@ interface OrderItem {
   descripcion: string;
   cantidad: number;
   precio_unitario: number;
+  /** costo unitario congelado al cotizar — permite margen real por venta */
+  costo_unitario?: number;
+}
+
+/** margen de la orden cuando hay costos conocidos en los ítems (interno) */
+function orderMargin(order: { items: OrderItem[] | null }): number | null {
+  const items = order.items ?? [];
+  let revenue = 0;
+  let cost = 0;
+  let hasCost = false;
+  for (const it of items) {
+    revenue += Math.round((Number(it.precio_unitario) || 0) * (Number(it.cantidad) || 0));
+    if (it.costo_unitario != null && Number(it.costo_unitario) > 0) {
+      hasCost = true;
+      cost += Math.round(Number(it.costo_unitario) * (Number(it.cantidad) || 0));
+    }
+  }
+  return hasCost ? revenue - cost : null;
 }
 
 interface OrderRow {
@@ -927,6 +945,7 @@ export default function AdminOps({ session }: AdminOpsProps) {
                       <th className="pb-3 pr-4 font-medium">Fecha</th>
                       <th className="pb-3 pr-4 font-medium">Cliente</th>
                       <th className="pb-3 pr-4 font-medium">Total</th>
+                      <th className="pb-3 pr-4 font-medium">Margen</th>
                       <th className="pb-3 pr-4 font-medium">Estado</th>
                       <th className="pb-3 font-medium" />
                     </tr>
@@ -938,6 +957,20 @@ export default function AdminOps({ session }: AdminOpsProps) {
                         <td className="py-3 pr-4 text-white">{clientLabel(order)}</td>
                         <td className="py-3 pr-4 text-white/80">
                           {clp.format(Number(order.grand_total) || 0)}
+                        </td>
+                        <td className="py-3 pr-4">
+                          {(() => {
+                            const m = orderMargin(order);
+                            return m != null ? (
+                              <span className={m >= 0 ? "text-gold" : "text-coral"}>
+                                {clp.format(m)}
+                              </span>
+                            ) : (
+                              <span className="text-white/30" title="Sin costos registrados en los ítems">
+                                —
+                              </span>
+                            );
+                          })()}
                         </td>
                         <td className="py-3 pr-4">
                           <select
