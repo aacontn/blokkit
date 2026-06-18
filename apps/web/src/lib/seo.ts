@@ -26,19 +26,19 @@ export const SITE_TWITTER_HANDLE = import.meta.env.PUBLIC_TWITTER_HANDLE ?? "@bl
 const ROUTES: RouteSeoEntry[] = [
     {
         path: "/",
-        title: "BloKKit | Funda Bloqueadora de Señal para Teléfonos en Colegios y Empresas",
+        title: "Fundas Bloqueadoras de Señal para Celulares en Colegios | BloKKit",
         description:
-            "Sistema de fundas bloqueadoras de señal Faraday que crea zonas libres de distracciones sin confiscar teléfonos. Ideal para colegios, universidades y empresas en Chile y Latinoamérica.",
+            "Fundas bloqueadoras de señal para celulares en colegios y empresas: crea zonas libres de distracciones sin confiscar los teléfonos y cumple la Ley 21.801 en Chile.",
         keywords: [
-            "Funda Bloqueadora de señal para telefonos",
+            "fundas bloqueadoras de señal",
+            "funda bloqueadora de señal para celulares",
+            "fundas bloqueadoras de señal para colegios",
             "control de celulares en colegios",
-            "funda faraday celular",
-            "bloqueo de señal faraday",
-            "prohibición de celulares en aula",
-            "bloqueo de teléfonos en empresas",
+            "fundas para guardar celulares en clases",
+            "bloqueo de celulares en empresas",
         ],
         llmSummary:
-            "BloKKit ofrece un sistema operativo para restringir el uso de celulares en aulas y entornos críticos mediante funda Faraday, dock de apertura y plataforma de trazabilidad.",
+            "BloKKit ofrece un sistema para restringir el uso de celulares en aulas y entornos críticos mediante fundas bloqueadoras de señal, dock de apertura y plataforma de trazabilidad.",
         changefreq: "weekly",
         priority: 1.0,
     },
@@ -46,12 +46,12 @@ const ROUTES: RouteSeoEntry[] = [
         path: "/producto",
         title: "Producto | BloKKit — Funda Bloqueadora de Señal, Dock y Plataforma",
         description:
-            "Conoce el ecosistema BloKKit: Funda bloqueadora de señal Faraday, Dock de Desbloqueo y Plataforma Digital de trazabilidad.",
+            "Conoce el ecosistema BloKKit: funda bloqueadora de señal, Dock de Desbloqueo y Plataforma Digital de trazabilidad para el control de celulares en colegios y empresas.",
         keywords: [
-            "funda bloqueadora de señal para telefonos",
-            "funda faraday",
-            "dock de desbloqueo",
-            "plataforma de trazabilidad",
+            "funda bloqueadora de señal para celulares",
+            "fundas bloqueadoras de señal para colegios",
+            "dock de desbloqueo de celulares",
+            "plataforma de trazabilidad de celulares",
             "sistema de custodia de celulares",
         ],
         llmSummary:
@@ -118,7 +118,7 @@ const ROUTES: RouteSeoEntry[] = [
             "Noticias y entrevistas sobre BloKKit en medios nacionales e internacionales.",
         keywords: [
             "prensa blokkit",
-            "noticias inhibidores de señal",
+            "noticias bloqueo de celulares en colegios",
             "medios sobre control de celulares",
             "entrevistas blokkit",
             "casos reales en colegios",
