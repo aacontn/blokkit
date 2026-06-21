@@ -981,7 +981,7 @@ body {
 /* ── Exception for Header Button ── */
 .btn--header {
     background: var(--accent) !important;
-    color: #FFFFFF !important;
+    color: #1F1F1F !important; /* charcoal sobre cyan: contraste AA (era blanco, 1.75) */
     padding: 0 16px !important;            /* symmetric horizontal padding */
     height: 36px !important;                /* fixed height locks vertical centering */
     box-shadow: none !important;
@@ -991,7 +991,7 @@ body {
 }
 
 .btn--header .btn__icon {
-    color: #FFFFFF !important;
+    color: #1F1F1F !important;
     fill: currentColor !important;
     width: 14px !important;
     height: 14px !important;
