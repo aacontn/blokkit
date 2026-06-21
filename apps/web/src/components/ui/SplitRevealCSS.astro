@@ -1,0 +1,42 @@
+---
+/**
+ * Réplica EXACTA en CSS de TextSplitReveal (framer-motion), pero sin JS:
+ * cada palabra sube desde una máscara (y:110%→0%) + fade, 0.5s, ease [0.16,1,0.3,1],
+ * con stagger por palabra. El espacio entre palabras es un nbsp DENTRO de la palabra
+ * (mismo ancho que el original, no se colapsa, sin whitespace extra del template).
+ * Al ser CSS, anima desde el primer paint (no espera al JS) → no gatea el LCP.
+ */
+interface Props {
+  text: string;
+  delay?: number;
+  stagger?: number;
+  class?: string;
+}
+const { text, delay = 0, stagger = 0.04, class: className } = Astro.props;
+const words = text.split(" ");
+const NBSP = " ";
+---
+
+<span class:list={["scr", className]} aria-label={text}>{words.map((w, i) => (<span class="scr__mask"><span class="scr__word" style={`animation-delay:${(delay + i * stagger).toFixed(3)}s`} aria-hidden="true">{i < words.length - 1 ? w + NBSP : w}</span></span>))}</span>
+
+<style>
+  .scr__mask {
+    display: inline-block;
+    overflow: hidden;
+  }
+  .scr__word {
+    display: inline-block;
+    will-change: transform;
+    animation-name: scr-reveal;
+    animation-duration: 0.5s;
+    animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+    animation-fill-mode: both;
+  }
+  @keyframes scr-reveal {
+    from { transform: translateY(110%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scr__word { animation: none; }
+  }
+</style>

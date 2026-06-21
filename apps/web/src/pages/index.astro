@@ -4,6 +4,7 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import ScrollReveal from "../components/ui/ScrollReveal.tsx";
 import TextSplitReveal from "../components/ui/TextSplitReveal.tsx";
+import SplitRevealCSS from "../components/ui/SplitRevealCSS.astro";
 import StaggeredReveal from "../components/ui/StaggeredReveal.tsx";
 import AnimatedCounter from "../components/ui/AnimatedCounter.tsx";
 import MagneticButton from "../components/ui/MagneticButton.tsx";
@@ -32,39 +33,19 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
 
         <p class="hero__title" aria-hidden="true">
           <span class="hero__title-row">
-            <TextSplitReveal
-              client:load
-              text="Creamos"
-              as="span"
-              splitBy="word"
-              delay={0.15}
-            />
+            <SplitRevealCSS text="Creamos" delay={0.15} />
           </span>
           <span class="hero__title-row hero__title-row--accent">
-            <TextSplitReveal
-              client:load
-              text="ambientes libres"
-              as="span"
-              splitBy="word"
-              delay={0.3}
-            />
+            <SplitRevealCSS text="ambientes libres" delay={0.3} />
           </span>
           <span class="hero__title-row">
-            <TextSplitReveal
-              client:load
-              text="de distracciones."
-              as="span"
-              splitBy="word"
-              delay={0.45}
-            />
+            <SplitRevealCSS text="de distracciones." delay={0.45} />
           </span>
         </p>
 
-        <ScrollReveal client:load delay={0.55}>
-          <p class="hero__subtitle body-lg">
-            Sistema de custodia inteligente que crea zonas libres de celulares. Ideal para colegios, universidades y espacios que requieren concentración, privacidad o desconexión total.
-          </p>
-        </ScrollReveal>
+        <p class="hero__subtitle body-lg hero__subtitle--reveal">
+          Sistema de custodia inteligente que crea zonas libres de celulares. Ideal para colegios, universidades y espacios que requieren concentración, privacidad o desconexión total.
+        </p>
 
         <ScrollReveal client:visible delay={0.7} className="hero__ctas">
           <button
@@ -991,6 +972,19 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
     height: auto;
     aspect-ratio: 480 / 520; /* reserva espacio antes de cargar → evita CLS */
     object-fit: contain;
+  }
+
+  /* Reveal CSS del subtítulo (réplica de ScrollReveal "up": fade + slide 40px,
+     0.7s, ease [0.16,1,0.3,1], delay 0.55s) — sin JS → no gatea el LCP. */
+  .hero__subtitle--reveal {
+    animation: hero-sub-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+  }
+  @keyframes hero-sub-reveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero__subtitle--reveal { animation: none; }
   }
 
   @media (min-width: 1024px) {
