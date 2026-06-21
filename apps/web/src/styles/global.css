@@ -3,8 +3,8 @@
    Charcoal/cream alternating, blocky display, no serif
    ═══════════════════════════════════════════════════ */
 
-/* ── Google Fonts (Archivo Black is the heavy blocky display) ── */
-@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap");
+/* ── Google Fonts: se cargan async (no render-blocking) desde BaseLayout.astro ──
+   (antes había un @import aquí que serializaba la descarga y disparaba el FCP) */
 
 /* ── Body base — flat charcoal, no radial fluff ── */
 body {

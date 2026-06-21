@@ -43,6 +43,8 @@ const canonicalUrl = toAbsoluteUrl(canonicalPath);
 const ogImageUrl = toAbsoluteUrl(image);
 const gtmId = import.meta.env.PUBLIC_GTM_ID ?? "";
 const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION ?? "";
+const fontsHref =
+  "https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders+Display:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap";
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -123,9 +125,12 @@ const pageSchema: Record<string, unknown> = {
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
 
-    <!-- Fonts preload -->
+    <!-- Fonts: async, no render-blocking (display=swap muestra texto al instante) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preload" as="style" href={fontsHref} />
+    <link rel="stylesheet" href={fontsHref} media="print" onload="this.media='all'" />
+    <noscript><link rel="stylesheet" href={fontsHref} /></noscript>
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
