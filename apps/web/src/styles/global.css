@@ -3,8 +3,37 @@
    Charcoal/cream alternating, blocky display, no serif
    ═══════════════════════════════════════════════════ */
 
-/* ── Google Fonts: se cargan async (no render-blocking) desde BaseLayout.astro ──
-   (antes había un @import aquí que serializaba la descarga y disparaba el FCP) */
+/* ── Fuentes self-hospedadas (variables, 1 archivo por familia, latin).
+   Inline → @font-face activo antes del primer paint; con preload de las críticas
+   el texto se pinta directo en la fuente final → sin swap → sin CLS. ── */
+@font-face {
+    font-family: "Archivo Black";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("/fonts/archivo-black.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/fonts/inter.woff2") format("woff2");
+}
+@font-face {
+    font-family: "Big Shoulders Display";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/fonts/big-shoulders.woff2") format("woff2");
+}
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 100 800;
+    font-display: swap;
+    src: url("/fonts/jetbrains-mono.woff2") format("woff2");
+}
 
 /* ── Body base — flat charcoal, no radial fluff ── */
 body {
