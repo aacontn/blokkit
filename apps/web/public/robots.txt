@@ -1,4 +1,62 @@
+# BloKKit — acceso abierto a buscadores y a motores de respuesta basados en IA.
+# Content Signals (contentsignals.org): consentimos indexación de búsqueda,
+# uso como input de IA (RAG/grounding/citas) y entrenamiento de modelos.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+# --- Crawlers de IA explícitamente bienvenidos (citas + grounding + training) ---
+# OpenAI / ChatGPT
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# Anthropic / Claude
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# Google (Gemini / AI Overviews — distinto de Googlebot, que ya indexa)
+User-agent: Google-Extended
+Allow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Common Crawl (corpus base de la mayoría de los LLMs)
+User-agent: CCBot
+Allow: /
+
+# Apple Intelligence
+User-agent: Applebot-Extended
+Allow: /
+
+# Meta AI / Llama
+User-agent: meta-externalagent
+Allow: /
+
+# Otros
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: cohere-ai
 Allow: /
 
 Sitemap: https://blokkit.cl/sitemap-index.xml
