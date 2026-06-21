@@ -974,14 +974,16 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
     object-fit: contain;
   }
 
-  /* Reveal CSS del subtítulo (réplica de ScrollReveal "up": fade + slide 40px,
-     0.7s, ease [0.16,1,0.3,1], delay 0.55s) — sin JS → no gatea el LCP. */
+  /* Reveal CSS del subtítulo: SOLO slide-up, SIN fade de opacidad. El subtítulo es el
+     elemento LCP; con opacity:1 desde el primer frame el LCP se registra al instante
+     (el LCP lo gatea la opacidad, no el transform) → rendimiento verde. Mantiene el
+     movimiento; el título sigue con su reveal completo. Sin delay para no "sentarse". */
   .hero__subtitle--reveal {
-    animation: hero-sub-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
+    animation: hero-sub-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
   @keyframes hero-sub-reveal {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(40px); }
+    to { transform: translateY(0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__subtitle--reveal { animation: none; }
