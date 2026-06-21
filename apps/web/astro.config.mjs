@@ -7,6 +7,8 @@ import sitemap from "@astrojs/sitemap";
 export default defineConfig({
   site: "https://blokkit.cl",
   output: "static",
+  // Inlina el CSS en el HTML para evitar requests render-blocking (mejora FCP/LCP en primera carga).
+  build: { inlineStylesheets: "always" },
   integrations: [
     react(),
     sitemap({
