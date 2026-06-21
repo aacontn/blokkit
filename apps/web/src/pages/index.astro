@@ -47,7 +47,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
           Sistema de custodia inteligente que crea zonas libres de celulares. Ideal para colegios, universidades y espacios que requieren concentración, privacidad o desconexión total.
         </p>
 
-        <ScrollReveal client:visible delay={0.7} className="hero__ctas">
+        <div class="hero__ctas hero-reveal" style="animation-delay: 0.7s">
           <button
             type="button"
             class="btn btn--primary"
@@ -60,16 +60,14 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
           <a href="/producto" class="btn btn--ghost" data-how-modal-trigger>
             Ver cómo funciona
           </a>
-        </ScrollReveal>
+        </div>
 
-        <ScrollReveal client:visible delay={0.85}>
-          <ul class="hero__sectors tabular" aria-label="Sectores">
-            <li>Colegios</li>
-            <li>Universidades</li>
-            <li>Eventos</li>
-            <li>Organizaciones y empresas</li>
-          </ul>
-        </ScrollReveal>
+        <ul class="hero__sectors tabular hero-reveal" style="animation-delay: 0.85s" aria-label="Sectores">
+          <li>Colegios</li>
+          <li>Universidades</li>
+          <li>Eventos</li>
+          <li>Organizaciones y empresas</li>
+        </ul>
       </div>
 
       <!-- Right: Product Visual -->
@@ -591,7 +589,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
   />
 
   <!-- Modal "Cómo funciona" — se abre desde [data-how-modal-trigger] (CTA del hero) -->
-  <HowItWorksModal client:load />
+  <HowItWorksModal client:idle />
 
   <Footer slot="footer" />
 </BaseLayout>
@@ -987,6 +985,20 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__subtitle--reveal { animation: none; }
+  }
+
+  /* Reveal CSS de CTAs y sectores (réplica de ScrollReveal "up"). Están BAJO el
+     elemento LCP, así que sí pueden tener fade. Reemplazan islas de React para que
+     el hero sea 100% estático → framer-motion no bloquea el pintado del subtítulo. */
+  .hero-reveal {
+    animation: hero-reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes hero-reveal-up {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-reveal { animation: none; }
   }
 
   @media (min-width: 1024px) {
