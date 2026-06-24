@@ -472,9 +472,9 @@ const WHATSAPP = "https://wa.me/56996472784?text=Hola%2C%20estoy%20interesado%20
           /* sin atribución */
         }
 
-        // endpoint público (edge function con honeypot + validación);
-        // el viejo /api/contact nunca existió — los leads se perdían
-        const response = await fetch("https://elzneskmoftedmyfhkgi.supabase.co/functions/v1/contact-lead", {
+        // Pages Function de mismo origen (honeypot + validación + Mailrelay).
+        // Reemplaza el endpoint Supabase que quedó muerto (NXDOMAIN).
+        const response = await fetch("/api/contact", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify(payload),
