@@ -1,25 +1,23 @@
 /**
  * /api/contact — Cloudflare Pages Function del formulario de contacto de blokkit.cl.
  *
- * Reemplaza el endpoint Supabase muerto (elzneskmoftedmyfhkgi.supabase.co, NXDOMAIN):
- * el form ahora postea aquí, mismo origen, sin CORS. Defensas propias: honeypot,
- * validación estricta y límites de largo. Notifica el lead vía Mailrelay (transaccional)
- * a CONTACT_FORM_TO_EMAIL, con Reply-To del interesado.
+ * Vive en la RAÍZ del repo (el proyecto Pages tiene root_dir=""); si se mueve a
+ * apps/web/functions/ Cloudflare no la encuentra y POST devuelve 405.
  *
- * Variables (configurar en Cloudflare Pages → Settings → Environment variables,
- * Production y Preview; los valores viven en apps/web/.env solo para dev local):
- *   MAILRELAY_API_BASE_URL  (default https://blokkit.ipzmarketing.com/api/v1)
- *   MAILRELAY_API_TOKEN     (secreto, obligatorio)
- *   MAILRELAY_FROM_EMAIL    (obligatorio, dominio verificado en Mailrelay)
- *   MAILRELAY_FROM_NAME     (default "BloKKit Web")
- *   CONTACT_FORM_TO_EMAIL   (default hola@blokkit.cl)
+ * Reemplaza el endpoint Supabase muerto. El form postea aquí (mismo origen, sin CORS).
+ * Defensas: honeypot, validación estricta y límites de largo. Notifica el lead vía
+ * Resend a CONTACT_FORM_TO_EMAIL, con reply_to del interesado.
+ *
+ * Variables (Cloudflare Pages → Settings → Environment variables, Production y Preview;
+ * en dev local viven en apps/web/.env):
+ *   RESEND_API_KEY         (secreto, obligatorio)
+ *   CONTACT_FORM_FROM      (remitente; default "BloKKit Web <contacto@blokkit.cl>", dominio verificado en Resend)
+ *   CONTACT_FORM_TO_EMAIL  (destino; default hola@blokkit.cl)
  */
 
 interface Env {
-  MAILRELAY_API_BASE_URL?: string;
-  MAILRELAY_API_TOKEN?: string;
-  MAILRELAY_FROM_EMAIL?: string;
-  MAILRELAY_FROM_NAME?: string;
+  RESEND_API_KEY?: string;
+  CONTACT_FORM_FROM?: string;
   CONTACT_FORM_TO_EMAIL?: string;
 }
 
@@ -97,14 +95,12 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     return jsonResponse(400, { message: "El email no es válido." });
   }
 
-  const apiBaseUrl = (env.MAILRELAY_API_BASE_URL ?? "https://blokkit.ipzmarketing.com/api/v1").replace(/\/$/, "");
-  const apiToken = env.MAILRELAY_API_TOKEN;
-  const fromEmail = env.MAILRELAY_FROM_EMAIL;
-  const fromName = env.MAILRELAY_FROM_NAME ?? "BloKKit Web";
+  const apiKey = env.RESEND_API_KEY;
+  const from = env.CONTACT_FORM_FROM ?? "BloKKit Web <contacto@blokkit.cl>";
   const destination = env.CONTACT_FORM_TO_EMAIL ?? "hola@blokkit.cl";
 
-  if (!apiToken || !fromEmail) {
-    console.error("contact: faltan MAILRELAY_API_TOKEN / MAILRELAY_FROM_EMAIL en el entorno de Pages");
+  if (!apiKey) {
+    console.error("contact: falta RESEND_API_KEY en el entorno de Pages");
     return jsonResponse(500, { message: "No pudimos enviar la solicitud. Escríbenos a hola@blokkit.cl" });
   }
 
@@ -113,7 +109,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     ? `<p><strong>Atribución:</strong><br/>${Object.entries(utm).map(([k, v]) => `${escapeHtml(k)}: ${escapeHtml(v)}`).join("<br/>")}</p>`
     : "";
 
-  const textPart = [
+  const text = [
     `Nombre: ${name}`,
     `Cargo: ${role || "-"}`,
     `Email: ${email}`,
@@ -124,7 +120,7 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     message,
   ].join("\n") + utmText;
 
-  const htmlPart = `
+  const html = `
     <h2>Nuevo contacto desde blokkit.cl</h2>
     <p><strong>Nombre:</strong> ${escapeHtml(name)}</p>
     <p><strong>Cargo:</strong> ${escapeHtml(role || "-")}</p>
@@ -135,32 +131,29 @@ export const onRequestPost = async ({ request, env }: { request: Request; env: E
     ${utmHtml}
   `;
 
-  const mailRelayPayload = {
-    from: { email: fromEmail, name: fromName },
-    to: [{ email: destination }],
-    subject: `Nuevo contacto web BloKKit - ${name}`,
-    html_part: htmlPart,
-    text_part: textPart,
-    headers: { "Reply-To": email },
-    smtp_tags: ["web-contacto"],
-  };
-
   try {
-    const response = await fetch(`${apiBaseUrl}/send_emails`, {
+    const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: { "content-type": "application/json", "x-auth-token": apiToken },
-      body: JSON.stringify(mailRelayPayload),
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        from,
+        to: [destination],
+        reply_to: email,
+        subject: `Nuevo contacto web BloKKit - ${name}`,
+        html,
+        text,
+      }),
     });
 
     if (!response.ok) {
       const details = await response.text().catch(() => "");
-      console.error("Mailrelay error:", response.status, details);
+      console.error("Resend error:", response.status, details);
       return jsonResponse(502, { message: "No pudimos enviar la solicitud. Intenta de nuevo." });
     }
 
     return jsonResponse(200, { ok: true });
   } catch (error) {
-    console.error("Mailrelay request failed:", error);
+    console.error("Resend request failed:", error);
     return jsonResponse(502, { message: "No pudimos enviar la solicitud. Intenta de nuevo." });
   }
 };
