@@ -449,8 +449,13 @@ body.locked .app-shell, body.locked .sidebar-backdrop { display:none !important;
 #pinGate button:disabled { opacity:.5; cursor:default; }
 #pinGate .pin-err { min-height:18px; margin-top:12px; font-size:12px; color:#f99; letter-spacing:.03em; }
 @media print { #pinGate { display:none !important; } body.locked .app-shell { display:none !important; } }
+/* Safari no soporta @page{size;margin:0}: los márgenes del diálogo reducen el área
+   imprimible y la lámina full-bleed de 297mm desborda a una 2ª página. Se escala
+   solo en Safari para que quepa en A4 o Carta con cualquier margen razonable. */
+@media print { html.ua-safari .page { zoom: 0.85; } }
 </style>
 <script>
+if (/safari/i.test(navigator.userAgent) && !/chrome|crios|chromium|android|edg|fxios|opr/i.test(navigator.userAgent)) document.documentElement.classList.add("ua-safari");
 try { if (sessionStorage.getItem("blokkit_cotz_unlock") !== "1") document.body.classList.add("locked"); }
 catch (e) { document.body.classList.add("locked"); }
 </script>
