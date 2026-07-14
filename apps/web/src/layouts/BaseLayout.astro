@@ -8,6 +8,7 @@ import {
   SITE_NAME,
   SITE_TWITTER_HANDLE,
   SITE_URL,
+  SOCIAL_PROFILES,
   getRouteSeoByPath,
   toAbsoluteUrl,
   type PageType,
@@ -57,6 +58,7 @@ const orgSchema = {
   name: SITE_NAME,
   url: SITE_URL,
   logo: { "@type": "ImageObject", url: toAbsoluteUrl(ORG_LOGO) },
+  sameAs: Object.values(SOCIAL_PROFILES),
   contactPoint: {
     "@type": "ContactPoint",
     email: "hola@blokkit.cl",

@@ -26,6 +26,13 @@ export const DEFAULT_OG_IMAGE_ALT = "Fundas bloqueadoras de señal BloKKit para 
 // logo se vea sobre fondo blanco (la variante blanca del sitio es invisible ahí).
 export const ORG_LOGO = "/images/logo-blokkit-azul.png";
 export const SITE_TWITTER_HANDLE = import.meta.env.PUBLIC_TWITTER_HANDLE ?? "@blokkit_cl";
+// Perfiles verificados (jul 2026) — alimentan sameAs del schema Organization
+// y los íconos del footer. Aunque estén inactivos, conectan la entidad ante Google.
+export const SOCIAL_PROFILES = {
+    instagram: "https://www.instagram.com/blokkit_cl/",
+    linkedin: "https://www.linkedin.com/company/blokkit",
+    x: "https://x.com/blokkit_cl",
+};
 
 const ROUTES: RouteSeoEntry[] = [
     {
