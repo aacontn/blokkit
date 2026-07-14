@@ -1,6 +1,7 @@
 ---
 import {
   DEFAULT_OG_IMAGE,
+  DEFAULT_OG_IMAGE_ALT,
   ORG_LOGO,
   SITE_LANGUAGE,
   SITE_LOCALE,
@@ -32,9 +33,9 @@ const title = Astro.props.title ?? routeSeo?.title ?? SITE_NAME;
 const description = Astro.props.description ?? routeSeo?.description ?? "";
 const canonicalPath = Astro.props.canonicalPath ?? currentPath;
 const image = Astro.props.image ?? routeSeo?.image ?? DEFAULT_OG_IMAGE;
+const imageAlt = routeSeo?.imageAlt ?? DEFAULT_OG_IMAGE_ALT;
 const pageType = Astro.props.type ?? routeSeo?.type ?? "website";
 const noindex = Astro.props.noindex ?? routeSeo?.noindex ?? false;
-const keywords = Astro.props.keywords ?? routeSeo?.keywords ?? [];
 const llmSummary = Astro.props.llmSummary ?? routeSeo?.llmSummary ?? "";
 const publishedTime = Astro.props.publishedTime ?? routeSeo?.publishedTime;
 const modifiedTime = Astro.props.modifiedTime ?? routeSeo?.modifiedTime;
@@ -44,12 +45,18 @@ const ogImageUrl = toAbsoluteUrl(image);
 const gtmId = import.meta.env.PUBLIC_GTM_ID ?? "";
 const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION ?? "";
 
+// Grafo con @id estables: Organization y WebSite son las mismas entidades en
+// las 10 páginas; Article/WebPage las referencian en vez de duplicarlas.
+const ORG_ID = `${SITE_URL}/#organization`;
+const WEBSITE_ID = `${SITE_URL}/#website`;
+
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
+  "@id": ORG_ID,
   name: SITE_NAME,
   url: SITE_URL,
-  logo: toAbsoluteUrl(ORG_LOGO),
+  logo: { "@type": "ImageObject", url: toAbsoluteUrl(ORG_LOGO) },
   contactPoint: {
     "@type": "ContactPoint",
     email: "hola@blokkit.cl",
@@ -59,6 +66,19 @@ const orgSchema = {
   },
 };
 
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": WEBSITE_ID,
+  name: SITE_NAME,
+  url: SITE_URL,
+  inLanguage: SITE_LANGUAGE,
+  publisher: { "@id": ORG_ID },
+};
+
+// El título sin la marca ("Keyword | BloKKit" → "Keyword") para headline/breadcrumb
+const pageLabel = title.split("|")[0].trim();
+
 const pageSchema: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": pageType === "article" ? "Article" : "WebPage",
@@ -66,13 +86,30 @@ const pageSchema: Record<string, unknown> = {
   description,
   url: canonicalUrl,
   inLanguage: SITE_LANGUAGE,
-  isPartOf: { "@type": "WebSite", name: SITE_NAME, url: SITE_URL },
+  isPartOf: { "@id": WEBSITE_ID },
   ...(publishedTime && { datePublished: publishedTime }),
   ...(modifiedTime && { dateModified: modifiedTime }),
   ...(pageType === "article" && {
-    publisher: { "@type": "Organization", name: SITE_NAME, logo: { "@type": "ImageObject", url: toAbsoluteUrl(ORG_LOGO) } },
+    headline: pageLabel,
+    image: ogImageUrl,
+    mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
+    author: { "@id": ORG_ID },
+    publisher: { "@id": ORG_ID },
   }),
 };
+
+// BreadcrumbList (Inicio → página) en todas las páginas internas
+const isHome = canonicalUrl === `${SITE_URL}/`;
+const breadcrumbSchema = isHome
+  ? null
+  : {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        { "@type": "ListItem", position: 1, name: "Inicio", item: `${SITE_URL}/` },
+        { "@type": "ListItem", position: 2, name: pageLabel, item: canonicalUrl },
+      ],
+    };
 ---
 
 <!doctype html>
@@ -84,12 +121,11 @@ const pageSchema: Record<string, unknown> = {
     <!-- SEO -->
     <title>{title}</title>
     <meta name="description" content={description} />
-    {keywords.length > 0 && <meta name="keywords" content={keywords.join(", ")} />}
-    <link rel="canonical" href={canonicalUrl} />
+    {!noindex && <link rel="canonical" href={canonicalUrl} />}
     {noindex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="author" content={SITE_NAME} />
-    <link rel="alternate" hreflang="es-CL" href={canonicalUrl} />
-    <link rel="alternate" hreflang="x-default" href={canonicalUrl} />
+    {!noindex && <link rel="alternate" hreflang="es-CL" href={canonicalUrl} />}
+    {!noindex && <link rel="alternate" hreflang="x-default" href={canonicalUrl} />}
 
     <!-- LLM/GEO -->
     {llmSummary && <meta name="llm-summary" content={llmSummary} />}
@@ -106,8 +142,9 @@ const pageSchema: Record<string, unknown> = {
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:locale" content={SITE_LOCALE} />
     <meta property="og:image" content={ogImageUrl} />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:alt" content={imageAlt} />
     {publishedTime && <meta property="article:published_time" content={publishedTime} />}
     {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
 
@@ -117,6 +154,7 @@ const pageSchema: Record<string, unknown> = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -127,10 +165,13 @@ const pageSchema: Record<string, unknown> = {
          @font-face vive inline en global.css → fuentes listas antes del paint (sin swap/CLS). -->
     <link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-black.woff2" crossorigin />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/inter.woff2" crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/jetbrains-mono.woff2" crossorigin />
 
     <!-- Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(pageSchema)} />
+    {breadcrumbSchema && <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />}
 
     <!-- Google Tag Manager -->
     {gtmId && (

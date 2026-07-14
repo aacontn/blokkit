@@ -110,7 +110,6 @@
 
   /* ── Typography — blocky structural, no condensed serif ── */
   --font-display: "Archivo Black", "Druk Wide", "Impact", system-ui, sans-serif;
-  --font-display-alt: "Big Shoulders Display", "Anton", "Impact", sans-serif;
   --font-heading: "Archivo Black", "Druk Wide", "Impact", system-ui, sans-serif;
   --font-body: "Inter", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", "SF Mono", "Menlo", monospace;

@@ -67,7 +67,7 @@ const noticias = [
     title: "No TikTok, no Instagram: Chilean school blocks phones as students rediscover real-world connections",
     excerpt: "Dozens of teens are rediscovering how to reconnect in the real world after a school in Santiago implemented a pioneering program that blocks cell phone signals.",
     url: "https://koreajoongangdaily.joins.com/news/2025-09-12/world/world/No-TikTok-no-Instagram-Chilean-school-blocks-phones-as-students-rediscover-realworld-connections/2397713",
-    image: "/images/press/korea-joongangdaily.jpg",
+    image: "/images/press/korea-joongangdaily.webp",
     international: true,
   },
   {
@@ -149,7 +149,7 @@ const entrevistas = [
     source: "CHV Noticias",
     date: "ago 2025",
     sortDate: "2025-08-02",
-    title: "Lo Barnechea implementará inhibidores de señal de teléfonos en colegios",
+    title: "Lo Barnechea implementará inhibidores de señal de teléfonos en colegios — reportaje CHV",
     excerpt: "Desde el segundo semestre, algunos estudiantes contarán con inhibidores de señales para los teléfonos celulares.",
     youtubeId: "XM_TvEgUb3M",
   },
@@ -248,7 +248,7 @@ const cobertura = [...noticias, ...entrevistas].sort(
             {item.type === "noticia" ? (
               <a href={item.url} target="_blank" rel="noopener" class={`prensa-card ${item.featured ? "prensa-card--featured" : ""}`}>
                 <div class="prensa-card__image">
-                  <img src={item.image} alt={item.title} loading="lazy" />
+                  <img src={item.image} alt={item.title} width="640" height="360" loading="lazy" />
                   {item.international && <span class="prensa-card__badge">Internacional</span>}
                 </div>
                 <div class="prensa-card__body">
@@ -273,7 +273,7 @@ const cobertura = [...noticias, ...entrevistas].sort(
                 data-modal-date={item.date}
               >
                 <div class="prensa-card__image prensa-card__image--video">
-                  <img src={`https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`} alt={item.title} loading="lazy" />
+                  <img src={`https://img.youtube.com/vi/${item.youtubeId}/hqdefault.jpg`} alt={item.title} width="480" height="360" loading="lazy" />
                   <div class="prensa-card__play" aria-hidden="true">
                     <svg width="46" height="46" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                   </div>

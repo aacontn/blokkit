@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+/* Con este archivo Astro emite dist/404.html y Cloudflare Pages responde
+   404 real en rutas inexistentes, en vez del fallback SPA que servía la
+   home con status 200 (soft-404 para Google). */
+---
+
+<BaseLayout
+  title="Página no encontrada | BloKKit"
+  description="La página que buscas no existe o cambió de dirección."
+  noindex={true}
+>
+  <Header slot="header" />
+
+  <section class="nf section--dark hero-mesh-bg">
+    <div class="container nf__inner">
+      <span class="nf__code" aria-hidden="true">404</span>
+      <h1 class="nf__title">Página no encontrada</h1>
+      <p class="nf__sub body-lg">
+        La página que buscas no existe o cambió de dirección. Estos accesos te
+        devuelven al camino:
+      </p>
+      <nav class="nf__links" aria-label="Enlaces sugeridos">
+        <a href="/" class="btn btn--primary">Ir al inicio</a>
+        <a href="/producto/" class="btn btn--ghost">Ver fundas bloqueadoras de señal</a>
+        <a href="/ley-celulares-2026/" class="btn btn--ghost">Ley 21.801 — Celulares</a>
+        <a href="/contacto/" class="btn btn--ghost">Contacto</a>
+      </nav>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .nf {
+    display: flex;
+    align-items: center;
+    min-height: 78vh;
+    padding-block: var(--space-20);
+  }
+
+  .nf__inner {
+    text-align: center;
+  }
+
+  .nf__code {
+    display: block;
+    font-family: var(--font-heading);
+    font-size: clamp(5rem, 3rem + 12vw, 11rem);
+    line-height: 0.9;
+    color: transparent;
+    -webkit-text-stroke: 2px rgba(242, 242, 242, 0.35);
+    user-select: none;
+  }
+
+  .nf__title {
+    margin-top: var(--space-6);
+    font-family: var(--font-heading);
+    font-size: clamp(1.6rem, 1.2rem + 2vw, 2.6rem);
+    text-transform: uppercase;
+    color: var(--text-primary);
+  }
+
+  .nf__sub {
+    max-width: 46ch;
+    margin: var(--space-4) auto 0;
+    color: var(--text-secondary);
+  }
+
+  .nf__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-8);
+  }
+</style>

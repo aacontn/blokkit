@@ -247,7 +247,7 @@ export function FundaScene({ progress }: { progress: MotionValue<number> }) {
                 {/* official BloKKit logo, screen-printed vertically on the
                     lower half of the body */}
                 <image
-                    href="/images/Logo-Blokkit-white.png"
+                    href="/images/Logo-Blokkit-white.webp"
                     x="170" y="443" width="180" height="54"
                     transform={`translate(5 -10) rotate(-90 260 470)`}
                     opacity="0.95"
@@ -328,14 +328,17 @@ export function Hud({ phase }: { phase: number }) {
     );
 }
 
-function SectionHead() {
+// asHeading=false en la variante mobile: desktop y mobile coexisten en el DOM
+// (se alternan por CSS) y dejarían dos <h2> idénticos en la página.
+function SectionHead({ asHeading = true }: { asHeading?: boolean }) {
+    const Heading = asHeading ? "h2" : "p";
     return (
         <header className="hiw-head">
             <span className="hiw-label">· Operación simple</span>
-            <h2 className="hiw-heading">
+            <Heading className="hiw-heading">
                 Cómo funciona
                 <em>en 5 segundos</em>
-            </h2>
+            </Heading>
             <p className="hiw-lead">
                 Un flujo único para cada organización: rápido, visible y fácil de
                 supervisar de principio a fin.
@@ -451,7 +454,7 @@ export default function HowItWorksScroll() {
         <div className="hiw">
             <DesktopStage />
             <div className="hiw-mobile">
-                <SectionHead />
+                <SectionHead asHeading={false} />
                 {STEPS.map((_, i) => (
                     <MobileStep key={i} index={i} />
                 ))}

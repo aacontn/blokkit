@@ -10,6 +10,7 @@ export interface RouteSeoEntry {
     priority: number;
     type?: PageType;
     image?: string;
+    imageAlt?: string;
     noindex?: boolean;
     publishedTime?: string;
     modifiedTime?: string;
@@ -20,15 +21,18 @@ export const SITE_URL = (import.meta.env.PUBLIC_SITE_URL ?? "https://blokkit.cl"
 export const SITE_LOCALE = "es_CL";
 export const SITE_LANGUAGE = "es-CL";
 export const DEFAULT_OG_IMAGE = "/images/blokkit-fundas.webp";
-export const ORG_LOGO = "/images/Logo-Blokkit-white.png";
+export const DEFAULT_OG_IMAGE_ALT = "Fundas bloqueadoras de señal BloKKit para celulares";
+// Versión azul sobre lienzo blanco 512×512: la directriz de Google exige que el
+// logo se vea sobre fondo blanco (la variante blanca del sitio es invisible ahí).
+export const ORG_LOGO = "/images/logo-blokkit-azul.png";
 export const SITE_TWITTER_HANDLE = import.meta.env.PUBLIC_TWITTER_HANDLE ?? "@blokkit_cl";
 
 const ROUTES: RouteSeoEntry[] = [
     {
         path: "/",
-        title: "Fundas Bloqueadoras de Señal para Celulares en Colegios | BloKKit",
+        title: "Fundas Bloqueadoras de Señal para Celulares | BloKKit",
         description:
-            "Fundas bloqueadoras de señal para celulares en colegios y empresas: crea zonas libres de distracciones sin confiscar los teléfonos y cumple la Ley 21.801 en Chile.",
+            "Fundas bloqueadoras de señal para celulares en colegios y empresas: zonas libres de distracciones sin confiscar teléfonos, cumpliendo la Ley 21.801 en Chile.",
         keywords: [
             "fundas bloqueadoras de señal",
             "funda bloqueadora de señal para celulares",
@@ -44,9 +48,9 @@ const ROUTES: RouteSeoEntry[] = [
     },
     {
         path: "/producto",
-        title: "Producto | BloKKit — Funda Bloqueadora de Señal, Dock y Plataforma",
+        title: "Funda Bloqueadora de Señal, Dock y Plataforma | BloKKit",
         description:
-            "Conoce el ecosistema BloKKit: funda bloqueadora de señal, Dock de Desbloqueo y Plataforma Digital de trazabilidad para el control de celulares en colegios y empresas.",
+            "Conoce el sistema BloKKit: funda bloqueadora de señal, dock de desbloqueo y plataforma de trazabilidad para el control de celulares en colegios y empresas.",
         keywords: [
             "funda bloqueadora de señal para celulares",
             "fundas bloqueadoras de señal para colegios",
@@ -59,12 +63,13 @@ const ROUTES: RouteSeoEntry[] = [
         changefreq: "weekly",
         priority: 0.9,
         image: "/images/dock-standard.webp",
+        imageAlt: "Dock de desbloqueo BloKKit para fundas bloqueadoras de señal",
     },
     {
         path: "/beneficios",
-        title: "Beneficios | BloKKit — Ventajas por Sector",
+        title: "Beneficios del Bloqueo de Celulares por Sector | BloKKit",
         description:
-            "Descubre los beneficios de BloKKit para colegios, universidades, empresas, gobierno, policías, justicia y eventos.",
+            "Qué gana cada sector con ambientes sin celulares: más foco y menos suspensiones en colegios, reuniones efectivas en empresas, custodia trazable en gobierno.",
         keywords: [
             "beneficios control de celulares",
             "mejorar foco en clases",
@@ -79,9 +84,9 @@ const ROUTES: RouteSeoEntry[] = [
     },
     {
         path: "/soluciones",
-        title: "Soluciones | BloKKit — Por Vertical y Contexto",
+        title: "Control de Celulares en Colegios y Empresas | BloKKit",
         description:
-            "Soluciones operativas BloKKit para educación, empresas, gobierno, policías, justicia y eventos.",
+            "Cómo se implementa el control de celulares con fundas bloqueadoras: protocolo de ingreso, bloqueo verificable, aperturas autorizadas y registro trazable.",
         keywords: [
             "soluciones de control de celulares",
             "implementación por contexto",
@@ -96,9 +101,9 @@ const ROUTES: RouteSeoEntry[] = [
     },
     {
         path: "/evidencia",
-        title: "Evidencia | BloKKit — Datos e Impacto Internacional",
+        title: "Celulares en Colegios: Evidencia y Resultados | BloKKit",
         description:
-            "Evidencia internacional y contexto Chile para decisiones de implementación BloKKit con medición real de impacto.",
+            "La evidencia internacional sobre celulares en colegios aplicada a Chile: estudios, cifras con fuente y resultados reales de ambientes escolares sin teléfonos.",
         keywords: [
             "evidencia uso de celulares en colegios",
             "estudios foco académico",
@@ -115,7 +120,7 @@ const ROUTES: RouteSeoEntry[] = [
         path: "/prensa",
         title: "Prensa | BloKKit — Cobertura en Medios",
         description:
-            "Noticias y entrevistas sobre BloKKit en medios nacionales e internacionales.",
+            "BloKKit en los medios: Emol, La Tercera, CHV, 24 Horas y prensa internacional cubren el piloto de fundas bloqueadoras de señal en colegios de Lo Barnechea.",
         keywords: [
             "prensa blokkit",
             "noticias bloqueo de celulares en colegios",
@@ -130,7 +135,7 @@ const ROUTES: RouteSeoEntry[] = [
     },
     {
         path: "/contacto",
-        title: "Contacto BloKKit | Agendar Reunión",
+        title: "Contacto | BloKKit — Agendar Reunión y Cotización",
         description:
             "Contacta a BloKKit para implementar control de celulares en colegios, universidades, empresas, gobierno y eventos.",
         keywords: [
@@ -163,7 +168,9 @@ const ROUTES: RouteSeoEntry[] = [
         changefreq: "weekly",
         priority: 0.9,
         type: "article",
-        publishedTime: "2026-01-01T00:00:00-03:00",
+        // La ley se publicó el 11-02-2026; el dossier salió con el sitio (13-02-2026).
+        // Nunca antes del hecho que documenta.
+        publishedTime: "2026-02-13T09:00:00-03:00",
         modifiedTime: "2026-06-11T12:00:00-04:00",
     },
     {

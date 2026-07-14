@@ -225,7 +225,7 @@ export default function HowItWorksModal() {
                                         </svg>
                                         Ver de nuevo
                                     </button>
-                                    <a href="/producto" className="hiw-modal-link">
+                                    <a href="/producto/" className="hiw-modal-link">
                                         Ver el producto en detalle →
                                     </a>
                                 </footer>

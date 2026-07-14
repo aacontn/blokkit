@@ -6,6 +6,7 @@ import ScrollReveal from "../components/ui/ScrollReveal.tsx";
 import FinalCta from "../components/FinalCta.astro";
 import PageHero from "../components/PageHero.astro";
 import ArchitectureFlow from "../components/ArchitectureFlow.astro";
+import { toAbsoluteUrl } from "../lib/seo";
 
 const rolloutSteps = [
   { step: "01", title: "Política operativa", desc: "Definimos protocolo por recinto, excepciones permitidas y responsables por turno." },
@@ -29,7 +30,7 @@ const productSchema = {
     audienceType: "Colegios, universidades, empresas, gobierno y eventos",
   },
   areaServed: "CL",
-  url: "https://blokkit.cl/producto",
+  url: toAbsoluteUrl("/producto/"),
 };
 ---
 
@@ -39,12 +40,12 @@ const productSchema = {
   </Fragment>
   <Header slot="header" />
 
-  <!-- Hero -->
+  <!-- Hero — el H1 lleva la keyword de producto (antes iba en el label, un <span> sin peso) -->
   <PageHero
-    label="Fundas Bloqueadoras de Señal"
-    title="Arquitectura integral"
-    accent="para operación sin fricción"
-    subtitle="Tres piezas conectadas que convierten una política institucional en cumplimiento diario, medible y escalable."
+    label="Sistema BloKKit"
+    title="Fundas bloqueadoras de señal"
+    accent="dock y plataforma de gestión"
+    subtitle="Tres piezas conectadas que convierten el control de celulares en colegios, universidades y empresas en cumplimiento diario, medible y escalable."
   />
 
   <!-- ═══════════ SISTEMA: las tres capas (cream) ═══════════ -->
@@ -273,13 +274,40 @@ const productSchema = {
     </div>
   </section>
 
+  <!-- ═══════════ ¿FUNDA O INHIBIDOR? (dark) — el término que usa la prensa ═══════════ -->
+  <section class="section--lg section--dark" id="inhibidores">
+    <div class="container">
+      <ScrollReveal client:visible>
+        <div class="inhib">
+          <span class="label">Aclaración técnica</span>
+          <h2 class="heading-2">
+            ¿Funda bloqueadora
+            <span class="heading-accent">o inhibidor de señal?</span>
+          </h2>
+          <p class="body-lg inhib__lead">
+            La prensa suele llamar <strong>“inhibidores de señal para colegios”</strong> a esta
+            tecnología. La diferencia importa: un inhibidor (jammer) emite interferencia activa
+            sobre el espectro radioeléctrico. Las fundas BloKKit no emiten nada — bloquean
+            pasivamente la señal del teléfono guardado en su interior, con el principio de la
+            jaula de Faraday.
+          </p>
+          <p class="body-lg inhib__lead">
+            El resultado práctico es el que buscan colegios y empresas: el celular queda fuera de
+            red durante la jornada, sin intervenir las comunicaciones del resto del recinto y sin
+            confiscar el dispositivo, que permanece siempre con su dueño.
+          </p>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
   <!-- CTA -->
   <FinalCta
     title="¿Listo para activar"
     accent="el sistema completo?"
     subtitle="Te mostramos cómo implementar BloKKit en tu operación con un plan de despliegue realista y medible."
     secondaryText="Ver beneficios por sector"
-    secondaryHref="/beneficios"
+    secondaryHref="/beneficios/"
   />
 
   <Footer slot="footer" />
@@ -841,5 +869,27 @@ const productSchema = {
     line-height: 0.9;
     color: transparent;
     -webkit-text-stroke: 1.5px var(--border-outline-light);
+  }
+
+  /* ── Funda vs inhibidor ── */
+  .inhib {
+    max-width: 820px;
+  }
+
+  .inhib .heading-2 {
+    margin-top: var(--space-3);
+  }
+
+  .inhib .heading-accent {
+    display: block;
+  }
+
+  .inhib__lead {
+    margin-top: var(--space-4);
+    color: var(--text-secondary);
+  }
+
+  .inhib__lead strong {
+    color: var(--text-primary);
   }
 </style>

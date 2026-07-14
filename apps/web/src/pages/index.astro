@@ -13,12 +13,10 @@ import HowItWorksModal from "../components/ui/HowItWorksModal.tsx";
 import FinalCta from "../components/FinalCta.astro";
 import ArchitectureFlow from "../components/ArchitectureFlow.astro";
 
-// Page Metadata
-const pageTitle = "Fundas Bloqueadoras de Señal para Celulares en Colegios | BloKKit";
-const pageDescription = "Fundas bloqueadoras de señal para celulares en colegios y empresas: crea zonas libres de distracciones sin confiscar los teléfonos y cumple la Ley 21.801 en Chile.";
+// Metadata: viene de src/lib/seo.ts (fuente única por ruta) vía BaseLayout
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription}>
+<BaseLayout>
   <Header slot="header" />
 
   <!-- ═══════════════ HERO ═══════════════ -->
@@ -27,7 +25,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
       <!-- Left: Text -->
       <div class="hero__text">
         <div class="hero__eyebrow fade-in-up">
-          <h1 class="hero__h1">Fundas Bloqueadoras de Señal</h1>
+          <h1 class="hero__h1">Fundas Bloqueadoras de Señal para Celulares</h1>
           <span class="arrow-down-right" aria-hidden="true"></span>
         </div>
 
@@ -57,7 +55,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
           >
             Agendar reunión
           </button>
-          <a href="/producto" class="btn btn--ghost" data-how-modal-trigger>
+          <a href="/producto/" class="btn btn--ghost" data-how-modal-trigger>
             Ver cómo funciona
           </a>
         </div>
@@ -81,6 +79,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
           width="480"
           height="520"
           loading="eager"
+          fetchpriority="high"
         />
         <!-- Floating glass stat card — bottom-left -->
         <div class="hero__glass-card hero__glass-card--bl">
@@ -206,7 +205,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
 
         <ScrollReveal client:visible delay={0.3} className="problem__ctas">
           <div class="pill-switch pill-switch--light" role="group" aria-label="Acciones">
-            <a href="/evidencia" class="pill-option">Ver Evidencia</a>
+            <a href="/evidencia/" class="pill-option">Ver Evidencia</a>
             <button type="button" class="pill-option" data-cal-link="blokkit/30min" data-cal-namespace="30min" data-cal-config='{"layout":"month_view","useSlotsViewOnSmallScreen":"true"}'>
               Agendar Reunión
             </button>
@@ -259,8 +258,8 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
 
       <ScrollReveal client:visible delay={0.2}>
         <div class="container" style="margin-top: var(--space-10); text-align: center;">
-          <a href="/producto" class="btn btn--primary btn--lg">
-            Ver Sistema Completo
+          <a href="/producto/" class="btn btn--primary btn--lg">
+            Ver las fundas y el sistema completo
           </a>
         </div>
       </ScrollReveal>
@@ -303,7 +302,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
             <p class="ley__banner-sub">
               La norma ya está vigente. Lo que falta en la mayoría de los colegios es el <strong>cómo</strong>: quién guarda, dónde, qué pasa con las excepciones y quién responde.
             </p>
-            <a href="/ley-celulares-2026" class="btn btn--primary btn--lg">
+            <a href="/ley-celulares-2026/" class="btn btn--primary btn--lg">
               Conocer los alcances de la Ley 21.801
             </a>
           </div>
@@ -409,7 +408,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
               <div class="why-matters__result">
                 <strong>Resultado:</strong> cumplimiento irregular y desgaste operativo. La investigación lo confirma: cuando la regla existe solo en el papel, no hay diferencias medibles.
               </div>
-              <a href="/evidencia#paradoja" class="why-matters__source">U. de Birmingham · The Lancet 2025</a>
+              <a href="/evidencia/#paradoja" class="why-matters__source">U. de Birmingham · The Lancet 2025</a>
             </div>
           </ScrollReveal>
 
@@ -430,7 +429,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
               <div class="why-matters__result">
                 <strong>Resultado:</strong> la ganancia académica aparece justo donde la prohibición se aplica de forma estricta — equivalente a 5 días más de año escolar.
               </div>
-              <a href="/evidencia#paradoja" class="why-matters__source">Beland &amp; Murphy · LSE 2016</a>
+              <a href="/evidencia/#paradoja" class="why-matters__source">Beland &amp; Murphy · LSE 2016</a>
             </div>
           </ScrollReveal>
         </div>
@@ -441,7 +440,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
         <div class="why-matters__photo-reveal">
           <figure class="why-matters__photo">
             <img
-              src="/images/press-classroom.png"
+              src="/images/press-classroom.webp"
               alt="Sala de clases concentrada y sin celulares, operando con normalidad"
               width="640" height="640"
               loading="lazy"
@@ -464,7 +463,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
           <p class="why-matters__risk-line">
             <strong>Riesgo de no implementar:</strong> más carga de supervisión, menos consistencia y más conflictos por interpretación.
           </p>
-          <a href="/evidencia" class="btn btn--primary">
+          <a href="/evidencia/" class="btn btn--primary">
             Ver la evidencia completa
           </a>
         </div>
@@ -497,7 +496,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
             title: "Colegios y universidades",
             desc: "Protocolo operativo por jornada y nivel, con excepciones definidas. Menos carga de fiscalización para equipos académicos.",
             linkText: "Ver solución en Educación",
-            link: "/soluciones#educacion",
+            link: "/soluciones/#educacion",
             icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l9 4-9 4-9-4 9-4z"/><path d="M7 11.2v3.8c0 1.3 2.2 2.4 5 2.4s5-1.1 5-2.4v-3.8"/><g class="ico-tassel"><path d="M21 9v5"/><circle cx="21" cy="15.4" r="1.1" fill="currentColor" stroke="none"/></g></svg>`
           },
           {
@@ -505,7 +504,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
             title: "Equipos y operaciones",
             desc: "Implementación por área y nivel de riesgo. Norma consistente para reuniones, capacitación y zonas sensibles.",
             linkText: "Ver solución para Empresas",
-            link: "/soluciones#empresas",
+            link: "/soluciones/#empresas",
             icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6.5" y="3.5" width="11" height="17" rx="1.2"/><path d="M10.5 20.5v-3h3v3"/><path d="M3.5 20.5h17"/><rect class="ico-win ico-w1" x="9" y="6.5" width="2.2" height="2.2" rx="0.5" fill="currentColor" stroke="none"/><rect class="ico-win ico-w2" x="12.8" y="6.5" width="2.2" height="2.2" rx="0.5" fill="currentColor" stroke="none"/><rect class="ico-win ico-w3" x="9" y="10.2" width="2.2" height="2.2" rx="0.5" fill="currentColor" stroke="none"/><rect class="ico-win ico-w4" x="12.8" y="10.2" width="2.2" height="2.2" rx="0.5" fill="currentColor" stroke="none"/><rect class="ico-win ico-w5" x="9" y="13.9" width="2.2" height="2.2" rx="0.5" fill="currentColor" stroke="none"/><rect class="ico-win ico-w6" x="12.8" y="13.9" width="2.2" height="2.2" rx="0.5" fill="currentColor" stroke="none"/></svg>`
           },
           {
@@ -513,7 +512,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
             title: "Congreso, juzgados y cadena de custodia",
             desc: "Custodia trazable con protocolo formal de ingreso y devolución. Aplicable en audiencias, diligencias y salas de control.",
             linkText: "Ver solución para Gobierno",
-            link: "/soluciones#gobierno-policias",
+            link: "/soluciones/#gobierno",
             icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g class="ico-gavel"><path d="m14.5 12.5-8 8a2.119 2.119 0 1 1-3-3l8-8"/><path d="m16 16 6-6"/><path d="m8 8 6-6"/><path d="m9 7 8 8"/><path d="m21 11-8-8"/></g><path d="M14 21.5h7.5"/><g class="ico-hit"><path d="M20.5 3.5l1.6-1.6"/><path d="M22 7h2"/></g></svg>`
           },
           {
@@ -521,7 +520,7 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
             title: "Operaciones de alta sensibilidad",
             desc: "Estándar operativo simple, adaptable y visible. Implementación ajustada al flujo real de cada operación.",
             linkText: "Ver solución para Eventos",
-            link: "/soluciones#eventos",
+            link: "/soluciones/#eventos",
             icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><g class="ico-ticket"><path d="M2 9.5a2.5 2.5 0 0 1 0 5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2.5a2.5 2.5 0 0 1 0-5V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 6.5v1.8"/><path d="M13 11.1v1.8"/><path d="M13 15.7v1.8"/></g><g class="ico-spark"><path d="M21.2 2.6v2.8"/><path d="M19.8 4h2.8"/></g></svg>`
           },
         ].map((seg, i) => (
@@ -571,8 +570,8 @@ const pageDescription = "Fundas bloqueadoras de señal para celulares en colegio
 
       <ScrollReveal client:visible delay={0.4} className="arch__ctas">
         <div style="text-align: center; margin-top: var(--space-10);">
-          <a href="/producto" class="btn btn--primary btn--lg">
-            Descubre Blokkit
+          <a href="/producto/" class="btn btn--primary btn--lg">
+            Conoce las fundas bloqueadoras BloKKit
           </a>
         </div>
       </ScrollReveal>

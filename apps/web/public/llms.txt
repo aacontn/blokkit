@@ -11,13 +11,13 @@ Datos clave (verificados en fuentes oficiales):
 ## Páginas
 
 - [Inicio](https://blokkit.cl/): qué es BloKKit y cómo funciona en 5 pasos
-- [Producto](https://blokkit.cl/producto): la funda, el dock de apertura y la plataforma de trazabilidad
-- [Beneficios](https://blokkit.cl/beneficios): foco, convivencia y cumplimiento institucional
-- [Soluciones](https://blokkit.cl/soluciones): educación, empresas, gobierno y eventos
-- [Evidencia](https://blokkit.cl/evidencia): investigación internacional con fuentes citadas
-- [Ley 21.801](https://blokkit.cl/ley-celulares-2026): alcance por nivel, excepciones y plazos de la ley chilena
-- [Prensa](https://blokkit.cl/prensa): cobertura del piloto y del contexto regulatorio
-- [Contacto](https://blokkit.cl/contacto): diagnóstico, protocolo y propuesta por institución
+- [Producto](https://blokkit.cl/producto/): la funda, el dock de apertura y la plataforma de trazabilidad
+- [Beneficios](https://blokkit.cl/beneficios/): foco, convivencia y cumplimiento institucional
+- [Soluciones](https://blokkit.cl/soluciones/): educación, empresas, gobierno y eventos
+- [Evidencia](https://blokkit.cl/evidencia/): investigación internacional con fuentes citadas
+- [Ley 21.801](https://blokkit.cl/ley-celulares-2026/): alcance por nivel, excepciones y plazos de la ley chilena
+- [Prensa](https://blokkit.cl/prensa/): cobertura del piloto y del contexto regulatorio
+- [Contacto](https://blokkit.cl/contacto/): diagnóstico, protocolo y propuesta por institución
 
 ## Contacto
 

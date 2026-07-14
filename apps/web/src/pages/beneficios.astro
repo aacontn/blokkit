@@ -55,10 +55,36 @@ const eventBenefits = [
 ];
 
 const sections = [
-  { id: "educacion", num: "01", kicker: "Educación", title: "Colegios y", accent: "Universidades", desc: "Las distracciones digitales son el mayor obstáculo para el aprendizaje. BloKKit permite crear ambientes de estudio óptimos sin conflictos por confiscación.", benefits: eduBenefits, stats: [{ big: "211h", desc: "horas pedagógicas recuperadas por curso" }, { big: "-33%", desc: "en suspensiones estudiantiles" }, { big: "-43%", desc: "en incidentes de bullying con protocolo" }] },
-  { id: "empresas", num: "02", kicker: "Corporativo", title: "Empresas y", accent: "Oficinas", desc: "Las reuniones productivas y el trabajo enfocado son esenciales para el rendimiento empresarial. BloKKit crea zonas libres de distracciones para momentos críticos.", benefits: corpBenefits, stats: [{ big: "8-12min", desc: "de pérdida por reunión sin protocolo" }, { big: "-25%", desc: "menos interrupciones en bloques críticos" }, { big: "<1%", desc: "del presupuesto operativo anual" }], dark: true },
-  { id: "gobierno", num: "03", kicker: "Gobierno y Justicia", title: "Congreso, juzgados y", accent: "cadena de custodia", desc: "En reuniones sensibles y procedimientos legales, la custodia de dispositivos no puede quedar al criterio individual.", benefits: govBenefits, stats: [{ big: "100%", desc: "trazabilidad documentada" }, { big: "<3s", desc: "desbloqueo con personal autorizado" }, { big: "+control", desc: "menos incidentes por manejo informal" }] },
-  { id: "eventos", num: "04", kicker: "Entretenimiento", title: "Eventos y", accent: "Espectáculos", desc: "Protege la propiedad intelectual de artistas y creadores. Crea experiencias inmersivas sin pantallas de por medio.", benefits: eventBenefits, stats: [{ big: "95%", desc: "del público usa celular durante shows" }, { big: "72hrs", desc: "antes de contenido pirata online" }, { big: "4.8★", desc: "satisfacción en eventos sin celulares" }], dark: true },
+  {
+    id: "educacion", num: "01", kicker: "Educación", title: "Colegios y", accent: "Universidades",
+    desc: "Las distracciones digitales son el mayor obstáculo para el aprendizaje. Con las fundas bloqueadoras de señal el teléfono queda sellado junto al estudiante durante la jornada: sin confiscación, sin discusiones en sala y con las excepciones de salud o emergencia resueltas por protocolo. Es además la forma más simple de cumplir la Ley 21.801, que rige desde marzo de 2026 en todos los colegios de Chile.",
+    benefits: eduBenefits,
+    stats: [{ big: "211h", desc: "horas pedagógicas recuperadas por curso" }, { big: "-33%", desc: "en suspensiones estudiantiles" }, { big: "-43%", desc: "en incidentes de bullying con protocolo" }],
+    linkText: "Cómo se implementa en educación", linkHref: "/soluciones/#educacion",
+  },
+  {
+    id: "empresas", num: "02", kicker: "Corporativo", title: "Empresas y", accent: "Oficinas",
+    desc: "Las reuniones productivas y el trabajo enfocado son esenciales para el rendimiento empresarial. BloKKit crea zonas libres de celulares para directorios, comités y salas de decisión: cada participante bloquea su teléfono al ingresar y lo conserva consigo, protegiendo el foco y la información sensible sin esquemas de entrega o retiro manual.",
+    benefits: corpBenefits,
+    stats: [{ big: "8-12min", desc: "de pérdida por reunión sin protocolo" }, { big: "-25%", desc: "menos interrupciones en bloques críticos" }, { big: "<1%", desc: "del presupuesto operativo anual" }],
+    linkText: "Cómo se implementa en empresas", linkHref: "/soluciones/#empresas",
+    dark: true,
+  },
+  {
+    id: "gobierno", num: "03", kicker: "Gobierno y Justicia", title: "Congreso, juzgados y", accent: "cadena de custodia",
+    desc: "En reuniones sensibles y procedimientos legales, la custodia de dispositivos no puede quedar al criterio individual. El bloqueo verificable y el registro de cada apertura entregan una cadena de custodia documentada, con responsables definidos de principio a fin.",
+    benefits: govBenefits,
+    stats: [{ big: "100%", desc: "trazabilidad documentada" }, { big: "<3s", desc: "desbloqueo con personal autorizado" }, { big: "+control", desc: "menos incidentes por manejo informal" }],
+    linkText: "Cómo se implementa en gobierno", linkHref: "/soluciones/#gobierno",
+  },
+  {
+    id: "eventos", num: "04", kicker: "Entretenimiento", title: "Eventos y", accent: "Espectáculos",
+    desc: "Protege la propiedad intelectual de artistas y creadores. El público bloquea su celular al ingresar y lo conserva durante el show: experiencias inmersivas sin pantallas de por medio, sin grabaciones piratas y con aperturas controladas para momentos designados.",
+    benefits: eventBenefits,
+    stats: [{ big: "95%", desc: "del público usa celular durante shows" }, { big: "72hrs", desc: "antes de contenido pirata online" }, { big: "4.8★", desc: "satisfacción en eventos sin celulares" }],
+    linkText: "Cómo se implementa en eventos", linkHref: "/soluciones/#eventos",
+    dark: true,
+  },
 ];
 ---
 
@@ -67,8 +93,8 @@ const sections = [
 
   <PageHero
     label="Fundas Bloqueadoras de Señal"
-    title="Beneficios para"
-    accent="cada sector"
+    title="Beneficios del bloqueo de celulares"
+    accent="para cada sector"
     subtitle="Resultados comprobados en educación, empresas, gobierno y eventos — operación medible para cada contexto."
   />
 
@@ -93,6 +119,11 @@ const sections = [
                   </div>
                 ))}
               </div>
+
+              <a href={s.linkHref} class="sector-solucion-link">
+                {s.linkText}
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14m0 0l-6-6m6 6l-6 6" /></svg>
+              </a>
             </ScrollReveal>
 
             <ScrollReveal client:visible delay={0.2} className="sector-benefits">
@@ -226,4 +257,26 @@ const sections = [
   }
 
   .sector-section--light .benefit-card__title { color: var(--text-dark); }
+
+  /* Enlace contextual al paso siguiente del funnel (/soluciones/#sector) */
+  .sector-solucion-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: var(--space-6);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    transition: gap 0.25s ease, opacity 0.25s ease;
+  }
+
+  .sector-section--dark .sector-solucion-link { color: var(--accent); }
+
+  .sector-solucion-link:hover {
+    gap: 12px;
+    opacity: 0.85;
+  }
 </style>

@@ -1,3 +1,6 @@
 # El portal y su login viven en el subdominio de la app
-/login https://app.blokkit.cl/login 302
+/login https://app.blokkit.cl/login 301
 /app/* https://app.blokkit.cl/:splat 301
+
+# Ruta convencional del sitemap → índice real generado por @astrojs/sitemap
+/sitemap.xml /sitemap-index.xml 301
