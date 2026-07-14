@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Cotizador BloKKit</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body class="preview">
+<style>
+:root {
+  color-scheme: light;
+  --bg-dark: #14171F;
+  --bg-dark-2: #0E1117;
+  --line-dark: #2A3142;
+  --cyan: #23a4f9;
+  --cyan-light: #A3DBF7;
+  --cyan-soft-bg: #BFE6F8;
+  --cyan-very-soft: #E8F5FD;
+  --text-dark: #14171F;
+  --text-soft: #4B5563;
+  --muted: #6B7280;
+  --line-light: #E5E7EB;
+  --paper: #FFFFFF;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #F3F4F6;
+  color: var(--text-dark);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.display {
+  font-family: "Impact", "Haettenschweiler", "Arial Narrow Bold", "Helvetica Inserat", "Oswald", "Bebas Neue", sans-serif;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+/* ---------- Toolbar ---------- */
+.toolbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg-dark); color: #fff;
+  padding: 10px 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  border-bottom: 2px solid var(--cyan);
+}
+.toolbar .brand { font-weight: 700; font-size: 12px; letter-spacing: .25em; text-transform: uppercase; color: var(--cyan-light); margin-right: auto; }
+.toolbar button {
+  background: transparent; color: #fff; border: 1px solid #2a2f3a;
+  padding: 7px 13px; border-radius: 6px; font-size: 13px; font-weight: 600;
+  cursor: pointer; transition: all .15s; font-family: inherit;
+}
+.toolbar button:hover { background: var(--cyan); border-color: var(--cyan); color: var(--bg-dark); }
+.toolbar button.primary { background: var(--cyan); color: var(--bg-dark); border-color: var(--cyan); }
+.toolbar button.primary:hover { background: #1a8fd9; }
+.toolbar button.danger { border-color: #3a2228; color: #f99; }
+.toolbar button.danger:hover { background: #c0392b; border-color: #c0392b; color: #fff; }
+
+/* ---------- Sidebar (mini app) ---------- */
+.app-shell { display: flex; align-items: flex-start; }
+.main-area { flex: 1; min-width: 0; overflow-x: auto; }
+
+.sidebar {
+  background: var(--bg-dark);
+  border-right: 2px solid var(--line-dark);
+  position: sticky; top: 0; height: 100vh; align-self: flex-start;
+  width: 272px; min-width: 272px; flex-shrink: 0;
+  overflow: hidden;
+  transition: width .18s ease, min-width .18s ease;
+  z-index: 90;
+}
+.sidebar.collapsed { width: 0; min-width: 0; border-right: none; }
+.sidebar-inner { width: 272px; min-width: 272px; height: 100%; display: flex; flex-direction: column; }
+.sidebar-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 16px 16px 10px 16px; border-bottom: 1px solid var(--line-dark);
+}
+.sidebar-brand { font-size: 13px; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan-light); }
+.sidebar-collapse-btn {
+  background: transparent; border: 1px solid #2a2f3a; color: #fff; border-radius: 6px;
+  width: 26px; height: 26px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 14px; line-height: 1; font-family: inherit; flex-shrink: 0;
+}
+.sidebar-collapse-btn:hover { background: var(--cyan); border-color: var(--cyan); color: var(--bg-dark); }
+.sidebar-actions { display: flex; gap: 6px; padding: 12px 16px 8px 16px; flex-wrap: wrap; }
+.sidebar-btn {
+  flex: 1; min-width: 70px; background: transparent; color: #fff; border: 1px solid #2a2f3a;
+  padding: 7px 6px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer;
+  font-family: inherit; transition: all .15s; white-space: nowrap;
+}
+.sidebar-btn:hover { background: var(--cyan); border-color: var(--cyan); color: var(--bg-dark); }
+.sidebar-btn.primary { background: var(--cyan); color: var(--bg-dark); border-color: var(--cyan); }
+.sidebar-btn.primary:hover { background: #1a8fd9; color: #fff; }
+.sidebar-btn.danger { border-color: #3a2228; color: #f99; }
+.sidebar-btn.danger:hover { background: #c0392b; border-color: #c0392b; color: #fff; }
+.sidebar-active-hint { padding: 0 16px 10px 16px; font-size: 10.5px; color: var(--cyan-light); opacity: .85; }
+.sidebar-search { padding: 0 16px 12px 16px; }
+.sidebar-search input {
+  width: 100%; background: var(--bg-dark-2); border: 1px solid var(--line-dark); color: #fff;
+  padding: 8px 10px; border-radius: 6px; font-size: 12.5px; font-family: inherit;
+}
+.sidebar-search input::placeholder { color: #6B7280; }
+.sidebar-search input:focus { outline: none; border-color: var(--cyan); }
+.sidebar-list { flex: 1; overflow-y: auto; padding: 4px 10px 16px 10px; }
+.db-item { padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; border: 1px solid transparent; transition: background .15s, border-color .15s; }
+.db-item:hover { background: rgba(163,219,247,.08); }
+.db-item.active { background: rgba(35,164,249,.16); border-color: var(--cyan); }
+.db-item-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; margin-bottom: 3px; }
+.db-num { font-size: 11px; font-weight: 700; color: var(--cyan-light); letter-spacing: .03em; }
+.db-total { font-size: 11px; font-weight: 700; color: var(--cyan); font-variant-numeric: tabular-nums; }
+.db-client { font-size: 12.5px; color: #fff; font-weight: 600; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.db-date { font-size: 10.5px; color: #8791A0; }
+.db-empty { color: #6B7280; font-size: 12px; padding: 16px 6px; text-align: center; }
+.sidebar-backdrop { display: none; }
+.sidebar-backdrop.show { display: block; position: fixed; inset: 0; background: rgba(0,0,0,.45); z-index: 150; }
+
+@media (max-width: 1100px) {
+  .sidebar {
+    position: fixed; top: 0; left: 0; height: 100vh;
+    width: min(82vw, 300px); min-width: 0;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0,0,0,.35);
+    z-index: 200;
+    transition: transform .2s ease;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar.collapsed { width: min(82vw, 300px); min-width: 0; }
+  .sidebar-inner { width: 100%; min-width: 0; }
+  .main-area { width: 100%; }
+}
+
+/* ---------- Page ---------- */
+.page {
+  width: 210mm; min-height: 297mm;
+  margin: 22px auto;
+  background: var(--paper);
+  color: var(--text-dark);
+  box-shadow: 0 12px 40px rgba(0,0,0,.18);
+  position: relative;
+  display: flex; flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------- DARK HEADER + HERO ---------- */
+.dark-block {
+  background: var(--bg-dark);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.dark-block::after {
+  content: ""; position: absolute; right: -60px; top: -40px; width: 280px; height: 280px;
+  background: radial-gradient(closest-side, rgba(35,164,249,.22), transparent 70%);
+  pointer-events: none;
+}
+
+.header {
+  padding: 18px 36px 6px 36px;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+  position: relative; z-index: 2;
+}
+.header .top-label {
+  font-size: 11px; letter-spacing: .45em; color: var(--cyan-light); font-weight: 700;
+}
+.logo-block { display: flex; align-items: center; }
+.logo-block svg.full-logo { height: 42px; width: auto; }
+
+.hero {
+  padding: 12px 36px 18px 36px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: flex-start;
+  position: relative; z-index: 2;
+}
+/* Left: cotización badge with outline number (brand signature) */
+.hero-left .lbl {
+  font-size: 10px; letter-spacing: .45em; color: var(--cyan-light); font-weight: 700;
+  display: block; margin-bottom: 4px;
+}
+.hero-left .quote-id {
+  display: flex; align-items: baseline; gap: 8px; margin-bottom: 10px;
+}
+.hero-left .quote-id .num-outline {
+  font-size: 34px; line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.3px var(--cyan);
+}
+.hero-left .quote-id .hash {
+  font-size: 22px; color: var(--cyan); font-weight: 900;
+  font-family: "Impact", "Haettenschweiler", "Oswald", sans-serif;
+}
+.hero-left .company {
+  font-size: 12px; color: #B6BFC9; letter-spacing: .03em;
+}
+.hero-left .company b { color: #fff; font-weight: 700; }
+
+/* Right: dates stacked */
+.hero-right { text-align: right; display: flex; flex-direction: column; gap: 10px; padding-top: 18px; }
+.hero-right .item { display: flex; flex-direction: column; gap: 3px; }
+.hero-right .lbl {
+  font-size: 10px; letter-spacing: .45em; color: var(--cyan-light); font-weight: 700;
+}
+.hero-right .val {
+  font-size: 13px; color: #fff; font-weight: 600; letter-spacing: .02em;
+}
+
+/* Diagonal arrow at the bottom of hero */
+.arrow-corner {
+  position: absolute; bottom: -14px; left: 40px; z-index: 3;
+  width: 24px; height: 24px;
+  background: var(--bg-dark);
+  border-right: 3px solid var(--cyan); border-bottom: 3px solid var(--cyan);
+  transform: rotate(45deg);
+}
+
+/* ---------- LIGHT BODY ---------- */
+.body {
+  padding: 20px 36px 16px 36px;
+  background: var(--paper);
+  flex: 1;
+}
+
+/* Section header (light context) */
+.section-head {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 8px;
+}
+.section-head .num-outline {
+  font-size: 24px; line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1.1px var(--cyan);
+}
+.section-head .title {
+  font-size: 14px; color: var(--text-dark); letter-spacing: .08em;
+}
+.section-head .title .hl { color: var(--cyan); }
+.section-head .arrow-mini {
+  width: 9px; height: 9px;
+  border-right: 2px solid var(--cyan); border-bottom: 2px solid var(--cyan);
+  transform: rotate(-45deg); margin-left: 2px;
+}
+
+/* Card row */
+.card-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 16px; }
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line-light);
+  border-radius: 8px;
+  padding: 12px 14px;
+  position: relative;
+}
+.card .crow {
+  display: flex; align-items: baseline; gap: 6px;
+  font-size: 12.5px; line-height: 1.55; color: var(--text-dark);
+}
+.card .crow .name { font-weight: 800; color: var(--text-dark); }
+.card .crow.muted { color: var(--text-soft); }
+
+/* ---------- Products table (light) ---------- */
+.products-wrap {
+  border: 1px solid var(--bg-dark);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  background: var(--paper);
+}
+table.products { width: 100%; border-collapse: collapse; font-size: 12.5px; color: var(--text-dark); }
+table.products thead tr { background: var(--bg-dark); }
+table.products thead th {
+  text-align: left; padding: 9px 13px; font-weight: 700;
+  font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase;
+  color: var(--cyan-light); white-space: nowrap;
+}
+table.products thead th.num { text-align: right; }
+table.products tbody td {
+  padding: 9px 13px; border-top: 1px solid var(--line-light); vertical-align: top;
+}
+table.products tbody tr:first-child td { border-top: none; }
+table.products tbody td.num { text-align: right; font-variant-numeric: tabular-nums; }
+table.products tbody td.total { font-weight: 700; color: var(--text-dark); }
+table.products tbody td.included { color: var(--muted); font-style: italic; }
+
+.totals-rows td {
+  padding: 7px 13px !important; border-top: 1px solid var(--line-light) !important;
+  color: var(--muted);
+}
+.totals-rows td.lbl { text-align: right; letter-spacing: .04em; font-size: 11.5px; }
+.totals-rows td.val { text-align: right; font-variant-numeric: tabular-nums; color: var(--text-dark); }
+.totals-final td {
+  background: var(--bg-dark); padding: 11px 13px !important;
+  border-top: 2px solid var(--cyan) !important;
+}
+.totals-final td.lbl {
+  text-align: right;
+  font-size: 15px;
+  color: #fff;
+  font-family: "Impact", "Haettenschweiler", "Arial Narrow Bold", "Oswald", sans-serif;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.totals-final td.val {
+  text-align: right;
+  font-size: 20px;
+  font-family: "Impact", "Haettenschweiler", "Arial Narrow Bold", "Oswald", sans-serif;
+  color: var(--cyan);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.row-ctrl {
+  border: none; background: transparent; cursor: pointer; color: var(--muted); font-size: 16px;
+  padding: 2px 6px; border-radius: 4px;
+}
+.row-ctrl:hover { background: #fee2e2; color: #c0392b; }
+.add-row-btn {
+  margin: 4px 0 18px 0; background: transparent; color: var(--cyan); border: 1px dashed var(--cyan);
+  padding: 7px 12px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer;
+  font-family: inherit; letter-spacing: .04em;
+}
+.add-row-btn:hover { background: var(--cyan); color: #fff; }
+
+/* Notes */
+.notes { font-size: 10.5px; color: var(--muted); line-height: 1.5; margin-bottom: 14px; padding: 0 2px; }
+.notes p { margin-bottom: 1px; }
+
+/* ---------- Bottom row: Conditions (light) + Bank (cyan callout) ---------- */
+.bottom-row { display: grid; grid-template-columns: 1.45fr 1fr; gap: 12px; margin-bottom: 0; }
+.bottom-row .card-cond ul { list-style: none; padding: 0; margin: 0; }
+.bottom-row .card-cond ul li {
+  font-size: 11px; line-height: 1.55; color: var(--text-dark); padding-left: 14px; position: relative;
+  margin-bottom: 1px;
+}
+.bottom-row .card-cond ul li::before {
+  content: ""; width: 4px; height: 4px; background: var(--cyan); border-radius: 50%;
+  position: absolute; left: 2px; top: 7px;
+}
+
+/* Bank callout — cyan card, like slide highlight boxes */
+.card-bank {
+  background: var(--cyan-soft-bg);
+  color: var(--bg-dark);
+  border: none;
+  position: relative;
+}
+.card-bank .crow { color: var(--bg-dark); }
+.card-bank .crow.muted { color: #1F2937; }
+.card-bank .crow b { font-weight: 800; }
+.card-bank .section-head .num-outline { -webkit-text-stroke-color: var(--bg-dark); }
+.card-bank .section-head .title { color: var(--bg-dark); }
+.card-bank .section-head .title .hl { color: var(--bg-dark); }
+.card-bank .section-head .arrow-mini { border-color: var(--bg-dark); }
+.card-bank::before {
+  content: ""; position: absolute; top: 14px; right: 14px;
+  width: 16px; height: 16px;
+  border-right: 2.5px solid var(--bg-dark); border-bottom: 2.5px solid var(--bg-dark);
+  transform: rotate(-45deg);
+}
+
+/* ---------- FOOTER (dark) ---------- */
+.footer {
+  background: var(--bg-dark);
+  padding: 12px 36px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; align-items: center;
+  font-size: 11px;
+  margin-top: auto;
+}
+.footer .fitem { display: flex; align-items: center; gap: 8px; color: var(--cyan-light); }
+.footer .fitem svg { flex-shrink: 0; color: var(--cyan); }
+.footer .fmini { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+.footer .fmini .wm { font-size: 15px; letter-spacing: .04em; }
+.footer .fmini .wm .blok { color: #fff; }
+.footer .fmini .wm .kit { color: var(--cyan); }
+
+/* ---------- Edit mode ---------- */
+[contenteditable="true"] {
+  outline: none;
+  border-radius: 3px;
+  transition: background .15s, box-shadow .15s;
+  padding: 0 2px;
+}
+[contenteditable="true"]:hover { background: rgba(35,164,249,.10); }
+[contenteditable="true"]:focus { background: rgba(35,164,249,.20); box-shadow: 0 0 0 2px var(--cyan) inset; }
+/* On dark hero */
+.dark-block [contenteditable="true"]:hover { background: rgba(163,219,247,.15); }
+.dark-block [contenteditable="true"]:focus { background: rgba(35,164,249,.25); box-shadow: 0 0 0 2px var(--cyan) inset; }
+/* On cyan bank card */
+.card-bank [contenteditable="true"]:hover { background: rgba(11,13,18,.08); }
+.card-bank [contenteditable="true"]:focus { background: rgba(11,13,18,.18); box-shadow: 0 0 0 2px var(--bg-dark) inset; }
+
+body.preview [contenteditable="true"] { background: none; box-shadow: none; }
+body.preview [contenteditable="true"] { -webkit-user-modify: read-only; }
+body.preview .editor-only { display: none !important; }
+
+/* ---------- Print ---------- */
+@media print {
+  @page { size: A4; margin: 0; }
+  html, body { background: #fff !important; }
+  .toolbar, .editor-only, .sidebar, .sidebar-backdrop { display: none !important; }
+  .app-shell { display: block !important; }
+  .main-area { width: 100% !important; overflow: visible !important; }
+  .page {
+    width: 210mm; height: 297mm; min-height: 0;
+    margin: 0 !important; box-shadow: none !important;
+    page-break-after: avoid; page-break-inside: avoid;
+    overflow: hidden;
+  }
+  [contenteditable="true"] { background: none !important; box-shadow: none !important; }
+  .dark-block, .footer, .card-bank, .totals-final td, table.products thead tr, .arrow-corner {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; color-adjust: exact;
+  }
+  /* Aún más compacto al imprimir, para asegurar 1 hoja */
+  .header { padding: 14px 30px 4px 30px !important; }
+  .logo-block svg.full-logo { height: 36px !important; }
+  .hero { padding: 8px 30px 14px 30px !important; }
+  .hero-left .quote-id .num-outline { font-size: 30px !important; }
+  .hero-left .quote-id .hash { font-size: 20px !important; }
+  .body { padding: 14px 30px 12px 30px !important; }
+  .card-row { margin-bottom: 12px !important; gap: 10px !important; }
+  .card { padding: 10px 12px !important; }
+  .section-head { margin-bottom: 6px !important; }
+  .section-head .num-outline { font-size: 20px !important; }
+  .products-wrap { margin-bottom: 8px !important; }
+  table.products thead th { padding: 7px 11px !important; font-size: 9px !important; }
+  table.products tbody td { padding: 7px 11px !important; }
+  .totals-rows td { padding: 5px 11px !important; }
+  .totals-final td { padding: 8px 11px !important; }
+  .totals-final td.lbl { font-size: 13px !important; }
+  .totals-final td.val { font-size: 17px !important; }
+  .notes { margin-bottom: 10px !important; font-size: 10px !important; }
+  .bottom-row { gap: 10px !important; }
+  .bottom-row .card-cond ul li { font-size: 10.5px !important; line-height: 1.45 !important; }
+  .footer { padding: 9px 30px !important; font-size: 10px !important; }
+}
+</style>
+<style>
+#pinGate { display:none; position:fixed; inset:0; z-index:9999; background:#14171F; color:#fff; align-items:center; justify-content:center; overflow:hidden; }
+body.locked #pinGate { display:flex; }
+body.locked .app-shell, body.locked .sidebar-backdrop { display:none !important; }
+#pinGate::after { content:""; position:absolute; right:-60px; top:-40px; width:340px; height:340px; background:radial-gradient(closest-side, rgba(35,164,249,.22), transparent 70%); pointer-events:none; }
+#pinGate .pin-box { text-align:center; padding:32px; position:relative; z-index:2; }
+#pinGate .wm { font-family:"Impact","Haettenschweiler","Arial Narrow Bold","Oswald","Bebas Neue",sans-serif; font-weight:900; font-size:36px; letter-spacing:.04em; text-transform:uppercase; margin-bottom:6px; }
+#pinGate .wm .blok { color:#fff; }
+#pinGate .wm .kit { color:#23a4f9; }
+#pinGate .sub { font-size:10px; letter-spacing:.45em; color:#A3DBF7; font-weight:700; text-transform:uppercase; margin-bottom:28px; }
+#pinGate input { width:230px; background:#0E1117; border:1px solid #2A3142; border-radius:8px; color:#fff; font-size:26px; text-align:center; letter-spacing:.35em; padding:12px 10px; font-variant-numeric:tabular-nums; outline:none; font-family:inherit; }
+#pinGate input:focus { border-color:#23a4f9; box-shadow:0 0 0 2px rgba(35,164,249,.35); }
+#pinGate button { display:block; margin:16px auto 0; background:#23a4f9; color:#14171F; border:none; border-radius:8px; padding:10px 36px; font-weight:800; font-size:14px; letter-spacing:.08em; cursor:pointer; font-family:inherit; }
+#pinGate button:hover { background:#1a8fd9; }
+#pinGate button:disabled { opacity:.5; cursor:default; }
+#pinGate .pin-err { min-height:18px; margin-top:12px; font-size:12px; color:#f99; letter-spacing:.03em; }
+@media print { #pinGate { display:none !important; } body.locked .app-shell { display:none !important; } }
+</style>
+<script>
+try { if (sessionStorage.getItem("blokkit_cotz_unlock") !== "1") document.body.classList.add("locked"); }
+catch (e) { document.body.classList.add("locked"); }
+</script>
+<div id="pinGate">
+  <div class="pin-box">
+    <div class="wm"><span class="blok">BLOK</span><span class="kit">KIT</span></div>
+    <div class="sub">Cotizador &middot; Acceso con PIN</div>
+    <input id="pinInput" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" maxlength="12">
+    <button id="pinBtn" type="button">Entrar</button>
+    <div class="pin-err" id="pinError"></div>
+  </div>
+</div>
+<script>
+(function () {
+  const HASH = "a2cbfde6af9f24dfa2b3dbdd2358cefa90b696aa58f6082992db524e84125bed";
+  const inp = document.getElementById("pinInput");
+  const btn = document.getElementById("pinBtn");
+  const err = document.getElementById("pinError");
+  let fails = 0;
+  async function sha256hex(s) {
+    const b = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(s));
+    return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2, "0")).join("");
+  }
+  async function tryPin() {
+    const v = inp.value.trim();
+    if (!v || btn.disabled) return;
+    btn.disabled = true;
+    const h = await sha256hex(v);
+    if (h === HASH) {
+      try { sessionStorage.setItem("blokkit_cotz_unlock", "1"); } catch (e) {}
+      document.body.classList.remove("locked");
+      err.textContent = "";
+      btn.disabled = false;
+      return;
+    }
+    fails++;
+    inp.value = "";
+    const wait = Math.min(16, Math.pow(2, fails - 1));
+    err.textContent = fails > 1 ? "PIN incorrecto — espera " + wait + " s" : "PIN incorrecto";
+    setTimeout(() => { btn.disabled = false; inp.focus(); }, wait * 1000);
+  }
+  btn.addEventListener("click", tryPin);
+  inp.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); tryPin(); } });
+  if (document.body.classList.contains("locked")) setTimeout(() => inp.focus(), 50);
+})();
+</script>
+
+
+<div class="app-shell">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <div class="sidebar-head">
+        <span class="sidebar-brand display">Cotizaciones</span>
+        <button id="btnSidebarCollapse" class="sidebar-collapse-btn" type="button" title="Colapsar">‹</button>
+      </div>
+      <div class="sidebar-actions">
+        <button id="btnDbNew" type="button" class="sidebar-btn primary">+ Nueva</button>
+        <button id="btnDbDuplicate" type="button" class="sidebar-btn">⧉ Duplicar</button>
+        <button id="btnDbDelete" type="button" class="sidebar-btn danger">✕ Eliminar</button>
+      </div>
+      <div class="sidebar-active-hint" id="activeHint"></div>
+      <div class="sidebar-search">
+        <input id="dbSearch" type="text" placeholder="Buscar por cliente o N°…" autocomplete="off">
+      </div>
+      <div class="sidebar-list" id="dbList"></div>
+    </div>
+  </aside>
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <div class="main-area">
+
+    <div class="toolbar">
+      <button id="btnSidebarToggle" type="button">☰ Cotizaciones</button>
+      <div class="brand">⬢ Cotizador BloKKit</div>
+      <button id="btnToggle" type="button">✎ Editar</button>
+      <button id="btnAddRow" type="button">+ Agregar producto</button>
+      <button id="btnReset" type="button" class="danger">↺ Restaurar Astoreca</button>
+      <button id="btnNew" type="button">Nueva (en blanco)</button>
+      <button id="btnPrint" type="button" class="primary">⤓ Guardar PDF / Imprimir</button>
+    </div>
+
+    <div class="page">
+
+      <!-- DARK BLOCK (header + hero) -->
+      <div class="dark-block">
+        <div class="header">
+          <div class="logo-block">
+            <!-- Logo BloKKit completo (BLOK en blanco para fondo oscuro, KIT y candado en cyan) -->
+            <svg class="full-logo" viewBox="0 0 697.67 143.23" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path fill="#FFFFFF" d="M202.14,72.07v-.27c7.4-3.7,11.64-10.69,11.64-19.73,0-13.56-8.9-23.29-25.89-23.29h-42.88v7.89c0,.2.12.38.31.46l18.59,7.95h21.65c8.08,0,10.82,4.25,10.82,10s-3.42,10-10.69,10h-23.15v-13.54l-16.84-7.36c-.33-.14-.7.1-.7.46v73.74h46.44c17.4,0,26.44-10.27,26.44-24.25,0-10.69-5.89-18.9-15.75-22.06h.01ZM188.44,102.21h-25.89v-21.51h26.03c7.26,0,11.37,4.79,11.37,10.82s-3.29,10.69-11.51,10.69h0Z"/>
+              <path fill="#FFFFFF" d="M233.93,28.78h17.54v73.43h46.85v16.17h-64.39V28.79h0Z"/>
+              <path fill="#FFFFFF" d="M305.44,73.58c0-26.85,19.73-46.58,47.67-46.58s47.67,19.73,47.67,46.58-19.73,46.58-47.67,46.58-47.67-19.73-47.67-46.58ZM382.98,73.58c0-17.54-12.06-30.28-29.87-30.28s-29.86,12.74-29.86,30.28,12.06,30.41,29.86,30.41,29.87-12.88,29.87-30.41h0Z"/>
+              <path fill="#FFFFFF" d="M417.92,28.78h17.54v39.18l32.06-39.18h22.06l-38.08,43.98,39.45,45.62h-22.6l-32.88-40.28v40.28h-17.54V28.79h-.01Z"/>
+              <path fill="#23a4f9" d="M505.32,28.78h17.54v39.18l32.06-39.18h22.06l-38.08,43.98,39.45,45.62h-22.6l-32.88-40.28v40.28h-17.54V28.79h-.01Z"/>
+              <path fill="#23a4f9" d="M592.87,28.78h17.54v89.59h-17.54V28.78Z"/>
+              <path fill="#23a4f9" d="M653.42,45.08h-26.71v-16.3h70.96v16.3h-26.71v73.29h-17.54V45.08h0Z"/>
+              <path fill="#23a4f9" d="M3.13,55.96h100.74c1.73,0,3.13,1.5,3.13,3.34v40.06c0,4.34-.76,8.68-2.42,12.69-17.05,41.19-85.67,42.02-102.28-.14-1.57-3.99-2.3-8.26-2.3-12.55v-40.06c0-1.84,1.4-3.34,3.13-3.34ZM12,71.36v28.47c0,3.36.59,6.7,1.92,9.78,12.73,29.38,63.71,29.14,77.61,1.06,1.67-3.37,2.47-7.11,2.47-10.87v-28.69c0-1.19-.96-2.15-2.15-2.15H14.39c-1.32,0-2.4,1.08-2.4,2.4h.01Z"/>
+              <path fill="#23a4f9" d="M88.72,67.96H15.28c-1.26,0-2.28-1.16-2.28-2.6v-31.19c0-3.44.58-6.88,1.83-10.05,12.51-31.85,62.22-32.49,74.43.1,1.18,3.16,1.74,6.55,1.74,9.96v31.18c0,1.44-1.02,2.6-2.28,2.6h0ZM80,59.08v-22.22c0-2.83-.47-5.64-1.46-8.21-8.66-22.34-41.52-22.09-50.78-.61-1.17,2.72-1.76,5.75-1.76,8.81v22.43c0,.93.63,1.68,1.41,1.68h51.01c.87,0,1.58-.84,1.58-1.88h0Z"/>
+            </svg>
+          </div>
+          <div class="top-label">COTIZACIÓN</div>
+        </div>
+
+        <div class="hero">
+          <div class="hero-left">
+            <span class="lbl">DOCUMENTO N°</span>
+            <div class="quote-id">
+              <span class="hash">#</span>
+              <span class="num-outline display" contenteditable="true" id="quoteNumber">1242</span>
+            </div>
+            <div class="company"><b>Blokkit SpA</b> · RUT 78.203.591-6</div>
+          </div>
+          <div class="hero-right">
+            <div class="item">
+              <span class="lbl">FECHA</span>
+              <span class="val" contenteditable="true" id="quoteDate">13 de marzo de 2026</span>
+            </div>
+            <div class="item">
+              <span class="lbl">VALIDEZ</span>
+              <span class="val" contenteditable="true" id="validity">5 días corridos</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="arrow-corner"></div>
+      </div>
+
+      <!-- LIGHT BODY -->
+      <div class="body">
+
+        <div class="card-row">
+          <div class="card">
+            <div class="section-head">
+              <div class="num-outline display">01</div>
+              <div class="title display"><span class="hl">Cliente</span></div>
+              <div class="arrow-mini"></div>
+            </div>
+            <div class="crow"><span class="name" contenteditable="true">Fundación Astoreca</span></div>
+            <div class="crow muted" contenteditable="true">Federico Sanchez</div>
+            <div class="crow muted" contenteditable="true">fasanchez3@uc.cl</div>
+            <div class="crow muted" contenteditable="true">+56 9 9018 2719</div>
+          </div>
+          <div class="card">
+            <div class="section-head">
+              <div class="num-outline display">02</div>
+              <div class="title display"><span class="hl">Detalles</span></div>
+              <div class="arrow-mini"></div>
+            </div>
+            <div class="crow muted">Validez: <span contenteditable="true">5 días</span></div>
+            <div class="crow muted">Entrega: <span contenteditable="true">10 días hábiles</span></div>
+            <div class="crow muted">Pago: <span contenteditable="true">50% anticipo + 50% contra entrega</span></div>
+          </div>
+        </div>
+
+        <div class="section-head">
+          <div class="num-outline display">03</div>
+          <div class="title display"><span class="hl">Detalle</span> de productos</div>
+          <div class="arrow-mini"></div>
+        </div>
+
+        <div class="products-wrap">
+          <table class="products">
+            <thead>
+              <tr>
+                <th style="width:55%">Descripción</th>
+                <th class="num" style="width:10%">Cant.</th>
+                <th class="num" style="width:17%">P. Unitario</th>
+                <th class="num" style="width:18%">Total</th>
+                <th class="editor-only" style="width:30px"></th>
+              </tr>
+            </thead>
+            <tbody id="productsBody"></tbody>
+            <tbody id="totalsBody">
+              <tr class="totals-rows"><td colspan="3" class="lbl">Subtotal neto</td><td class="val" id="subtotalCell">$ 3.014.000</td><td class="editor-only"></td></tr>
+              <tr class="totals-rows"><td colspan="3" class="lbl">IVA 19%</td><td class="val" id="ivaCell">$ 572.660</td><td class="editor-only"></td></tr>
+              <tr class="totals-final"><td colspan="3" class="lbl">Total</td><td class="val" id="totalCell">$ 3.586.660</td><td class="editor-only" style="background:var(--bg-dark)"></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <button id="btnAddRowInline" type="button" class="add-row-btn editor-only">+ Agregar fila</button>
+
+        <div class="notes" id="notes" contenteditable="true">
+          <p>(*) Tanto las fundas como unidades de desbloqueo pueden personalizarse a conveniencia del cliente.</p>
+          <p>(**) Se considera un imán de desbloqueo por nivel, sujeto a revisión según protocolo implementado.</p>
+        </div>
+
+        <div class="bottom-row">
+          <div class="card card-cond">
+            <div class="section-head">
+              <div class="num-outline display">04</div>
+              <div class="title display"><span class="hl">Condiciones</span></div>
+              <div class="arrow-mini"></div>
+            </div>
+            <ul id="conditions" contenteditable="true">
+              <li>Precios en pesos chilenos (CLP), valores netos.</li>
+              <li>Validez de la cotización: 5 días corridos.</li>
+              <li>Plazo de entrega: 10 días hábiles tras confirmación de orden de compra y personalización.</li>
+              <li>Incluye personalización con logo institucional mediante estampado DTF.</li>
+              <li>Garantía: 12 meses por defectos de fabricación.</li>
+              <li>Forma de pago: 50% anticipo + 50% contra entrega, o según convenio marco.</li>
+            </ul>
+          </div>
+          <div class="card card-bank">
+            <div class="section-head">
+              <div class="num-outline display">05</div>
+              <div class="title display">Datos Bancarios</div>
+            </div>
+            <div class="crow"><b contenteditable="true">Blokkit SpA</b></div>
+            <div class="crow muted">RUT <span contenteditable="true">78.203.591-6</span></div>
+            <div class="crow"><b contenteditable="true">Banco Scotiabank</b></div>
+            <div class="crow muted" contenteditable="true">Cuenta Corriente</div>
+            <div class="crow muted">N° <span contenteditable="true">992264780</span></div>
+            <div class="crow muted" contenteditable="true">pagos@blokkit.cl</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER (dark) -->
+      <div class="footer">
+        <div class="fitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+          <span>hola@blokkit.cl</span>
+        </div>
+        <div class="fitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <span>+56 9 9039 9130</span>
+        </div>
+        <div class="fitem">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <span>www.blokkit.cl</span>
+        </div>
+        <div class="fmini">
+          <svg viewBox="0 0 697.67 143.23" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="height:22px;width:auto;">
+            <path fill="#FFFFFF" d="M202.14,72.07v-.27c7.4-3.7,11.64-10.69,11.64-19.73,0-13.56-8.9-23.29-25.89-23.29h-42.88v7.89c0,.2.12.38.31.46l18.59,7.95h21.65c8.08,0,10.82,4.25,10.82,10s-3.42,10-10.69,10h-23.15v-13.54l-16.84-7.36c-.33-.14-.7.1-.7.46v73.74h46.44c17.4,0,26.44-10.27,26.44-24.25,0-10.69-5.89-18.9-15.75-22.06h.01ZM188.44,102.21h-25.89v-21.51h26.03c7.26,0,11.37,4.79,11.37,10.82s-3.29,10.69-11.51,10.69h0Z"/>
+            <path fill="#FFFFFF" d="M233.93,28.78h17.54v73.43h46.85v16.17h-64.39V28.79h0Z"/>
+            <path fill="#FFFFFF" d="M305.44,73.58c0-26.85,19.73-46.58,47.67-46.58s47.67,19.73,47.67,46.58-19.73,46.58-47.67,46.58-47.67-19.73-47.67-46.58ZM382.98,73.58c0-17.54-12.06-30.28-29.87-30.28s-29.86,12.74-29.86,30.28,12.06,30.41,29.86,30.41,29.87-12.88,29.87-30.41h0Z"/>
+            <path fill="#FFFFFF" d="M417.92,28.78h17.54v39.18l32.06-39.18h22.06l-38.08,43.98,39.45,45.62h-22.6l-32.88-40.28v40.28h-17.54V28.79h-.01Z"/>
+            <path fill="#23a4f9" d="M505.32,28.78h17.54v39.18l32.06-39.18h22.06l-38.08,43.98,39.45,45.62h-22.6l-32.88-40.28v40.28h-17.54V28.79h-.01Z"/>
+            <path fill="#23a4f9" d="M592.87,28.78h17.54v89.59h-17.54V28.78Z"/>
+            <path fill="#23a4f9" d="M653.42,45.08h-26.71v-16.3h70.96v16.3h-26.71v73.29h-17.54V45.08h0Z"/>
+            <path fill="#23a4f9" d="M3.13,55.96h100.74c1.73,0,3.13,1.5,3.13,3.34v40.06c0,4.34-.76,8.68-2.42,12.69-17.05,41.19-85.67,42.02-102.28-.14-1.57-3.99-2.3-8.26-2.3-12.55v-40.06c0-1.84,1.4-3.34,3.13-3.34ZM12,71.36v28.47c0,3.36.59,6.7,1.92,9.78,12.73,29.38,63.71,29.14,77.61,1.06,1.67-3.37,2.47-7.11,2.47-10.87v-28.69c0-1.19-.96-2.15-2.15-2.15H14.39c-1.32,0-2.4,1.08-2.4,2.4h.01Z"/>
+            <path fill="#23a4f9" d="M88.72,67.96H15.28c-1.26,0-2.28-1.16-2.28-2.6v-31.19c0-3.44.58-6.88,1.83-10.05,12.51-31.85,62.22-32.49,74.43.1,1.18,3.16,1.74,6.55,1.74,9.96v31.18c0,1.44-1.02,2.6-2.28,2.6h0ZM80,59.08v-22.22c0-2.83-.47-5.64-1.46-8.21-8.66-22.34-41.52-22.09-50.78-.61-1.17,2.72-1.76,5.75-1.76,8.81v22.43c0,.93.63,1.68,1.41,1.68h51.01c.87,0,1.58-.84,1.58-1.88h0Z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.body.classList.add("preview");
+
+const ASTORECA_PRODUCTS = [
+  { desc: "Funda BloKKit con bloqueo de señal para teléfono *", qty: 200, unit: 14500 },
+  { desc: "Unidad de Desbloqueo Manual con soporte de muro **", qty: 3, unit: 38000 },
+  { desc: "Capacitación Apoderados y/o Cuerpo Docente", qty: 2, unit: "Incluido" },
+  { desc: "Acceso a Software de Gestión", qty: 1, unit: "Incluido" },
+];
+
+const ASTORECA_STATE = {
+  quoteNumber: "1242",
+  quoteDate: "13 de marzo de 2026",
+  validity: "5 días corridos",
+  clientCard: `<div class="section-head">
+          <div class="num-outline display">01</div>
+          <div class="title display"><span class="hl">Cliente</span></div>
+          <div class="arrow-mini"></div>
+        </div>
+        <div class="crow"><span class="name" contenteditable="true">Fundación Astoreca</span></div>
+        <div class="crow muted" contenteditable="true">Federico Sanchez</div>
+        <div class="crow muted" contenteditable="true">fasanchez3@uc.cl</div>
+        <div class="crow muted" contenteditable="true">+56 9 9018 2719</div>`,
+  detailsCard: `<div class="section-head">
+          <div class="num-outline display">02</div>
+          <div class="title display"><span class="hl">Detalles</span></div>
+          <div class="arrow-mini"></div>
+        </div>
+        <div class="crow muted">Validez: <span contenteditable="true">5 días</span></div>
+        <div class="crow muted">Entrega: <span contenteditable="true">10 días hábiles</span></div>
+        <div class="crow muted">Pago: <span contenteditable="true">50% anticipo + 50% contra entrega</span></div>`,
+  notes: `<p>(*) Tanto las fundas como unidades de desbloqueo pueden personalizarse a conveniencia del cliente.</p>
+      <p>(**) Se considera un imán de desbloqueo por nivel, sujeto a revisión según protocolo implementado.</p>`,
+  conditions: `<li>Precios en pesos chilenos (CLP), valores netos.</li>
+          <li>Validez de la cotización: 5 días corridos.</li>
+          <li>Plazo de entrega: 10 días hábiles tras confirmación de orden de compra y personalización.</li>
+          <li>Incluye personalización con logo institucional mediante estampado DTF.</li>
+          <li>Garantía: 12 meses por defectos de fabricación.</li>
+          <li>Forma de pago: 50% anticipo + 50% contra entrega, o según convenio marco.</li>`,
+  bankCard: `<div class="section-head">
+          <div class="num-outline display">05</div>
+          <div class="title display">Datos Bancarios</div>
+        </div>
+        <div class="crow"><b contenteditable="true">Blokkit SpA</b></div>
+        <div class="crow muted">RUT <span contenteditable="true">78.203.591-6</span></div>
+        <div class="crow"><b contenteditable="true">Banco Scotiabank</b></div>
+        <div class="crow muted" contenteditable="true">Cuenta Corriente</div>
+        <div class="crow muted">N° <span contenteditable="true">992264780</span></div>
+        <div class="crow muted" contenteditable="true">pagos@blokkit.cl</div>`,
+  products: ASTORECA_PRODUCTS.map(p => ({ ...p })),
+};
+
+const DB_KEY = "blokkit_cotizador_db_v1";
+const ACTIVE_KEY = "blokkit_cotizador_active_v1";
+const OLD_STATE_KEY = "blokkit_cotizador_state_v3";
+
+let db = [];
+let activeId = null;
+let saveTimer = null;
+
+const fmt = (n) => "$ " + Math.round(n).toLocaleString("es-CL").replace(/,/g, ".");
+const parseCLP = (s) => {
+  if (s === null || s === undefined) return 0;
+  if (typeof s === "number") return s;
+  const cleaned = String(s).replace(/[^\d-]/g, "");
+  return cleaned ? parseInt(cleaned, 10) : 0;
+};
+
+function uid() {
+  return "q_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+function todayStr() {
+  const m = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+  const d = new Date();
+  return `${d.getDate()} de ${m[d.getMonth()]} de ${d.getFullYear()}`;
+}
+
+function computeTotalStr(products) {
+  let subtotal = 0;
+  (products || []).forEach((p) => {
+    const included = typeof p.unit === "string" && /incluido/i.test(p.unit);
+    if (included) return;
+    subtotal += (parseCLP(p.qty) * parseCLP(p.unit));
+  });
+  return fmt(subtotal * 1.19);
+}
+
+function extractCliente(clientCardHtml) {
+  const div = document.createElement("div");
+  div.innerHTML = clientCardHtml || "";
+  const nameEl = div.querySelector(".name");
+  return nameEl ? nameEl.textContent.trim() : "Cliente";
+}
+
+function makeRecord(state) {
+  return {
+    id: uid(),
+    numero: state.quoteNumber || "",
+    fecha: state.quoteDate || "",
+    cliente: extractCliente(state.clientCard),
+    total: computeTotalStr(state.products),
+    state: state,
+  };
+}
+
+function recordFromOldState(oldState) {
+  const state = {
+    quoteNumber: oldState.quoteNumber || "1242",
+    quoteDate: oldState.quoteDate || todayStr(),
+    validity: oldState.validity || "5 días corridos",
+    clientCard: oldState.clientCard || ASTORECA_STATE.clientCard,
+    detailsCard: oldState.detailsCard || ASTORECA_STATE.detailsCard,
+    notes: oldState.notes || ASTORECA_STATE.notes,
+    conditions: oldState.conditions || ASTORECA_STATE.conditions,
+    bankCard: oldState.bankCard || ASTORECA_STATE.bankCard,
+    products: (oldState.products && oldState.products.length) ? oldState.products : ASTORECA_STATE.products,
+  };
+  return makeRecord(state);
+}
+
+function persistDb() {
+  try {
+    localStorage.setItem(DB_KEY, JSON.stringify(db));
+    if (activeId) localStorage.setItem(ACTIVE_KEY, activeId);
+  }
+  catch (e) { console.warn("persist failed", e); }
+}
+
+function loadDb() {
+  try {
+    const raw = localStorage.getItem(DB_KEY);
+    if (raw) db = JSON.parse(raw);
+  } catch (e) { db = []; }
+  if (!Array.isArray(db)) db = [];
+  if (db.length === 0) {
+    let rec = null;
+    try {
+      const oldRaw = localStorage.getItem(OLD_STATE_KEY);
+      if (oldRaw) rec = recordFromOldState(JSON.parse(oldRaw));
+    } catch (e) { rec = null; }
+    if (!rec) rec = makeRecord(JSON.parse(JSON.stringify(ASTORECA_STATE)));
+    db.push(rec);
+    persistDb();
+  }
+  let savedActive = null;
+  try { savedActive = localStorage.getItem(ACTIVE_KEY); } catch (e) {}
+  activeId = (savedActive && db.some(r => r.id === savedActive)) ? savedActive : db[0].id;
+}
+
+function nextNumero() {
+  let max = 0;
+  db.forEach((r) => {
+    const n = parseInt(String(r.numero).replace(/\D/g, ""), 10);
+    if (!isNaN(n) && n > max) max = n;
+  });
+  return String(max + 1);
+}
+
+function blankState(numero) {
+  return {
+    quoteNumber: numero,
+    quoteDate: todayStr(),
+    validity: "5 días corridos",
+    clientCard: `<div class="section-head">
+          <div class="num-outline display">01</div>
+          <div class="title display"><span class="hl">Cliente</span></div>
+          <div class="arrow-mini"></div>
+        </div>
+        <div class="crow"><span class="name" contenteditable="true">Nombre Institución</span></div>
+        <div class="crow muted" contenteditable="true">Contacto</div>
+        <div class="crow muted" contenteditable="true">email@cliente.cl</div>
+        <div class="crow muted" contenteditable="true">+56 9 0000 0000</div>`,
+    detailsCard: ASTORECA_STATE.detailsCard,
+    notes: `<p>(*) Notas u observaciones particulares de la cotización.</p>`,
+    conditions: ASTORECA_STATE.conditions,
+    bankCard: ASTORECA_STATE.bankCard,
+    products: [{ desc: "Funda BloKKit con bloqueo de señal para teléfono", qty: 1, unit: 14500 }],
+  };
+}
+
+function renderProducts(products) {
+  const tbody = document.getElementById("productsBody");
+  tbody.innerHTML = "";
+  products.forEach((p) => {
+    const tr = document.createElement("tr");
+    const included = (typeof p.unit === "string" && p.unit.toLowerCase() === "incluido");
+    tr.innerHTML = `
+      <td><span contenteditable="false" class="desc">${p.desc}</span></td>
+      <td class="num"><span contenteditable="false" class="qty">${p.qty}</span></td>
+      <td class="num ${included ? 'included' : ''}"><span contenteditable="false" class="unit">${included ? "Incluido" : p.unit.toLocaleString("es-CL").replace(/,/g, ".")}</span></td>
+      <td class="num total ${included ? 'included' : ''}">${included ? "Incluido" : fmt(p.qty * p.unit)}</td>
+      <td class="editor-only"><button class="row-ctrl" type="button" title="Eliminar fila" data-action="del">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+  applyEditableState();
+  recalc();
+}
+
+function applyEditableState() {
+  const editing = !document.body.classList.contains("preview");
+  document.querySelectorAll("[contenteditable]").forEach(el => el.setAttribute("contenteditable", editing ? "true" : "false"));
+}
+
+function recalc() {
+  const rows = document.querySelectorAll("#productsBody tr");
+  let subtotal = 0;
+  rows.forEach(row => {
+    const qty = parseCLP(row.querySelector(".qty").innerText);
+    const unitRaw = row.querySelector(".unit").innerText.trim();
+    const included = /incluido/i.test(unitRaw);
+    const totalCell = row.querySelector("td.total");
+    if (included) {
+      totalCell.innerText = "Incluido";
+      totalCell.classList.add("included");
+      row.querySelector("td:nth-child(3)").classList.add("included");
+    } else {
+      const unit = parseCLP(unitRaw);
+      const t = qty * unit;
+      totalCell.innerText = fmt(t);
+      totalCell.classList.remove("included");
+      row.querySelector("td:nth-child(3)").classList.remove("included");
+      subtotal += t;
+    }
+  });
+  const iva = subtotal * 0.19;
+  const total = subtotal + iva;
+  document.getElementById("subtotalCell").innerText = fmt(subtotal);
+  document.getElementById("ivaCell").innerText = fmt(iva);
+  document.getElementById("totalCell").innerText = fmt(total);
+}
+
+function captureProducts() {
+  return Array.from(document.querySelectorAll("#productsBody tr")).map(row => {
+    const desc = row.querySelector(".desc").innerText.trim();
+    const qty = parseCLP(row.querySelector(".qty").innerText);
+    const unitRaw = row.querySelector(".unit").innerText.trim();
+    const unit = /incluido/i.test(unitRaw) ? "Incluido" : parseCLP(unitRaw);
+    return { desc, qty, unit };
+  });
+}
+
+function saveState() {
+  const rec = db.find(r => r.id === activeId);
+  if (!rec) return;
+  try {
+    const state = {
+      quoteNumber: document.getElementById("quoteNumber").innerText.trim(),
+      quoteDate: document.getElementById("quoteDate").innerText.trim(),
+      validity: document.getElementById("validity").innerText.trim(),
+      clientCard: document.querySelectorAll(".card-row .card")[0].innerHTML,
+      detailsCard: document.querySelectorAll(".card-row .card")[1].innerHTML,
+      notes: document.getElementById("notes").innerHTML,
+      conditions: document.getElementById("conditions").innerHTML,
+      bankCard: document.querySelector(".card-bank").innerHTML,
+      products: captureProducts(),
+    };
+    rec.state = state;
+    rec.numero = state.quoteNumber;
+    rec.fecha = state.quoteDate;
+    rec.cliente = extractCliente(state.clientCard);
+    rec.total = document.getElementById("totalCell").innerText.trim();
+    persistDb();
+    renderSidebarList();
+    updateActiveHint();
+  } catch (e) { console.warn("save failed", e); }
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveState, 300);
+}
+
+function loadActiveIntoForm() {
+  const rec = db.find(r => r.id === activeId);
+  if (!rec) return;
+  const s = rec.state;
+  document.getElementById("quoteNumber").innerText = s.quoteNumber || "";
+  document.getElementById("quoteDate").innerText = s.quoteDate || "";
+  document.getElementById("validity").innerText = s.validity || "";
+  document.querySelectorAll(".card-row .card")[0].innerHTML = s.clientCard || "";
+  document.querySelectorAll(".card-row .card")[1].innerHTML = s.detailsCard || "";
+  document.getElementById("notes").innerHTML = s.notes || "";
+  document.getElementById("conditions").innerHTML = s.conditions || "";
+  document.querySelector(".card-bank").innerHTML = s.bankCard || "";
+  renderProducts(s.products && s.products.length ? s.products : ASTORECA_STATE.products);
+  applyEditableState();
+  updateActiveHint();
+}
+
+function updateActiveHint() {
+  const hint = document.getElementById("activeHint");
+  if (!hint) return;
+  const rec = db.find(r => r.id === activeId);
+  hint.textContent = rec ? `Editando N° ${rec.numero} · ${rec.cliente}` : "";
+}
+
+function renderSidebarList() {
+  const searchEl = document.getElementById("dbSearch");
+  const q = (searchEl && searchEl.value ? searchEl.value : "").trim().toLowerCase();
+  const list = document.getElementById("dbList");
+  const sorted = [...db].sort((a, b) => (parseInt(b.numero, 10) || 0) - (parseInt(a.numero, 10) || 0));
+  const filtered = q
+    ? sorted.filter(r => String(r.numero).toLowerCase().includes(q) || String(r.cliente).toLowerCase().includes(q))
+    : sorted;
+  if (!filtered.length) {
+    list.innerHTML = `<div class="db-empty">Sin resultados</div>`;
+    return;
+  }
+  list.innerHTML = filtered.map(r => `
+    <div class="db-item ${r.id === activeId ? 'active' : ''}" data-id="${r.id}">
+      <div class="db-item-top">
+        <span class="db-num">N° ${escapeHtml(r.numero)}</span>
+        <span class="db-total">${escapeHtml(r.total)}</span>
+      </div>
+      <div class="db-client">${escapeHtml(r.cliente)}</div>
+      <div class="db-date">${escapeHtml(r.fecha)}</div>
+    </div>
+  `).join("");
+}
+
+function selectRecord(id) {
+  if (id === activeId) return;
+  activeId = id;
+  persistDb();
+  loadActiveIntoForm();
+  renderSidebarList();
+  if (isMobileLayout()) closeSidebarMobile();
+}
+
+function createNewRecord() {
+  if (!confirm("¿Crear una cotización nueva en blanco?")) return;
+  const numero = nextNumero();
+  const rec = makeRecord(blankState(numero));
+  db.unshift(rec);
+  activeId = rec.id;
+  persistDb();
+  loadActiveIntoForm();
+  renderSidebarList();
+}
+
+function duplicateRecord() {
+  const active = db.find(r => r.id === activeId);
+  if (!active) return;
+  const clone = JSON.parse(JSON.stringify(active));
+  clone.id = uid();
+  clone.numero = nextNumero();
+  clone.state.quoteNumber = clone.numero;
+  clone.state.quoteDate = todayStr();
+  clone.fecha = clone.state.quoteDate;
+  db.unshift(clone);
+  activeId = clone.id;
+  persistDb();
+  loadActiveIntoForm();
+  renderSidebarList();
+}
+
+function deleteRecord() {
+  if (db.length <= 1) { alert("Debe existir al menos una cotización en la lista."); return; }
+  const active = db.find(r => r.id === activeId);
+  if (!active) return;
+  if (!confirm(`¿Eliminar la cotización N° ${active.numero} (${active.cliente})? Esta acción no se puede deshacer.`)) return;
+  db = db.filter(r => r.id !== activeId);
+  activeId = db[0].id;
+  persistDb();
+  loadActiveIntoForm();
+  renderSidebarList();
+}
+
+function restoreAstoreca() {
+  if (!confirm("¿Restaurar los datos de referencia (Fundación Astoreca) en esta cotización?")) return;
+  const rec = db.find(r => r.id === activeId);
+  if (!rec) return;
+  rec.state = JSON.parse(JSON.stringify(ASTORECA_STATE));
+  rec.numero = rec.state.quoteNumber;
+  rec.fecha = rec.state.quoteDate;
+  rec.cliente = extractCliente(rec.state.clientCard);
+  rec.total = computeTotalStr(rec.state.products);
+  persistDb();
+  loadActiveIntoForm();
+  renderSidebarList();
+}
+
+function addRow() {
+  const tbody = document.getElementById("productsBody");
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><span contenteditable="true" class="desc">Nuevo producto</span></td>
+    <td class="num"><span contenteditable="true" class="qty">1</span></td>
+    <td class="num"><span contenteditable="true" class="unit">0</span></td>
+    <td class="num total">$ 0</td>
+    <td class="editor-only"><button class="row-ctrl" type="button" title="Eliminar fila" data-action="del">✕</button></td>
+  `;
+  tbody.appendChild(tr);
+  if (document.body.classList.contains("preview")) document.getElementById("btnToggle").click();
+  recalc();
+  saveState();
+}
+
+function isMobileLayout() {
+  return window.matchMedia("(max-width: 1100px)").matches;
+}
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  if (isMobileLayout()) {
+    const open = sidebar.classList.toggle("open");
+    document.getElementById("sidebarBackdrop").classList.toggle("show", open);
+  } else {
+    sidebar.classList.toggle("collapsed");
+  }
+}
+function closeSidebarMobile() {
+  document.getElementById("sidebar").classList.remove("open");
+  document.getElementById("sidebarBackdrop").classList.remove("show");
+}
+function collapseOrCloseSidebar() {
+  if (isMobileLayout()) closeSidebarMobile();
+  else document.getElementById("sidebar").classList.add("collapsed");
+}
+
+document.addEventListener("click", (e) => {
+  if (e.target.matches('[data-action="del"]')) {
+    e.target.closest("tr").remove();
+    recalc();
+    saveState();
+  }
+});
+document.addEventListener("input", (e) => {
+  if (!e.target.closest(".page")) return;
+  if (e.target.closest("#productsBody")) recalc();
+  scheduleSave();
+});
+
+document.getElementById("btnToggle").addEventListener("click", () => {
+  const isPreview = document.body.classList.toggle("preview");
+  document.getElementById("btnToggle").innerText = isPreview ? "✎ Editar" : "👁 Vista previa";
+  applyEditableState();
+});
+document.getElementById("btnAddRow").addEventListener("click", addRow);
+document.getElementById("btnAddRowInline").addEventListener("click", addRow);
+document.getElementById("btnReset").addEventListener("click", restoreAstoreca);
+document.getElementById("btnNew").addEventListener("click", createNewRecord);
+document.getElementById("btnPrint").addEventListener("click", () => {
+  if (!document.body.classList.contains("preview")) document.getElementById("btnToggle").click();
+  setTimeout(() => window.print(), 100);
+});
+
+document.getElementById("btnSidebarToggle").addEventListener("click", toggleSidebar);
+document.getElementById("btnSidebarCollapse").addEventListener("click", collapseOrCloseSidebar);
+document.getElementById("sidebarBackdrop").addEventListener("click", closeSidebarMobile);
+document.getElementById("btnDbNew").addEventListener("click", createNewRecord);
+document.getElementById("btnDbDuplicate").addEventListener("click", duplicateRecord);
+document.getElementById("btnDbDelete").addEventListener("click", deleteRecord);
+document.getElementById("dbList").addEventListener("click", (e) => {
+  const item = e.target.closest(".db-item");
+  if (!item) return;
+  selectRecord(item.dataset.id);
+});
+document.getElementById("dbSearch").addEventListener("input", renderSidebarList);
+
+loadDb();
+loadActiveIntoForm();
+applyEditableState();
+renderSidebarList();
+</script>
+
+</body>
+</html>
