@@ -65,6 +65,15 @@ Variables (viven en **Pages dashboard → env vars**):
 | `CONTACT_FORM_FROM` | Default `BloKKit Web <contacto@blokkit.cl>` (dominio verificado en Resend). |
 | `CONTACT_FORM_TO_EMAIL` | Default `hola@blokkit.cl`. |
 
+## 📊 Medición — GTM
+
+`BaseLayout` implementa **GTM** (no gtag/GA4 directo). El ID vive en Pages dashboard
+→ env vars como `PUBLIC_GTM_ID` (plaintext; un ID de GTM no es secreto). Contenedor:
+cuenta Tag Manager "Blokkit" (Google de Alfonso), contenedor web `blokkit.cl`.
+⚠️ El contenedor parte **vacío**: GTM carga pero no mide nada hasta que se le
+configure adentro una etiqueta (p. ej. GA4). Cambiar la env var solo surte efecto
+en el **siguiente build** (retry deploy o push).
+
 ## 🔐 Secretos — regla dura
 
 **Nunca un valor de secreto en el repo, en `CLAUDE.md`, ni en el chat.** Los secretos
