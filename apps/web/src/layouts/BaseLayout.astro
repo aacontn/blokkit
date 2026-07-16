@@ -45,6 +45,8 @@ const canonicalUrl = toAbsoluteUrl(canonicalPath);
 const ogImageUrl = toAbsoluteUrl(image);
 const gtmId = import.meta.env.PUBLIC_GTM_ID ?? "";
 const gscVerification = import.meta.env.PUBLIC_GSC_VERIFICATION ?? "";
+const bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION ?? "";
+const facebookVerification = import.meta.env.PUBLIC_FACEBOOK_DOMAIN_VERIFICATION ?? "";
 
 // Grafo con @id estables: Organization y WebSite son las mismas entidades en
 // las 10 páginas; Article/WebPage las referencian en vez de duplicarlas.
@@ -133,8 +135,13 @@ const breadcrumbSchema = isHome
     {llmSummary && <meta name="llm-summary" content={llmSummary} />}
     <link rel="llms" href="/llms.txt" type="text/plain" />
 
-    <!-- GSC Verification -->
+    <!-- Verificación de propiedad. Google ya está verificado por DNS: estas metas
+         son la vía alternativa y solo aparecen si se define la variable. -->
     {gscVerification && <meta name="google-site-verification" content={gscVerification} />}
+    {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
+    {facebookVerification && (
+      <meta name="facebook-domain-verification" content={facebookVerification} />
+    )}
 
     <!-- Open Graph -->
     <meta property="og:type" content={pageType} />
