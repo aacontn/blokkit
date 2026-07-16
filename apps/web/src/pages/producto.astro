@@ -6,7 +6,7 @@ import ScrollReveal from "../components/ui/ScrollReveal.tsx";
 import FinalCta from "../components/FinalCta.astro";
 import PageHero from "../components/PageHero.astro";
 import ArchitectureFlow from "../components/ArchitectureFlow.astro";
-import { toAbsoluteUrl } from "../lib/seo";
+import { SITE_URL, toAbsoluteUrl } from "../lib/seo";
 
 const rolloutSteps = [
   { step: "01", title: "Política operativa", desc: "Definimos protocolo por recinto, excepciones permitidas y responsables por turno." },
@@ -14,13 +14,18 @@ const rolloutSteps = [
   { step: "03", title: "Medición continua", desc: "Seguimos indicadores de uso, incidencias y cumplimiento para ajustar sin fricción." },
 ];
 
-/* Schema Product — el término comercial exacto ("funda con bloqueo
-   de señal / bloqueo magnético") que buscan los AI overviews */
-const productSchema = {
+/* Schema Service — BloKKit se contrata por cotización, sin precio de lista.
+   Un Product sin offers/review/aggregateRating no califica para product snippet
+   (requisito de Google), así que marcarlo como Product no ganaba nada y obligaba
+   a inventar precio o reseñas para que sirviera. Service describe con honestidad
+   lo que se contrata —funda + dock + plataforma + implementación— y le da al AI
+   overview el término comercial exacto, que es de donde llega la gente. */
+const serviceSchema = {
   "@context": "https://schema.org",
-  "@type": "Product",
-  name: "Funda BloKKit con bloqueo de señal para celulares",
-  brand: { "@type": "Brand", name: "BloKKit" },
+  "@type": "Service",
+  name: "Sistema BloKKit de bloqueo de celulares",
+  serviceType: "Bloqueo de celulares con fundas bloqueadoras de señal",
+  provider: { "@id": `${SITE_URL}/#organization` },
   description:
     "Funda con bloqueo magnético para celulares: el teléfono queda sellado junto a su dueño e inutilizable hasta el dock de apertura. Sistema de custodia para colegios, universidades, empresas y eventos en Chile, con asignación por QR y registro de uso por persona.",
   image: "https://blokkit.cl/images/blokkit-fundas.webp",
@@ -29,14 +34,14 @@ const productSchema = {
     "@type": "Audience",
     audienceType: "Colegios, universidades, empresas, gobierno y eventos",
   },
-  areaServed: "CL",
+  areaServed: { "@type": "Country", name: "Chile" },
   url: toAbsoluteUrl("/producto/"),
 };
 ---
 
 <BaseLayout>
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
   </Fragment>
   <Header slot="header" />
 

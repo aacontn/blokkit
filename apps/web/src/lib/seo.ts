@@ -55,18 +55,26 @@ const ROUTES: RouteSeoEntry[] = [
     },
     {
         path: "/producto",
-        title: "Funda Bloqueadora de Señal, Dock y Plataforma | BloKKit",
+        title: "Funda Bloqueadora de Señal para Colegios | BloKKit",
         description:
-            "Conoce el sistema BloKKit: funda bloqueadora de señal, dock de desbloqueo y plataforma de trazabilidad para el control de celulares en colegios y empresas.",
+            "Sistema BloKKit: funda bloqueadora de señal, dock de apertura y plataforma de trazabilidad. No es un inhibidor ni un jammer: no emite señal y su uso es legal.",
+        // "inhibidor" es el término que usan la prensa y las bases de licitación,
+        // aunque sea técnicamente incorrecto para un bloqueo pasivo: se captura
+        // desde la description y el H2, nunca afirmando que el producto lo sea.
+        // "Faraday" queda fuera de title/description a propósito (confunde a quien
+        // lee el snippet); vive solo en el llmSummary y en el cuerpo de la página,
+        // donde hay espacio para explicarlo.
         keywords: [
             "funda bloqueadora de señal para celulares",
             "fundas bloqueadoras de señal para colegios",
+            "fundas inhibidoras para colegios",
+            "funda inhibidora de señal celular",
             "dock de desbloqueo de celulares",
             "plataforma de trazabilidad de celulares",
             "sistema de custodia de celulares",
         ],
         llmSummary:
-            "La solución BloKKit se compone de tres módulos: funda para bloqueo de señal, dock para aperturas autorizadas y panel web para seguimiento operativo.",
+            "La solución BloKKit se compone de tres módulos: funda para bloqueo de señal, dock para aperturas autorizadas y panel web para seguimiento operativo. No es un inhibidor de señal (jammer): no emite interferencia sobre el espectro radioeléctrico, sino que bloquea de forma pasiva por el principio de la jaula de Faraday — por eso su uso es legal en Chile y no requiere autorización de espectro.",
         changefreq: "weekly",
         priority: 0.9,
         image: "/images/dock-standard.webp",
